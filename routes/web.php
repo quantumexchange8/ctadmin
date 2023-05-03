@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\WebTemplateCategoryController;
@@ -35,9 +38,7 @@ foreach ($prefixRouters as $prefixRouter) {
          */
 
         Route::prefix('dashboard')->group(function () {
-            Route::get('/analytics', function () {
-                return view('pages.dashboard.analytics', ['title' => 'Dashboard', 'breadcrumb' => 'This Breadcrumb']);
-            })->name('analytics');
+            Route::match(['get', 'post'], '/analytics', [DashboardController::class, 'index'])->name('analytics');
             Route::get('/sales', function () {
                 return view('pages.dashboard.sales', ['title' => 'Sales Admin | CORK - Multipurpose Bootstrap Dashboard Template', 'breadcrumb' => 'This Breadcrumb']);
             })->name('sales');
@@ -71,6 +72,40 @@ foreach ($prefixRouters as $prefixRouter) {
             Route::delete('/category_image_delete', [CategoryController::class, 'category_image_delete']);
             Route::match(['get', 'post'], '/category_listing', [CategoryController::class, 'category_listing'])->name('category_listing');
             Route::post('/category_delete', [CategoryController::class, 'category_delete'])->name('category_delete');
+        });
+
+        /**
+         * ==============================
+         *        @Router -  Order
+         * ==============================
+         */
+
+        Route::prefix('order')->group(function () {
+            Route::match(['get', 'post'], '/order_listing', [OrderController::class, 'order_listing'])->name('order_listing');
+            Route::match(['get', 'post'], '/order_edit/{id}', [OrderController::class, 'order_edit'])->name('order_edit');
+            Route::match(['get', 'post'], '/order_preview/{id}', [OrderController::class, 'order_preview'])->name('order_preview');
+            Route::put('/order_item_delete/{id}', [OrderController::class, 'order_item_delete'])->name('order_item_delete');
+//            Route::match(['get', 'post'], '/category_edit/{id}', [CategoryController::class, 'category_edit'])->name('category_edit');
+//            Route::post('/category_upload', [CategoryController::class, 'category_upload']);
+//            Route::delete('/category_image_delete', [CategoryController::class, 'category_image_delete']);
+//            Route::match(['get', 'post'], '/category_listing', [CategoryController::class, 'category_listing'])->name('category_listing');
+//            Route::post('/category_delete', [CategoryController::class, 'category_delete'])->name('category_delete');
+        });
+
+        /**
+         * ==============================
+         *        @Router -  Invoice
+         * ==============================
+         */
+
+        Route::prefix('invoice')->group(function () {
+            Route::match(['get', 'post'], 'invoice_listing', [InvoiceController::class, 'invoice_listing'])->name('invoice_listing');
+            Route::match(['get', 'post'], '/invoice_preview', [InvoiceController::class, 'invoice_preview'])->name('invoice_preview');
+//            Route::match(['get', 'post'], '/category_edit/{id}', [CategoryController::class, 'category_edit'])->name('category_edit');
+//            Route::post('/category_upload', [CategoryController::class, 'category_upload']);
+//            Route::delete('/category_image_delete', [CategoryController::class, 'category_image_delete']);
+//            Route::match(['get', 'post'], '/category_listing', [CategoryController::class, 'category_listing'])->name('category_listing');
+//            Route::post('/category_delete', [CategoryController::class, 'category_delete'])->name('category_delete');
         });
 
         /**

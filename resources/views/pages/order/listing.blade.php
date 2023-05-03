@@ -32,7 +32,7 @@
                 <div class="col-lg-12 layout-spacing">
                     <div class="statbox widget box box-shadow">
                         <div class="widget-content widget-content-area">
-                            <form method="POST" action="{{ route('product_listing') }}">
+                            <form method="POST" action="{{ route('order_listing') }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-4">
@@ -47,36 +47,24 @@
                                             {!! Form::select('category_id', $get_category_sel, @$search['category_id'], ['class' => 'form-select', 'id' => 'category_type', 'placeholder' => 'Choose Category']) !!}
                                         </div>
                                     </div>
-                                    <div class="col-md-4 web-template-category">
-                                        <div class="form-group mb-3">
-                                            <label for="web_template_category_id" class="mb-2">Web Template Category</label>
-                                            {!! Form::select('web_template_category_id', $get_web_template_category_sel, @$search['web_template_category_id'], ['class' => 'form-select', 'id' => 'web_template_category_id', 'placeholder' => 'Choose Template Category..']) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 pos-system-category">
-                                        <div class="form-group mb-3">
-                                            <label for="pos_system_category_id" class="mb-2">POS System Category</label>
-                                            {!! Form::select('pos_system_category_id', $get_pos_system_category_sel, @$search['pos_system_category_id'], ['class' => 'form-select', 'id' => 'pos_system_category_id', 'placeholder' => 'Choose POS Category..']) !!}
-                                        </div>
-                                    </div>
                                     <div class="col-md-4">
                                         <div class="form-group mb-3">
                                             <label for="product_status" class="mb-2">Status</label>
-                                            {!! Form::select('product_status', $get_status_sel, @$search['product_status'], ['class' => 'form-select', 'placeholder' => 'Search Status..']) !!}
+                                            {!! Form::select('order_status', $get_status_sel, @$search['order_status'], ['class' => 'form-select', 'placeholder' => 'Search Status..']) !!}
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group mb-3">
-                                            <label for="product_visibility" class="mb-2">Visibility</label>
-                                            {!! Form::select('product_visibility', $get_visibility_sel, @$search['product_visibility'], ['class' => 'form-select', 'placeholder' => 'Search Visibility..']) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group mb-3">
-                                            <label for="order_by" class="mb-2">Order By</label>
-                                            {!! Form::select('order_by', $get_order_sel, @$search['order_by'], ['class' => 'form-select']) !!}
-                                        </div>
-                                    </div>
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <div class="form-group mb-3">--}}
+{{--                                            <label for="product_visibility" class="mb-2">Visibility</label>--}}
+{{--                                            {!! Form::select('product_visibility', $get_visibility_sel, @$search['product_visibility'], ['class' => 'form-select', 'placeholder' => 'Search Visibility..']) !!}--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <div class="form-group mb-3">--}}
+{{--                                            <label for="order_by" class="mb-2">Order By</label>--}}
+{{--                                            {!! Form::select('order_by', $get_order_sel, @$search['order_by'], ['class' => 'form-select']) !!}--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -86,12 +74,6 @@
                                         <button type="submit" class="btn btn-danger waves-effect waves-light mx-2" name="submit" value="reset">
                                             <i class="fas fa-times mr-1"></i> Reset
                                         </button>
-                                        <div class="float-end">
-                                            <a href="{{ route('product_add') }}" class="btn btn-success">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-                                                <span class="btn-text-inner">Create</span>
-                                            </a>
-                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -101,9 +83,9 @@
             </div>
             <div class="row">
                 @if($records->isNotEmpty())
-                    <?php
-                    $no = $records->firstItem();
-                    ?>
+                        <?php
+                        $no = $records->firstItem();
+                        ?>
                     <div id="tableWithoutBorder" class="col-lg-12 col-12 layout-spacing">
                         <div class="statbox widget box box-shadow">
                             <div class="widget-header">
@@ -114,19 +96,17 @@
                                 </div>
                             </div>
                             <div class="widget-content widget-content-area">
-                                <p class="mb-4"> Click the <code class="text-success">create button</code> to add more products.</p>
+{{--                                <p class="mb-4"> Click the <code class="text-success">create button</code> to add more products.</p>--}}
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th class="" scope="col">Title</th>
-                                            <th scope="col">Slug</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Email</th>
                                             <th scope="col">Price</th>
-                                            <th scope="col">Category</th>
-                                            <th scope="col">Product Category</th>
-                                            <th class="text-center" scope="col">Status</th>
-                                            <th scope="col">Date Created</th>
+                                            <th class="text-center" scope="col">Order Status</th>
+                                            <th scope="col">Date</th>
                                             <th class="text-center" scope="col">Action</th>
                                         </tr>
                                         </thead>
@@ -134,53 +114,39 @@
                                         @foreach($records as $record)
                                             <tr>
                                                 <td>{{ $no }}</td>
-                                                <td class="">
-                                                    {{ $record->product_title }}
-                                                </td>
-                                                <td class="">{{ $record->product_slug }}</td>
                                                 <td>
-                                                    @if($record->product_status == \App\Models\WebTemplate::STATUS_NORMAL)
-                                                        RM {{ $record->product_price }}
-                                                    @else
-                                                        <span>
-                                                            <s> RM {{ $record->product_price }}</s>
-                                                            <span class="text-secondary">RM {{ $record->product_offer_price }}</span> <br>
-                                                            <span class="badge badge-danger mt-1">OFFER</span>
-                                                        </span>
-                                                    @endif
+                                                    {{ $record->user->user_fullname }}
                                                 </td>
                                                 <td>
-                                                    {{ $record->category->category_name }}
+                                                    {{ $record->user->user_email }}
                                                 </td>
                                                 <td>
-                                                    @if($record->category_id == 1)
-                                                        -
-                                                    @elseif($record->category_id == 2)
-                                                        {{ $record->web_template_category->web_template_category_name }}
-                                                    @elseif($record->category_id == 3)
-                                                    @endif
+                                                    RM {{ $record->getTotalPrice() }}
                                                 </td>
                                                 <td class="text-center">
-                                                    <span class="badge {{ $record->product_visibility == 1 ? 'badge-light-success' : "badge-light-secondary" }}">{{ $record->product_visibility == 1 ? 'Visible' : "Not Visible" }}</span>
+                                                    <span class="badge {{ $record->order_status == 1 ? 'badge-light-success' : "badge-light-secondary" }}">{{ $record->order_status == 1 ? 'Processing' : "Replied" }}</span>
                                                 </td>
                                                 <td>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                                    <span class="table-inner-text">{{ date_format($record->product_created, 'Y-m-d') }}</span>
+                                                    <span class="inv-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                                        {{ $record->order_created->format('j M Y') }}
+                                                    </span>
                                                 </td>
                                                 <td class="text-center">
-                                                    <div class="action-btns">
-                                                        <a href="{{ route('product_edit', $record->id) }}" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                                                        </a>
-                                                        <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip delete" data-id='{{ $record->id }}' data-toggle="tooltip" data-placement="top" title="Delete" data-bs-toggle="modal" data-bs-target="#category_delete">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                                        </a>
-                                                    </div>
+                                                    <a class="badge badge-light-primary text-start me-2 action-edit" href="{{ route('order_edit', $record->order_id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></a>
+                                                    <a class="badge badge-light-danger text-start action-delete" href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+{{--                                                    <div class="action-btns">--}}
+{{--                                                        <a href="#" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">--}}
+{{--                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>--}}
+{{--                                                        </a>--}}
+{{--                                                        <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip delete" data-id='{{ $record->id }}' data-toggle="tooltip" data-placement="top" title="Delete" data-bs-toggle="modal" data-bs-target="#category_delete">--}}
+{{--                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>--}}
+{{--                                                        </a>--}}
+{{--                                                    </div>--}}
                                                 </td>
                                             </tr>
-                                        <?php
-                                        $no++;
-                                        ?>
+                                                <?php
+                                                $no++;
+                                                ?>
                                         @endforeach
                                         </tbody>
                                     </table>
@@ -189,7 +155,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+            </div>
             @else
                 <div class="col-12">
                     <div class="alert alert-arrow-right alert-icon-right alert-light-warning alert-dismissible fade show mb-4" role="alert">

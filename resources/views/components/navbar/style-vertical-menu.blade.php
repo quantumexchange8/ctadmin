@@ -128,23 +128,25 @@
                             </div>
 
                             <div class="drodpown-title notification mt-2">
-                                <h6 class="d-flex justify-content-between"><span class="align-self-center">Notifications</span> <span class="badge badge-secondary">16 New</span></h6>
+                                <h6 class="d-flex justify-content-between"><span class="align-self-center">Pending Action</span> <span class="badge badge-secondary">16 New</span></h6>
                             </div>
 
                             <div class="dropdown-item">
-                                <div class="media server-log">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-server"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>
-                                    <div class="media-body">
-                                        <div class="data-info">
-                                            <h6 class="">Server Rebooted</h6>
-                                            <p class="">45 min ago</p>
-                                        </div>
+                                <a href="{{ route('order_listing') }}">
+                                    <div class="media server-log">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-server"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>
+                                        <div class="media-body">
+                                            <div class="data-info">
+                                                <h6 class="">Order Listing</h6>
+                                                <p class="">{{ $order->order_created->diffForHumans() }}</p>
+                                            </div>
 
-                                        <div class="icon-status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            <div class="icon-status">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="dropdown-item">
