@@ -28,7 +28,7 @@ class ProductController extends Controller
                         'freetext' =>  $request->input('freetext'),
                         'category_id' => $request->input('category_id'),
                         'web_template_category_id' => $request->input('web_template_category_id'),
-                        'pos_system_category_id' => $request->input('pos_system_category_id'),
+                        'pos_system_category' => $request->input('pos_system_category'),
                         'product_status' =>  $request->input('product_status'),
                         'product_visibility' =>  $request->input('product_visibility'),
                         'order_by' =>  $request->input('order_by'),
@@ -52,7 +52,7 @@ class ProductController extends Controller
             'get_order_sel' => ['asc' => 'Created Date ASC', 'desc' => 'Created Date DESC'],
             'get_category_sel' => Category::get_category_sel(),
             'get_web_template_category_sel' => WebTemplateCategory::get_web_template_category_sel(),
-            'get_pos_system_category_sel' => ['cloud' => 'Cloud', 'offline' => 'Offline'],
+            'get_pos_system_category_sel' => ['Cloud' => 'Cloud', 'Offline' => 'Offline'],
         ]);
     }
 
@@ -72,7 +72,7 @@ class ProductController extends Controller
                 'product_image' => trans('public.image'),
                 'category_id' => trans('public.category'),
                 'web_template_category_id' => trans('public.web_template_category_id'),
-                'pos_system_category_id' => trans('public.pos_system_category_id'),
+                'pos_system_category' => trans('public.pos_system_category'),
             ];
 
             foreach ($languages as $lang) {
@@ -87,7 +87,7 @@ class ProductController extends Controller
                     'product_slug' => 'required|max:100|unique:tbl_product',
                     'category_id' => 'required|numeric',
                     'web_template_category_id' => 'required_if:category_id,2',
-                    'pos_system_category_id' => 'required_if:category_id,3',
+                    'pos_system_category' => 'required_if:category_id,3',
                     'product_image' => 'required',
                     'product_price' => 'required|numeric'
                 ])->setAttributeNames($attributeNames);
@@ -115,7 +115,7 @@ class ProductController extends Controller
                     'product_visibility' => $request->input('product_visibility') == 'on' ? 1 : 0,
                     'category_id' => $request->input('category_id'),
                     'web_template_category_id' => $request->input('web_template_category_id'),
-                    'pos_system_category_id' => $request->input('pos_system_category_id'),
+                    'pos_system_category' => $request->input('pos_system_category'),
                 ]);
 
                 if ($product_offer_price > 0)
@@ -157,7 +157,7 @@ class ProductController extends Controller
             'submit' => route('product_add'),
             'get_category_sel' => Category::get_category_sel(),
             'get_web_template_category_sel' => WebTemplateCategory::get_web_template_category_sel(),
-            'get_pos_system_category_sel' => ['cloud' => 'Cloud', 'offline' => 'Offline'],
+            'get_pos_system_category_sel' => ['Cloud' => 'Cloud', 'Offline' => 'Offline'],
         ])->withErrors($validator);
     }
 
@@ -174,7 +174,7 @@ class ProductController extends Controller
                 'product_visibility' => trans('public.product_visibility'),
                 'category_id' => trans('public.category'),
                 'web_template_category_id' => trans('public.web_template_category_id'),
-                'pos_system_category_id' => trans('public.pos_system_category_id'),
+                'pos_system_category' => trans('public.pos_system_category'),
             ];
 
             foreach ($languages as $lang) {
@@ -188,7 +188,7 @@ class ProductController extends Controller
             $validator = Validator::make($request->all(), $rules+[
                     'category_id' => 'required|numeric',
                     'web_template_category_id' => 'required_if:category_id,2',
-                    'pos_system_category_id' => 'required_if:category_id,3',
+                    'pos_system_category' => 'required_if:category_id,3',
                     'product_price' => 'required|numeric'
                 ])->setAttributeNames($attributeNames);
 
@@ -213,7 +213,7 @@ class ProductController extends Controller
                         'product_visibility' => $request->input('product_visibility') == 'on' ? 1 : 0,
                         'category_id' => $request->input('category_id'),
                         'web_template_category_id' => $request->input('web_template_category_id'),
-                        'pos_system_category_id' => $request->input('pos_system_category_id'),
+                        'pos_system_category' => $request->input('pos_system_category'),
                     ]);
 
                 if ($product_offer_price > 0)
@@ -258,7 +258,7 @@ class ProductController extends Controller
             'submit' => route('product_edit', $product_id),
             'get_category_sel' => Category::get_category_sel(),
             'get_web_template_category_sel' => WebTemplateCategory::get_web_template_category_sel(),
-            'get_pos_system_category_sel' => ['cloud' => 'Cloud', 'offline' => 'Offline'],
+            'get_pos_system_category_sel' => ['Cloud' => 'Cloud', 'Offline' => 'Offline'],
         ])->withErrors($validator);
     }
 

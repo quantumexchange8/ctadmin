@@ -35,13 +35,23 @@
                                             <div class="col-md-12">
                                                 <div class="mb-3">
                                                     <label class="form-label">Email</label>
-                                                    <input type="email" class="form-control" name="user_email">
+                                                    <input type="email" class="form-control @error('user_email') is-invalid @enderror" name="user_email" value="{{ old('user_email') }}">
+                                                    @error('user_email')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <span class="text-danger" style="font-size: 12px">{{ $message }}</span>
+                                                        </span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="mb-4">
                                                     <label class="form-label">Password</label>
-                                                    <input type="password" class="form-control" name="password">
+                                                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password">
+                                                    @error('password')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <span class="text-danger" style="font-size: 12px">{{ $message }}</span>
+                                                        </span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="col-12">

@@ -41,42 +41,42 @@
                                             <input type="text" class="form-control select_active" id="search" name="freetext" placeholder="Search for..." value="{{ @$search['freetext'] }}">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group mb-3">
-                                            <label for="category_type" class="mb-2">Category</label>
-                                            {!! Form::select('category_id', $get_category_sel, @$search['category_id'], ['class' => 'form-select', 'id' => 'category_type', 'placeholder' => 'Choose Category']) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 web-template-category">
-                                        <div class="form-group mb-3">
-                                            <label for="web_template_category_id" class="mb-2">Web Template Category</label>
-                                            {!! Form::select('web_template_category_id', $get_web_template_category_sel, @$search['web_template_category_id'], ['class' => 'form-select', 'id' => 'web_template_category_id', 'placeholder' => 'Choose Template Category..']) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 pos-system-category">
-                                        <div class="form-group mb-3">
-                                            <label for="pos_system_category" class="mb-2">POS System Category</label>
-                                            {!! Form::select('pos_system_category', $get_pos_system_category_sel, @$search['pos_system_category'], ['class' => 'form-select', 'id' => 'pos_system_category', 'placeholder' => 'Choose POS Category..']) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group mb-3">
-                                            <label for="product_status" class="mb-2">Status</label>
-                                            {!! Form::select('product_status', $get_status_sel, @$search['product_status'], ['class' => 'form-select', 'placeholder' => 'Search Status..']) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group mb-3">
-                                            <label for="product_visibility" class="mb-2">Visibility</label>
-                                            {!! Form::select('product_visibility', $get_visibility_sel, @$search['product_visibility'], ['class' => 'form-select', 'placeholder' => 'Search Visibility..']) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group mb-3">
-                                            <label for="order_by" class="mb-2">Order By</label>
-                                            {!! Form::select('order_by', $get_order_sel, @$search['order_by'], ['class' => 'form-select']) !!}
-                                        </div>
-                                    </div>
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <div class="form-group mb-3">--}}
+{{--                                            <label for="category_type" class="mb-2">Category</label>--}}
+{{--                                            {!! Form::select('category_id', $get_category_sel, @$search['category_id'], ['class' => 'form-select', 'id' => 'category_type', 'placeholder' => 'Choose Category']) !!}--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-md-4 web-template-category">--}}
+{{--                                        <div class="form-group mb-3">--}}
+{{--                                            <label for="web_template_category_id" class="mb-2">Web Template Category</label>--}}
+{{--                                            {!! Form::select('web_template_category_id', $get_web_template_category_sel, @$search['web_template_category_id'], ['class' => 'form-select', 'id' => 'web_template_category_id', 'placeholder' => 'Choose Template Category..']) !!}--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-md-4 pos-system-category">--}}
+{{--                                        <div class="form-group mb-3">--}}
+{{--                                            <label for="pos_system_category_id" class="mb-2">POS System Category</label>--}}
+{{--                                            {!! Form::select('pos_system_category_id', $get_pos_system_category_sel, @$search['pos_system_category_id'], ['class' => 'form-select', 'id' => 'pos_system_category_id', 'placeholder' => 'Choose POS Category..']) !!}--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <div class="form-group mb-3">--}}
+{{--                                            <label for="product_status" class="mb-2">Status</label>--}}
+{{--                                            {!! Form::select('product_status', $get_status_sel, @$search['product_status'], ['class' => 'form-select', 'placeholder' => 'Search Status..']) !!}--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <div class="form-group mb-3">--}}
+{{--                                            <label for="product_visibility" class="mb-2">Visibility</label>--}}
+{{--                                            {!! Form::select('product_visibility', $get_visibility_sel, @$search['product_visibility'], ['class' => 'form-select', 'placeholder' => 'Search Visibility..']) !!}--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <div class="form-group mb-3">--}}
+{{--                                            <label for="order_by" class="mb-2">Order By</label>--}}
+{{--                                            {!! Form::select('order_by', $get_order_sel, @$search['order_by'], ['class' => 'form-select']) !!}--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -114,81 +114,85 @@
                                 </div>
                             </div>
                             <div class="widget-content widget-content-area">
-                                <p class="mb-4"> Click the <code class="text-success">create button</code> to add more products.</p>
+                                <p class="mb-4"> Click the <code class="text-success">create button</code> to add more users.</p>
                                 <div class="table-responsive">
-                                    <table class="table">
+                                    <table class="table table-striped table-hover">
                                         <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th class="" scope="col">Title</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Category</th>
-                                            <th scope="col">Product Category</th>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Phone</th>
+                                            <th scope="col">Gender</th>
+                                            <th scope="col">Country</th>
                                             <th class="text-center" scope="col">Status</th>
-                                            <th scope="col">Date Created</th>
                                             <th class="text-center" scope="col">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($records as $record)
-                                            <tr>
-                                                <td>{{ $no }}</td>
-                                                <td class="">
-                                                    {{ $record->product_title }}
-                                                </td>
-                                                <td>
-                                                    @if($record->product_status == \App\Models\WebTemplate::STATUS_NORMAL)
-                                                        RM {{ $record->product_price }}
-                                                    @else
-                                                        <span>
-                                                            <s> RM {{ $record->product_price }}</s>
-                                                            <span class="text-secondary">RM {{ $record->product_offer_price }}</span> <br>
-                                                            <span class="badge badge-danger mt-1">OFFER</span>
-                                                        </span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    {{ $record->category->category_name }}
-                                                </td>
-                                                <td>
-                                                    @if($record->category_id == 1)
-                                                        -
-                                                    @elseif($record->category_id == 2)
-                                                        {{ $record->web_template_category->web_template_category_name }}
-                                                    @elseif($record->category_id == 3)
-                                                        {{ ucfirst($record->pos_system_category) }}
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">
-                                                    <span class="badge {{ $record->product_visibility == 1 ? 'badge-light-success' : "badge-light-secondary" }}">{{ $record->product_visibility == 1 ? 'Visible' : "Not Visible" }}</span>
-                                                </td>
-                                                <td>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                                    <span class="table-inner-text">{{ date_format($record->product_created, 'Y-m-d') }}</span>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="action-btns">
-                                                        <a href="{{ route('product_edit', $record->id) }}" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                                                        </a>
-                                                        <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip delete" data-id='{{ $record->id }}' data-toggle="tooltip" data-placement="top" title="Delete" data-bs-toggle="modal" data-bs-target="#category_delete">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        <?php
-                                        $no++;
-                                        ?>
-                                        @endforeach
+                                            @foreach($records as $record)
+                                                <tr>
+                                                    <td>
+                                                        <p class="mb-0">{{ $no }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <div class="media">
+                                                            <div class="avatar me-2">
+                                                                @if($record->hasMedia('user_profile_photo'))
+                                                                    <img alt="avatar" src="{{ $record->getFirstMediaUrl('user_profile_photo') }}" class="rounded-circle" />
+                                                                @else
+                                                                    <img alt="avatar" src="{{Vite::asset('resources/images/profile-3.jpeg')}}" class="rounded-circle" />
+                                                                @endif
+                                                            </div>
+                                                            <div class="media-body align-self-center">
+                                                                <h6 class="mb-0">{{ $record->user_fullname }}</h6>
+                                                                <span>{{ $record->user_email }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <p class="mb-0">
+                                                            {{ $record->user_phone }}
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="mb-0">
+                                                            {{ ucfirst($record->user_gender ?? '-') }}
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="mb-0">
+                                                            {{ $record->user_nationality }}
+                                                        </p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if($record->user_status == \App\Models\User::STATUS_ACTIVE)
+                                                            <span class="badge badge-primary">Active</span>
+                                                        @elseif($record->user_status == \App\Models\User::STATUS_INACTIVE)
+                                                            <span class="badge badge-warning">Inactive</span>
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="action-btns">
+                                                            <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                                            </a>
+                                                            <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                                $no++
+                                                ?>
+                                            @endforeach
                                         </tbody>
                                     </table>
-                                    {!! $records->links('pagination.custom') !!}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+            </div>
             @else
                 <div class="col-12">
                     <div class="alert alert-arrow-right alert-icon-right alert-light-warning alert-dismissible fade show mb-4" role="alert">

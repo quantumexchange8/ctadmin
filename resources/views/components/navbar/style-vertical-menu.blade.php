@@ -138,7 +138,7 @@
                                         <div class="media-body">
                                             <div class="data-info">
                                                 <h6 class="">Order Listing</h6>
-                                                <p class="">{{ $order->order_created->diffForHumans() }}</p>
+                                                <p class="">{{ @$order->order_created == null ? '' : $order->order_created->diffForHumans() }}</p>
                                             </div>
 
                                             <div class="icon-status">
@@ -241,10 +241,10 @@
                 <div class="icon-content">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-power"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
                 </div>
-                <p class="modal-text">Ready to Leave?</p>
+                <p class="modal-text text-center">Ready to Leave?</p>
             </div>
-            <div class="modal-footer justify-content-between">
-                <button class="btn btn-light-dark" data-bs-dismiss="modal">Discard</button>
+            <div class="modal-footer mx-auto">
+                <a class="btn btn-secondary" data-bs-dismiss="modal">Discard</a>
                 <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                 <form id="logout-form" method="POST" style="display: none;" action="{{ route('logout') }}">
                     {{ csrf_field() }}

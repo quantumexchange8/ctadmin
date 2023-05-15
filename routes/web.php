@@ -6,6 +6,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LocalizationController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebTemplateCategoryController;
 use App\Http\Controllers\WebTemplateController;
 use Illuminate\Support\Facades\Route;
@@ -84,6 +85,8 @@ foreach ($prefixRouters as $prefixRouter) {
             Route::match(['get', 'post'], '/order_listing', [OrderController::class, 'order_listing'])->name('order_listing');
             Route::match(['get', 'post'], '/order_edit/{id}', [OrderController::class, 'order_edit'])->name('order_edit');
             Route::match(['get', 'post'], '/order_preview/{id}', [OrderController::class, 'order_preview'])->name('order_preview');
+            Route::match(['get', 'post'], '/order_quotation/{id}', [OrderController::class, 'order_quotation'])->name('order_quotation');
+            Route::get('/download_quotation/{id}', [OrderController::class, 'download_quotation'])->name('download_quotation');
             Route::put('/order_item_delete/{id}', [OrderController::class, 'order_item_delete'])->name('order_item_delete');
 //            Route::match(['get', 'post'], '/category_edit/{id}', [CategoryController::class, 'category_edit'])->name('category_edit');
 //            Route::post('/category_upload', [CategoryController::class, 'category_upload']);
@@ -562,6 +565,7 @@ foreach ($prefixRouters as $prefixRouter) {
             Route::get('/profile', function () {
                 return view('pages.user.profile', ['title' => 'Account Settings | CORK - Multipurpose Bootstrap Dashboard Template ', 'breadcrumb' => 'This Breadcrumb']);
             })->name('profile');
+            Route::match(['get', 'post'], '/user_listing', [UserController::class, 'user_listing'])->name('user_listing');
         });
 
         /**

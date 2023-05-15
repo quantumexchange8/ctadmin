@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Product extends Model implements HasMedia, TranslatableContract
+class Product extends Model implements HasMedia, TranslatableContract, Searchable
 {
     use HasFactory, InteractsWithMedia, Translatable;
 
@@ -23,9 +25,20 @@ class Product extends Model implements HasMedia, TranslatableContract
     const STATUS_OFFER = 2;
 
     protected $fillable = [
-        'product_slug', 'product_price', 'product_offer_price', 'product_status', 'product_visibility', 'category_id', 'web_template_category_id', 'pos_system_category_id', 'is_deleted'
+        'product_slug', 'product_price', 'product_offer_price', 'product_status', 'product_visibility', 'category_id', 'web_template_category_id', 'pos_system_category', 'is_deleted'
     ];
     public $translatedAttributes = ['product_title', 'product_description'];
+
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('product_detail', $this->product_slug);
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->product_translation->product_title,
+            $url
+        );
+    }
 
     public static function get_record($search, $perpage)
     {
@@ -55,10 +68,10 @@ class Product extends Model implements HasMedia, TranslatableContract
             $query->where('web_template_category_id', $web_template_category_id);
         }
 
-        $pos_system_category_id = @$search['pos_system_category_id'];
+        $pos_system_category = @$search['pos_system_category'];
 
-        if(isset($pos_system_category_id)){
-            $query->where('pos_system_category_id', $pos_system_category_id);
+        if(isset($pos_system_category)){
+            $query->where('pos_system_category', $pos_system_category);
         }
 
         $product_status = @$search['product_status'];

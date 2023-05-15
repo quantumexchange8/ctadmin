@@ -62,7 +62,7 @@
 
                                                     <div class="col-xl-8 col-lg-7 col-md-6 col-sm-4">
                                                         <p class="inv-customer-name">{{ $order->user->user_fullname }}</p>
-                                                        <p class="inv-street-addr">405 Mulberry Rd., NC, 28649</p>
+                                                        <p class="inv-street-addr">{{ $order->user->user_address }}</p>
                                                         <p class="inv-email-address">{{ $order->user->user_email }}</p>
                                                         <p class="inv-email-address">{{ $order->user->user_phone }}</p>
                                                     </div>
@@ -83,7 +83,7 @@
                                                             <th class="">Qty</th>
                                                             <th class="">Price</th>
                                                             <th class="">Offer</th>
-                                                            <th class="text-right">Sub Total</th>
+                                                            <th class="text-right">Amount</th>
                                                         </tr>
                                                         <tr aria-hidden="true" class="mt-3 d-block table-row-hidden"></tr>
                                                         </thead>
@@ -96,16 +96,11 @@
                                                                         <li><a href="javascript:void(0);" class="remove-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                                     </ul>
                                                                 </td>
-                                                                <td class="description"><input type="text" class="form-control form-control-sm" placeholder="Item Description" value="{{ $item->order_item_name ?? $item->product->product_title }}" name="order_item_name[]"> <textarea class="form-control" placeholder="Additional Details" name="order_item_description[]"></textarea></td>
+                                                                <td class="description"><input type="text" class="form-control form-control-sm" placeholder="Item Description" value="{{ $item->order_item_name ?? $item->product->product_title }}" name="order_item_name[]"> <textarea class="form-control" placeholder="Additional Details" name="order_item_description[]">{{ $item->order_item_description }}</textarea></td>
                                                                 <td class="text-right qty"><input type="number" class="form-control form-control-sm" min="1" id="quantity" placeholder="Quantity" value="{{ $item->order_item_quantity }}"></td>
-                                                                <td class="text-right rate"><input type="text" class="form-control form-control-sm" value="{{ $item->order_item_price ?? $item->product->product_price }}"></td>
-                                                                <td class="text-right rate mt-2"><input type="text" class="form-control form-control-sm" name="offer_price" value="{{ $item->product->product_offer_price ?? "0.00" }}"></td>
-                                                                <td class="text-right rate mt-2"><input type="text" class="form-control form-control-sm subtotal" name="order_item_price[]" value="{{ $item->order_item_price }}"></td>
-
-{{--                                                                <td class="text-right qty"><span class="editable-amount"><span class="amount">{{ $item->order_item_quantity }}</span></span></td>--}}
-{{--                                                                <td class="text-right amount"><span class="editable-amount"><span class="currency">RM</span> <span class="amount">{{ $item->product->product_price }}</span></span></td>--}}
-{{--                                                                <td class="text-right amount"><span class="editable-amount"><span class="currency">RM</span> <span class="amount">{{ $item->product->product_offer_price }}</span></span></td>--}}
-{{--                                                                <td class="text-right amount"><span class="editable-amount"><span class="currency">RM</span> <span class="amount">{{ $item->order_item_price }}</span></span></td>--}}
+                                                                <td class="text-right rate"><input type="text" class="form-control form-control-sm" name="order_item_price[]" id='order_item_price' value="{{ $item->order_item_price ?? $item->product->product_price }}"></td>
+                                                                <td class="text-right rate mt-2"><input type="text" class="form-control form-control-sm" name="order_item_offer_price[]" id='offer_price' value="{{ $item->order_item_offer_price ?? "0.00" }}"></td>
+                                                                <td class="text-right rate mt-2"><input type="text" class="form-control form-control-sm subtotal" value="{{ $item->order_item_offer_price == 0.00 ? $item->order_item_price : $item->order_item_offer_price }}"></td>
                                                             </tr>
                                                         @endforeach
                                                         </tbody>
@@ -140,6 +135,30 @@
 
                                                     <div class="col-md-6">
                                                         <div class="totals-row">
+                                                            <div class="invoice-totals-row invoice-summary-subtotal">
+
+                                                                <div class="invoice-summary-label">Subtotal</div>
+
+                                                                <div class="invoice-summary-value">
+                                                                    <div class="subtotal-amount">
+                                                                        <span class="currency">RM </span><span class="subtotal-amount">{{ $order->getSubTotal() }}</span>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            <div class="invoice-totals-row invoice-summary-total">
+
+                                                                <div class="invoice-summary-label">Discount</div>
+
+                                                                <div class="invoice-summary-value">
+                                                                    <div class="total-amount">
+                                                                        <span class="currency">RM </span><span id="discount_value">{{ $order->discount_amount ?? '0.00' }}</span>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
 
                                                             <div class="invoice-totals-row invoice-summary-balance-due">
 
@@ -148,7 +167,7 @@
                                                                 <div class="invoice-summary-value">
                                                                     <div class="balance-due-amount">
                                                                         <div>
-                                                                            <input id="total-value" name="order_total_price" class="form-control form-control-sm" value="{{ $order->getTotalPrice() }}" data-inputmask="'alias': 'numeric', 'digits' : '2', 'groupSeperator' : ',', 'autoGroup' : true, 'digitsOptional': false, 'removeMaskOnSubmit': true">
+                                                                            <input id="total-value" name="order_total_price" class="form-control form-control-sm" value="{{ $order->order_total_price }}" data-inputmask="'alias': 'numeric', 'digits' : '2', 'groupSeperator' : ',', 'autoGroup' : true, 'digitsOptional': false, 'removeMaskOnSubmit': true">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -169,19 +188,41 @@
 
                                 <div class="col-xl-3">
 
-                                    <div class="invoice-actions-btn mt-0">
+                                    <div class="invoice-actions">
+
+                                        <div class="invoice-action-discount mt-0 pt-0">
+
+                                            <h5>Discount</h5>
+
+                                            <div class="invoice-action-discount-fields">
+
+                                                <div class="row">
+
+                                                    <div class="col-12">
+                                                        <div class="form-group mb-0 discount-amount">
+                                                            <label for="discount_amount">Amount</label>
+                                                            <input id="discount_amount" name="discount_amount" class="form-control form-control-sm" value="{{ @$order->discount_amount }}" data-inputmask="'alias': 'numeric', 'digits' : '2', 'groupSeperator' : ',', 'autoGroup' : true, 'digitsOptional': false, 'removeMaskOnSubmit': true">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="invoice-actions-btn">
 
                                         <div class="invoice-action-btn">
 
                                             <div class="row">
-                                                <div class="col-xl-12 col-md-4">
-                                                    <a href="javascript:void(0);" class="btn btn-primary btn-send">Send Invoice</a>
-                                                </div>
-                                                <div class="col-xl-12 col-md-4">
-                                                    <a href="{{ route('order_preview', $order->order_id) }}" class="btn btn-secondary btn-preview">Preview</a>
-                                                </div>
-                                                <div class="col-xl-12 col-md-4">
+                                                <div class="col-6">
                                                     <button class="btn btn-success w-100" type="submit">Save</button>
+                                                </div>
+                                                <div class="col-6">
+                                                    <a href="{{ route('order_listing') }}" class="btn btn-dark btn-preview">Cancel</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -214,6 +255,10 @@
 
                 <script>
                     $(document).ready(function() {
+                        updateTotal();
+                        $("#total-value").inputmask();
+                        $("#discount_amount").inputmask();
+
                         $(document).on('click', '.add-item', function() {
                             var tr = "<tr>" +
                                 "<td class='delete-item-row'>" +
@@ -223,9 +268,9 @@
                                 "</td>" +
                                 "<td class='description'><input type='text' class='form-control form-control-sm' placeholder='Item Name' name='order_item_name[]'> <textarea class='form-control' placeholder='Additional Details' name='order_item_description[]'></textarea></td>" +
                                 "<td class='text-right qty'><input type='number' class='form-control form-control-sm' min='1' id='quantity' placeholder='Quantity' value='1'></td>" +
-                                "<td class='text-right rate'><input type='text' class='form-control form-control-sm' id='order_item_price'></td>" +
-                                "<td class='text-right rate'><input type='text' class='form-control form-control-sm' id='offer_price' name='offer_price'></td>" +
-                                "<td class='text-right rate'><input type='text' class='form-control form-control-sm subtotal' name='order_item_price[]'></td>" +
+                                "<td class='text-right rate'><input type='text' class='form-control form-control-sm' id='order_item_price' name='order_item_price[]'></td>" +
+                                "<td class='text-right rate'><input type='text' class='form-control form-control-sm' id='offer_price' name='order_item_offer_price[]'></td>" +
+                                "<td class='text-right rate'><input type='text' class='form-control form-control-sm subtotal'></td>" +
                                 "</tr>";
                             $('tbody').append(tr);
                         });
@@ -253,8 +298,7 @@
                                 },
                                 success: function(response) {
                                     // Update the row to reflect that it has been deleted
-                                    row.hide();
-                                    updateTotal();
+                                    row.remove();
                                     Toastify({
                                         text: response.message,
                                         duration: 3000,
@@ -263,6 +307,8 @@
                                         close: true,
                                         backgroundColor: '#00ab55'
                                     }).showToast();
+                                    // Call updateTotal() after the row has been removed
+                                    updateTotal();
                                 },
                                 error: function(xhr, status, error) {
                                     console.log(xhr.responseText);
@@ -270,18 +316,23 @@
                             });
                         });
 
-                        $("#total-value").inputmask();
-
                         function updateTotal() {
-                            var total = 0;
+                            var subtotal = 0;
                             $('.subtotal').each(function() {
-                                var subtotal = parseFloat($(this).val()) || 0;
-                                total += subtotal;
+                                var value = parseFloat($(this).val()) || 0;
+                                subtotal += value;
                             });
+
+                            $('.invoice-summary-value .subtotal-amount').text(subtotal.toFixed(2));
+
+                            var discount = parseFloat($('#discount_amount').val()) || 0;
+                            var total = subtotal - discount;
+
                             $('#total-value').val(total.toFixed(2));
+                            $('#discount_value').text(discount.toFixed(2));
                         }
 
-                        $(document).on('input', '.rate input, #quantity', function() {
+                        $(document).on('input', '.rate input, #quantity, #discount_amount', function() {
                             var price = parseFloat($(this).closest('tr').find('.rate input').val()) || 0;
                             var quantity = parseFloat($(this).closest('tr').find('#quantity').val()) || 0;
                             var offerPrice = parseFloat($(this).closest('tr').find('#offer_price').val()) || 0;

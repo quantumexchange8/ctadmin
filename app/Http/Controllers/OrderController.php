@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\WebTemplateCategory;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Session;
@@ -69,6 +70,7 @@ class OrderController extends Controller
                 $orderItemNames = $request->input('order_item_name');
                 $orderItemDescriptions = $request->input('order_item_description');
                 $orderItemPrices = $request->input('order_item_price');
+                $orderItemOfferPrices = $request->input('order_item_offer_price');
                 $existingOrderItems = OrderItem::whereIn('order_item_id', $order_item_id)->get();
 
                 // update the existing order items and create new ones
@@ -82,10 +84,21 @@ class OrderController extends Controller
                         [
                             'order_item_name' => $orderItemNames[$i],
                             'order_item_description' => $orderItemDescriptions[$i],
-                            'order_item_price' => $orderItemPrices[$i]
+                            'order_item_price' => $orderItemPrices[$i],
+                            'order_item_offer_price' => $orderItemOfferPrices[$i]
                         ]
                     );
                 }
+
+                if ($request->input('discount_amount')) {
+                    $order->update([
+                       'discount_amount' => $request->input('discount_amount'),
+                    ]);
+                }
+
+                $order->update([
+                    'order_total_price' => $request->input('order_total_price'),
+                ]);
 
                 Session::flash('success_msg', 'Successfully Updated Order!');
                 return redirect()->route('order_listing');
@@ -110,6 +123,28 @@ class OrderController extends Controller
 
         return view('pages.order.preview', [
             'title' => 'Preview',
+            'heading' => 'Order',
+            'order' => $order
+        ]);
+    }
+
+    public function download_quotation($order_id) {
+        $order = Order::find($order_id);
+
+        return view('pages.order.quotation-pdf', [
+            'title' => 'Quotation',
+            'heading' => 'Order',
+            'order' => $order
+        ]);
+    }
+
+    public function order_quotation($order_id)
+    {
+        $order = Order::find($order_id);
+//        $order_item_id = OrderItem::where('order_id', $order_id)->where('is_deleted', 0)->pluck('order_item_id');
+
+        return view('pages.order.quotation', [
+            'title' => 'Quotation',
             'heading' => 'Order',
             'order' => $order
         ]);

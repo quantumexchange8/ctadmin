@@ -72,7 +72,7 @@
 
                                                             <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-12 order-sm-0 order-1 text-sm-end">
                                                                 <p class="inv-customer-name">{{ $order->user->user_fullname }}</p>
-                                                                <p class="inv-street-addr">2161 Ferrell Street, MN, 56545 </p>
+                                                                <p class="inv-street-addr">{{ $order->user->user_address }}</p>
                                                                 <p class="inv-email-address">{{ $order->user->user_email }}</p>
                                                                 <p class="inv-email-address">{{ $order->user->user_phone }}</p>
                                                             </div>

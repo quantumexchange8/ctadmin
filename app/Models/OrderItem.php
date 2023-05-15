@@ -16,7 +16,7 @@ class OrderItem extends Model
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
-        'order_item_name', 'order_item_description', 'order_item_price', 'order_id', 'product_id', 'order_item_quantity', 'is_deleted',
+        'order_item_name', 'order_item_description', 'order_item_price', 'order_item_offer_price', 'order_id', 'product_id', 'order_item_quantity', 'is_deleted',
     ];
 
     public function product()

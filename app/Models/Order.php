@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -17,7 +18,7 @@ class Order extends Model
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
-        'user_id', 'is_deleted', 'order_status'
+        'user_id', 'is_deleted', 'order_status', 'discount_amount', 'order_total_price'
     ];
 
     const STATUS_PENDING = 1;
@@ -56,12 +57,13 @@ class Order extends Model
             $query->where('order_status', $order_status);
         }
 
-        return $query->orderby('order_created')->paginate($perpage);
+        return $query->orderbyDesc('order_created')->paginate($perpage);
     }
 
-    public function getTotalPrice()
+    public function getSubTotal()
     {
-        return $this->order_item()->sum('order_item_price');
+        return $this->order_item()
+            ->sum(DB::raw("CASE WHEN order_item_offer_price = '0.00' THEN order_item_price ELSE order_item_offer_price END"));
     }
 
     public function product()

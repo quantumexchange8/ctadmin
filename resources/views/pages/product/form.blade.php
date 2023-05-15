@@ -79,7 +79,7 @@
                                             <div class="row my-4">
                                                 <div class="col-sm-12">
                                                     <label for="product_title" class="form-label">Name ({{ $locale }})</label>
-                                                    <input type="text" class="form-control" id="product_title" name="{{ $locale }}[product_title]"
+                                                    <input type="text" class="form-control" id="product_title-{{ $locale }}" name="{{ $locale }}[product_title]"
                                                            @if($title == 'Add')
                                                                value="{{ @$post->$locale['product_title'] }}"
                                                            @else
@@ -226,7 +226,7 @@ splide.mount();</pre>
                                         </div>
                                         <div class="col-xxl-12 col-md-6 mb-4 pos-system-category">
                                             <label for="category_id">POS Category</label>
-                                            {!! Form::select('pos_system_category_id', $get_pos_system_category_sel, @$post->pos_system_category_id, ['class' => 'form-select', 'id' => 'pos_system_category_id', 'placeholder' => 'Choose POS Category..']) !!}
+                                            {!! Form::select('pos_system_category', $get_pos_system_category_sel, @$post->pos_system_category, ['class' => 'form-select', 'id' => 'pos_system_category', 'placeholder' => 'Choose POS Category..']) !!}
                                         </div>
                                         <div class="col-xxl-12 col-md-6 mb-4 web-template-category">
                                             <label for="category_id">Template Category</label>
@@ -368,6 +368,11 @@ splide.mount();</pre>
                                 $('.pos-system-category').hide();
                             }
                         }
+
+                        $('#product_title-en').on('input', function() {
+                            var product_title = $(this).val().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                            $('#product_slug').val(product_title);
+                        });
 
                     });
 
