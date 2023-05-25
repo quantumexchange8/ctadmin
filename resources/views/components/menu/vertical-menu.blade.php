@@ -155,7 +155,129 @@
                 </ul>
             </li>
 
+            <li class="menu {{ Request::is('*/app/invoice/*') ? "active" : "" }}">
+                <a href="#invoice" data-bs-toggle="collapse" aria-expanded="{{ Request::is('*/app/invoice/*') ? "true" : "false" }}" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        <span>Invoice</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled {{ Request::is('*/app/invoice/*') ? "show" : "" }}" id="invoice" data-bs-parent="#accordionExample">
+                    <li class="{{ Request::routeIs('invoice-list') ? 'active' : '' }}">
+                        <a href="{{getRouterValue();}}/app/invoice/list"> List </a>
+                    </li>
+                    <li class="{{ Request::routeIs('invoice-preview') ? 'active' : '' }}">
+                        <a href="{{getRouterValue();}}/app/invoice/preview"> Preview </a>
+                    </li>
+                    <li class="{{ Request::routeIs('invoice-add') ? 'active' : '' }}">
+                        <a href="{{getRouterValue();}}/app/invoice/add"> Add </a>
+                    </li>
+                    <li class="{{ Request::routeIs('invoice-edit') ? 'active' : '' }}">
+                        <a href="{{getRouterValue();}}/app/invoice/edit"> Edit </a>
+                    </li>
+                </ul>
+            </li>
             <!-- End Products -->
+
+            <li class="menu menu-heading">
+                <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>USER AND PAGES</span></div>
+            </li>
+
+            <li class="menu {{ Request::is('*/user/*') ? "active" : "" }}">
+                <a href="#users" data-bs-toggle="collapse" aria-expanded="{{ Request::is('*/user/*') ? "true" : "false" }}" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <span>User</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled {{ Request::is('*/user/*') ? "show" : "" }}" id="users" data-bs-parent="#accordionExample">
+                    <li class="{{ Request::routeIs('user_add') || Request::is('*/user_edit/*') ? 'active' : '' }}">
+                        <a href="{{getRouterValue();}}/user/user_add"> Form </a>
+                    </li>
+                    <li class="{{ Request::routeIs('user_listing') ? 'active' : '' }}">
+                        <a href="{{getRouterValue();}}/user/user_listing"> Listing </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="menu {{ Request::is('*/page/*') ? "active" : "" }}">
+                <a href="#pages" data-bs-toggle="collapse" aria-expanded="{{ Request::is('*/page/*') ? "true" : "false" }}" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                        <span>Pages</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled {{ Request::is('*/page/*') ? "show" : "" }}" id="pages" data-bs-parent="#accordionExample">
+                    <li class="{{ Request::routeIs('knowledge-base') ? 'active' : '' }}">
+                        <a href="{{getRouterValue();}}/page/knowledge-base"> Knowledge Base </a>
+                    </li>
+                    <li class="{{ Request::routeIs('faq') ? 'active' : '' }}">
+                        <a href="{{getRouterValue();}}/page/faq"> FAQ </a>
+                    </li>
+                    <li class="{{ Request::routeIs('contact-us') ? 'active' : '' }}">
+                        <a href="{{getRouterValue();}}/page/contact-us"> Contact Form </a>
+                    </li>
+                    <li class="{{ Request::routeIs('404') ? 'active' : '' }}">
+                        <a href="{{getRouterValue();}}/page/404"> Error </a>
+                    </li>
+                    <li class="{{ Request::routeIs('maintenance') ? 'active' : '' }}">
+                        <a href="{{getRouterValue();}}/page/maintenance"> Maintanence </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="menu">
+                <a href="#authentication" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <span>Authentication</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="authentication" data-bs-parent="#accordionExample">
+                    <li>
+                        <a href="{{getRouterValue();}}/authentication/boxed/signin"> Sign In </a>
+                    </li>
+                    <li>
+                        <a href="{{getRouterValue();}}/authentication/boxed/signup"> Sign Up </a>
+                    </li>
+                    <li>
+                        <a href="{{getRouterValue();}}/authentication/boxed/lockscreen"> Unlock </a>
+                    </li>
+                    <li>
+                        <a href="{{getRouterValue();}}/authentication/boxed/password-reset"> Reset </a>
+                    </li>
+                    <li>
+                        <a href="{{getRouterValue();}}/authentication/boxed/2-step-verification"> 2 Step </a>
+                    </li>
+                    <li>
+                        <a href="{{getRouterValue();}}/authentication/cover/signin"> Sign In Cover </a>
+                    </li>
+                    <li>
+                        <a href="{{getRouterValue();}}/authentication/cover/signup"> Sign Up Cover </a>
+                    </li>
+                    <li>
+                        <a href="{{getRouterValue();}}/authentication/cover/lockscreen"> Unlock Cover </a>
+                    </li>
+                    <li>
+                        <a href="{{getRouterValue();}}/authentication/cover/password-reset"> Reset Cover </a>
+                    </li>
+                    <li>
+                        <a href="{{getRouterValue();}}/authentication/cover/2-step-verification"> 2 Step Cover </a>
+                    </li>
+                </ul>
+            </li>
 
             <li class="menu menu-heading">
                 <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>APPLICATIONS</span></div>
@@ -222,32 +344,6 @@
                         <span>Contacts</span>
                     </div>
                 </a>
-            </li>
-
-            <li class="menu {{ Request::is('*/app/invoice/*') ? "active" : "" }}">
-                <a href="#invoice" data-bs-toggle="collapse" aria-expanded="{{ Request::is('*/app/invoice/*') ? "true" : "false" }}" class="dropdown-toggle">
-                    <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                        <span>Invoice</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
-                <ul class="collapse submenu list-unstyled {{ Request::is('*/app/invoice/*') ? "show" : "" }}" id="invoice" data-bs-parent="#accordionExample">
-                    <li class="{{ Request::routeIs('invoice-list') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/app/invoice/list"> List </a>
-                    </li>
-                    <li class="{{ Request::routeIs('invoice-preview') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/app/invoice/preview"> Preview </a>
-                    </li>
-                    <li class="{{ Request::routeIs('invoice-add') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/app/invoice/add"> Add </a>
-                    </li>
-                    <li class="{{ Request::routeIs('invoice-edit') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/app/invoice/edit"> Edit </a>
-                    </li>
-                </ul>
             </li>
 
             <li class="menu {{ Request::is('*/app/ecommerce/*') ? "active" : "" }}">
@@ -601,103 +697,6 @@
                     </li>
                     <li class="{{ Request::routeIs('autocomplete') ? 'active' : '' }}">
                         <a href="{{getRouterValue();}}/form/autocomplete"> Auto Complete </a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="menu menu-heading">
-                <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>USER AND PAGES</span></div>
-            </li>
-
-            <li class="menu {{ Request::is('*/user/*') ? "active" : "" }}">
-                <a href="#users" data-bs-toggle="collapse" aria-expanded="{{ Request::is('*/user/*') ? "true" : "false" }}" class="dropdown-toggle">
-                    <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                        <span>User</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
-                <ul class="collapse submenu list-unstyled {{ Request::is('*/user/*') ? "show" : "" }}" id="users" data-bs-parent="#accordionExample">
-                    <li class="{{ Request::routeIs('profile') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/user/profile"> Profile </a>
-                    </li>
-                    <li class="{{ Request::routeIs('settings') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/user/settings"> Account Settings </a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="menu {{ Request::is('*/page/*') ? "active" : "" }}">
-                <a href="#pages" data-bs-toggle="collapse" aria-expanded="{{ Request::is('*/page/*') ? "true" : "false" }}" class="dropdown-toggle">
-                    <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
-                        <span>Pages</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
-                <ul class="collapse submenu list-unstyled {{ Request::is('*/page/*') ? "show" : "" }}" id="pages" data-bs-parent="#accordionExample">
-                    <li class="{{ Request::routeIs('knowledge-base') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/page/knowledge-base"> Knowledge Base </a>
-                    </li>
-                    <li class="{{ Request::routeIs('faq') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/page/faq"> FAQ </a>
-                    </li>
-                    <li class="{{ Request::routeIs('contact-us') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/page/contact-us"> Contact Form </a>
-                    </li>
-                    <li class="{{ Request::routeIs('404') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/page/404"> Error </a>
-                    </li>
-                    <li class="{{ Request::routeIs('maintenance') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/page/maintenance"> Maintanence </a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="menu">
-                <a href="#authentication" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        <span>Authentication</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
-                <ul class="collapse submenu list-unstyled" id="authentication" data-bs-parent="#accordionExample">
-                    <li>
-                        <a href="{{getRouterValue();}}/authentication/boxed/signin"> Sign In </a>
-                    </li>
-                    <li>
-                        <a href="{{getRouterValue();}}/authentication/boxed/signup"> Sign Up </a>
-                    </li>
-                    <li>
-                        <a href="{{getRouterValue();}}/authentication/boxed/lockscreen"> Unlock </a>
-                    </li>
-                    <li>
-                        <a href="{{getRouterValue();}}/authentication/boxed/password-reset"> Reset </a>
-                    </li>
-                    <li>
-                        <a href="{{getRouterValue();}}/authentication/boxed/2-step-verification"> 2 Step </a>
-                    </li>
-                    <li>
-                        <a href="{{getRouterValue();}}/authentication/cover/signin"> Sign In Cover </a>
-                    </li>
-                    <li>
-                        <a href="{{getRouterValue();}}/authentication/cover/signup"> Sign Up Cover </a>
-                    </li>
-                    <li>
-                        <a href="{{getRouterValue();}}/authentication/cover/lockscreen"> Unlock Cover </a>
-                    </li>
-                    <li>
-                        <a href="{{getRouterValue();}}/authentication/cover/password-reset"> Reset Cover </a>
-                    </li>
-                    <li>
-                        <a href="{{getRouterValue();}}/authentication/cover/2-step-verification"> 2 Step Cover </a>
                     </li>
                 </ul>
             </li>

@@ -32,6 +32,12 @@ foreach ($prefixRouters as $prefixRouter) {
             return view('welcome', ['title' => 'this is ome ', 'breadcrumb' => 'This Breadcrumb']);
         });
 
+        Route::get('markAsRead', function () {
+            auth()->user()->unreadNotifications->markAsRead();
+
+            return redirect()->back();
+        })->name('mark_as_read');
+
         /**
          * ==============================
          *       @Router -  Dashboard
@@ -88,11 +94,14 @@ foreach ($prefixRouters as $prefixRouter) {
             Route::match(['get', 'post'], '/order_quotation/{id}', [OrderController::class, 'order_quotation'])->name('order_quotation');
             Route::get('/download_quotation/{id}', [OrderController::class, 'download_quotation'])->name('download_quotation');
             Route::put('/order_item_delete/{id}', [OrderController::class, 'order_item_delete'])->name('order_item_delete');
+            Route::post('/send_mail', [OrderController::class, 'send_mail'])->name('send_mail');
+            Route::match(['get', 'post'], '/invoice_preview/{id}', [OrderController::class, 'invoice_preview'])->name('invoice_preview');
+            Route::match(['get', 'post'], '/receipt_preview/{id}', [OrderController::class, 'receipt_preview'])->name('receipt_preview');
 //            Route::match(['get', 'post'], '/category_edit/{id}', [CategoryController::class, 'category_edit'])->name('category_edit');
 //            Route::post('/category_upload', [CategoryController::class, 'category_upload']);
 //            Route::delete('/category_image_delete', [CategoryController::class, 'category_image_delete']);
 //            Route::match(['get', 'post'], '/category_listing', [CategoryController::class, 'category_listing'])->name('category_listing');
-//            Route::post('/category_delete', [CategoryController::class, 'category_delete'])->name('category_delete');
+            Route::post('/order_cancel', [OrderController::class, 'order_cancel'])->name('order_cancel');
         });
 
         /**
@@ -103,7 +112,6 @@ foreach ($prefixRouters as $prefixRouter) {
 
         Route::prefix('invoice')->group(function () {
             Route::match(['get', 'post'], 'invoice_listing', [InvoiceController::class, 'invoice_listing'])->name('invoice_listing');
-            Route::match(['get', 'post'], '/invoice_preview', [InvoiceController::class, 'invoice_preview'])->name('invoice_preview');
 //            Route::match(['get', 'post'], '/category_edit/{id}', [CategoryController::class, 'category_edit'])->name('category_edit');
 //            Route::post('/category_upload', [CategoryController::class, 'category_upload']);
 //            Route::delete('/category_image_delete', [CategoryController::class, 'category_image_delete']);
@@ -566,6 +574,10 @@ foreach ($prefixRouters as $prefixRouter) {
                 return view('pages.user.profile', ['title' => 'Account Settings | CORK - Multipurpose Bootstrap Dashboard Template ', 'breadcrumb' => 'This Breadcrumb']);
             })->name('profile');
             Route::match(['get', 'post'], '/user_listing', [UserController::class, 'user_listing'])->name('user_listing');
+            Route::match(['get', 'post'], '/user_add', [UserController::class, 'user_add'])->name('user_add');
+            Route::match(['get', 'post'], '/user_edit/{id}', [UserController::class, 'user_edit'])->name('user_edit');
+            Route::post('/user_profile_photo_upload', [UserController::class, 'user_profile_photo_upload']);
+            Route::delete('/user_profile_photo_delete', [UserController::class, 'user_profile_photo_delete']);
         });
 
         /**

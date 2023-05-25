@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\Searchable\Searchable;
-use Spatie\Searchable\SearchResult;
 
-class Product extends Model implements HasMedia, TranslatableContract, Searchable
+class Product extends Model implements HasMedia, TranslatableContract, Viewable
 {
-    use HasFactory, InteractsWithMedia, Translatable;
+    use HasFactory, InteractsWithMedia, Translatable, InteractsWithViews;
 
     protected $table = 'tbl_product';
 
@@ -28,17 +28,6 @@ class Product extends Model implements HasMedia, TranslatableContract, Searchabl
         'product_slug', 'product_price', 'product_offer_price', 'product_status', 'product_visibility', 'category_id', 'web_template_category_id', 'pos_system_category', 'is_deleted'
     ];
     public $translatedAttributes = ['product_title', 'product_description'];
-
-    public function getSearchResult(): SearchResult
-    {
-        $url = route('product_detail', $this->product_slug);
-
-        return new \Spatie\Searchable\SearchResult(
-            $this,
-            $this->product_translation->product_title,
-            $url
-        );
-    }
 
     public static function get_record($search, $perpage)
     {

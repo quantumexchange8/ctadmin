@@ -20,44 +20,44 @@ body.layout-dark {
 
 
   .swal2-icon {
-  
+
     &.swal2-success {
-      
+
       .swal2-success-ring {
         border-color: $l-success;
       }
-  
+
       [class^=swal2-success-line] {
         background-color: #00ab55;
       }
-      
+
     }
-    
+
     &.swal2-error {
       border-color: $l-danger;
-  
+
       [class^=swal2-x-mark-line] {
         background-color: $danger;
       }
-      
+
     }
-  
-  
+
+
     &.swal2-warning {
       border-color: $l-warning;
       color: $warning;
     }
-  
+
     &.swal2-info {
       border-color: $l-info;
       color: $info;
     }
-  
+
     &.swal2-question {
       border-color: $l-secondary;
       color: $secondary;
     }
-    
+
   }
-  
+
 }

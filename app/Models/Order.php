@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Order extends Model
+class Order extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory,  InteractsWithMedia;
+
     protected $table = 'tbl_order';
 
     protected $primaryKey = 'order_id';
@@ -18,17 +20,20 @@ class Order extends Model
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
-        'user_id', 'is_deleted', 'order_status', 'discount_amount', 'order_total_price'
+        'order_number', 'quotation_number', 'invoice_number', 'receipt_number', 'order_total_price', 'user_id', 'is_deleted', 'order_status', 'discount_amount',
     ];
 
-    const STATUS_PENDING = 1;
-    const STATUS_REPLIED = 2;
+    const STATUS_PROCESSING = 1;
+    const STATUS_PENDING = 2;
+    const STATUS_AWAITING = 3;
+    const STATUS_COMPLETED = 4;
+    const STATUS_CANCELLED = 5;
 
     public static function get_record($search, $perpage)
     {
         $search_text = @$search['freetext'] ?? NULL;
 
-        $query = Order::query()->with('user')->with('product')->where('is_deleted', 0);
+        $query = Order::query()->with('user')->where('is_deleted', 0);
 
         $query->whereHas('user', function ($query) use ($search_text) {
 
@@ -60,15 +65,21 @@ class Order extends Model
         return $query->orderbyDesc('order_created')->paginate($perpage);
     }
 
+    public static function get_order_status_sel()
+    {
+        return $orderStatuses = [
+            Order::STATUS_PROCESSING => 'Processing',
+            Order::STATUS_PENDING => 'Pending',
+            Order::STATUS_AWAITING => 'Awaiting Payment',
+            Order::STATUS_COMPLETED => 'Completed',
+            Order::STATUS_CANCELLED => 'Cancelled',
+        ];
+    }
+
     public function getSubTotal()
     {
         return $this->order_item()
             ->sum(DB::raw("CASE WHEN order_item_offer_price = '0.00' THEN order_item_price ELSE order_item_offer_price END"));
-    }
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
     public function user()

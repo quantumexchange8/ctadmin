@@ -32,12 +32,15 @@ class User extends Authenticatable implements HasMedia
         'user_fullname',
         'user_email',
         'password',
+        'user_gender',
+        'user_address',
         'user_nationality',
         'user_phone',
         'is_deleted',
         'user_created',
         'user_updated',
-        'role_as',
+        'user_role',
+        'user_status',
     ];
 
     /**
@@ -67,15 +70,34 @@ class User extends Authenticatable implements HasMedia
             $freetext = $search['freetext'];
             $query->where(function($query) use ($freetext) {
                 $query->where('user_fullname', 'like', '%' . $freetext . '%')
-                    ->orWhere('user_email', 'like', '%' . $freetext . '%');
+                    ->orWhere('user_email', 'like', '%' . $freetext . '%')
+                    ->orWhere('user_phone', 'like', '%' . $freetext . '%');
             });
         }
 
-//        $auto_rank_up = @$search['auto_rank_up'];
-//
-//        if(isset($auto_rank_up)){
-//            $query->where('auto_rank_up', $auto_rank_up);
-//        }
+        $user_nationality = @$search['user_nationality'];
+
+        if(isset($user_nationality)){
+            $query->where('user_nationality', $user_nationality);
+        }
+
+        $user_gender = @$search['user_gender'];
+
+        if(isset($user_gender)){
+            $query->where('user_gender', $user_gender);
+        }
+
+        $user_status = @$search['user_status'];
+
+        if(isset($user_status)){
+            $query->where('user_status', $user_status);
+        }
+
+        $order_by = @$search['order_by'];
+
+        if(isset($order_by)){
+            $query->orderby('user_created', $order_by);
+        }
 
         return $query->orderbyDesc('user_created')->paginate($perpage);
 

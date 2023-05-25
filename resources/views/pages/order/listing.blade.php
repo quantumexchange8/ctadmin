@@ -8,8 +8,15 @@
         <x-slot:headerFiles>
             <!--  BEGIN CUSTOM STYLE FILE  -->
             @vite(['resources/scss/light/assets/elements/custom-pagination.scss', 'resources/scss/dark/assets/elements/custom-pagination.scss'])
+            @vite(['resources/scss/light/assets/components/modal.scss'])
             @vite(['resources/scss/light/assets/elements/alert.scss'])
             @vite(['resources/scss/dark/assets/elements/alert.scss'])
+            @vite(['resources/scss/light/plugins/editors/quill/quill.snow.scss'])
+            @vite(['resources/scss/dark/plugins/editors/quill/quill.snow.scss'])
+            <link rel="stylesheet" href="{{asset('plugins/sweetalerts2/sweetalerts2.css')}}">
+            @vite(['resources/scss/light/plugins/sweetalerts2/custom-sweetalert.scss'])
+            @vite(['resources/scss/dark/plugins/sweetalerts2/custom-sweetalert.scss'])
+
             <link rel="stylesheet" href="{{asset('plugins/animate/animate.css')}}">
 
             <!--  END CUSTOM STYLE FILE  -->
@@ -38,7 +45,9 @@
                                     <div class="col-md-4">
                                         <div class="form-group mb-3">
                                             <label for="search" class="mb-2">Freetext</label>
-                                            <input type="text" class="form-control select_active" id="search" name="freetext" placeholder="Search for..." value="{{ @$search['freetext'] }}">
+                                            <input type="text" class="form-control select_active" id="search"
+                                                   name="freetext" placeholder="Search for..."
+                                                   value="{{ @$search['freetext'] }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -50,28 +59,30 @@
                                     <div class="col-md-4">
                                         <div class="form-group mb-3">
                                             <label for="product_status" class="mb-2">Status</label>
-                                            {!! Form::select('order_status', $get_status_sel, @$search['order_status'], ['class' => 'form-select', 'placeholder' => 'Search Status..']) !!}
+                                            {!! Form::select('order_status', $get_order_status_sel, @$search['order_status'], ['class' => 'form-select', 'placeholder' => 'Search Status..']) !!}
                                         </div>
                                     </div>
-{{--                                    <div class="col-md-4">--}}
-{{--                                        <div class="form-group mb-3">--}}
-{{--                                            <label for="product_visibility" class="mb-2">Visibility</label>--}}
-{{--                                            {!! Form::select('product_visibility', $get_visibility_sel, @$search['product_visibility'], ['class' => 'form-select', 'placeholder' => 'Search Visibility..']) !!}--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-md-4">--}}
-{{--                                        <div class="form-group mb-3">--}}
-{{--                                            <label for="order_by" class="mb-2">Order By</label>--}}
-{{--                                            {!! Form::select('order_by', $get_order_sel, @$search['order_by'], ['class' => 'form-select']) !!}--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
+                                    {{--                                    <div class="col-md-4">--}}
+                                    {{--                                        <div class="form-group mb-3">--}}
+                                    {{--                                            <label for="product_visibility" class="mb-2">Visibility</label>--}}
+                                    {{--                                            {!! Form::select('product_visibility', $get_visibility_sel, @$search['product_visibility'], ['class' => 'form-select', 'placeholder' => 'Search Visibility..']) !!}--}}
+                                    {{--                                        </div>--}}
+                                    {{--                                    </div>--}}
+                                    {{--                                    <div class="col-md-4">--}}
+                                    {{--                                        <div class="form-group mb-3">--}}
+                                    {{--                                            <label for="order_by" class="mb-2">Order By</label>--}}
+                                    {{--                                            {!! Form::select('order_by', $get_order_sel, @$search['order_by'], ['class' => 'form-select']) !!}--}}
+                                    {{--                                        </div>--}}
+                                    {{--                                    </div>--}}
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light mr-2" name="submit" value="search">
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light mr-2"
+                                                name="submit" value="search">
                                             <i class="fas fa-search mr-1"></i> Search
                                         </button>
-                                        <button type="submit" class="btn btn-danger waves-effect waves-light mx-2" name="submit" value="reset">
+                                        <button type="submit" class="btn btn-danger waves-effect waves-light mx-2"
+                                                name="submit" value="reset">
                                             <i class="fas fa-times mr-1"></i> Reset
                                         </button>
                                     </div>
@@ -83,9 +94,6 @@
             </div>
             <div class="row">
                 @if($records->isNotEmpty())
-                        <?php
-                        $no = $records->firstItem();
-                        ?>
                     <div id="tableWithoutBorder" class="col-lg-12 col-12 layout-spacing">
                         <div class="statbox widget box box-shadow">
                             <div class="widget-header">
@@ -96,12 +104,12 @@
                                 </div>
                             </div>
                             <div class="widget-content widget-content-area">
-{{--                                <p class="mb-4"> Click the <code class="text-success">create button</code> to add more products.</p>--}}
+                                {{--                                <p class="mb-4"> Click the <code class="text-success">create button</code> to add more products.</p>--}}
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th scope="col">Order No.</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Email</th>
                                             <th scope="col">Price</th>
@@ -113,7 +121,7 @@
                                         <tbody>
                                         @foreach($records as $record)
                                             <tr>
-                                                <td>{{ $no }}</td>
+                                                <td>{{ $record->order_number }}</td>
                                                 <td>
                                                     {{ $record->user->user_fullname }}
                                                 </td>
@@ -124,30 +132,110 @@
                                                     RM {{ $record->order_total_price ?? $record->getSubTotal() }}
                                                 </td>
                                                 <td class="text-center">
-                                                    <span class="badge {{ $record->order_status == 1 ? 'badge-light-success' : "badge-light-secondary" }}">{{ $record->order_status == 1 ? 'Processing' : "Replied" }}</span>
+                                                    @php
+                                                        $statusLabels = [
+                                                            \App\Models\Order::STATUS_PROCESSING => ['Processing', 'badge-primary'],
+                                                            \App\Models\Order::STATUS_PENDING => ['Pending', 'badge-secondary'],
+                                                            \App\Models\Order::STATUS_AWAITING => ['Awaiting Payment', 'badge-info'],
+                                                            \App\Models\Order::STATUS_COMPLETED => ['Completed', 'badge-success'],
+                                                            \App\Models\Order::STATUS_CANCELLED => ['Cancelled', 'badge-danger']
+                                                        ];
+                                                    @endphp
+                                                    @if (isset($statusLabels[$record->order_status]))
+                                                        @php
+                                                            $status = $statusLabels[$record->order_status];
+                                                        @endphp
+                                                        <span class="badge {{ $status[1] }}">{{ $status[0] }}</span>
+                                                    @endif
                                                 </td>
                                                 <td>
-                                                    <span class="inv-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                                    <span class="inv-date"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="24" height="24"
+                                                                                viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="2"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                class="feather feather-calendar"><rect
+                                                                x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line
+                                                                x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2"
+                                                                                                           x2="8"
+                                                                                                           y2="6"></line><line
+                                                                x1="3" y1="10" x2="21" y2="10"></line></svg>
                                                         {{ $record->order_created->format('j M Y') }}
                                                     </span>
                                                 </td>
                                                 <td class="text-center">
-                                                    <a class="badge badge-light-dark text-start me-2 action-view" href="{{ route('order_quotation', $record->order_id) }}" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
-                                                    <a class="badge badge-light-primary text-start me-2 action-edit" href="{{ route('order_edit', $record->order_id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></a>
-                                                    <a class="badge badge-light-danger text-start action-delete" href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
-{{--                                                    <div class="action-btns">--}}
-{{--                                                        <a href="#" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">--}}
-{{--                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>--}}
-{{--                                                        </a>--}}
-{{--                                                        <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip delete" data-id='{{ $record->id }}' data-toggle="tooltip" data-placement="top" title="Delete" data-bs-toggle="modal" data-bs-target="#category_delete">--}}
-{{--                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>--}}
-{{--                                                        </a>--}}
-{{--                                                    </div>--}}
+                                                    <div class="action-btns">
+                                                        <a href="javascript:void(0);" data-bs-toggle="modal"
+                                                           data-bs-target="#mail_modal-{{ $record->order_id }}"
+                                                           class="action-btn btn-view bs-tooltip me-2"
+                                                           data-toggle="tooltip" data-placement="top" data-id="{{ $record->order_id }}" title="Mail">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                 height="24" viewBox="0 0 24 24" fill="none"
+                                                                 stroke="currentColor" stroke-width="2"
+                                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                                 class="feather feather-mail">
+                                                                <path
+                                                                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                                                <polyline points="22,6 12,13 2,6"></polyline>
+                                                            </svg>
+                                                        </a>
+                                                        @include('pages.order.mail-modal')
+                                                        <a href="{{ route('receipt_preview', $record->order_id) }}"
+                                                           target="_blank" class="action-btn btn-view bs-tooltip me-2"
+                                                           data-toggle="tooltip" data-placement="top" title="Receipt">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                 height="24" viewBox="0 0 24 24" fill="none"
+                                                                 stroke="currentColor" stroke-width="2"
+                                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                                 class="feather feather-archive">
+                                                                <polyline points="21 8 21 21 3 21 3 8"></polyline>
+                                                                <rect x="1" y="3" width="22" height="5"></rect>
+                                                                <line x1="10" y1="12" x2="14" y2="12"></line>
+                                                            </svg>
+                                                        </a>
+                                                        <a href="{{ route('invoice_preview', $record->order_id) }}"
+                                                           target="_blank" class="action-btn btn-view bs-tooltip me-2"
+                                                           data-toggle="tooltip" data-placement="top" title="Invoice">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                 height="24" viewBox="0 0 24 24" fill="none"
+                                                                 stroke="currentColor" stroke-width="2"
+                                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                                 class="feather feather-dollar-sign">
+                                                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                                            </svg>
+                                                        </a>
+                                                        <a href="{{ route('order_edit', $record->order_id) }}"
+                                                           class="action-btn btn-edit bs-tooltip me-2"
+                                                           data-toggle="tooltip" data-placement="top" title="Edit">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                 height="24" viewBox="0 0 24 24" fill="none"
+                                                                 stroke="currentColor" stroke-width="2"
+                                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                                 class="feather feather-edit-2">
+                                                                <path
+                                                                    d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                                            </svg>
+                                                        </a>
+                                                        <a href="javascript:void(0);"
+                                                           class="action-btn btn-delete bs-tooltip cancel"
+                                                           data-toggle="tooltip" data-placement="top" data-id="{{ $record->order_id }}"
+                                                           data-bs-toggle="modal" data-bs-target="#order_cancel"
+                                                           title="Cancel">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                 height="24" viewBox="0 0 24 24" fill="none"
+                                                                 stroke="currentColor" stroke-width="2"
+                                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                                 class="feather feather-x-circle text-danger">
+                                                                <circle cx="12" cy="12" r="10"></circle>
+                                                                <line x1="15" y1="9" x2="9" y2="15"></line>
+                                                                <line x1="9" y1="9" x2="15" y2="15"></line>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
                                                 </td>
                                             </tr>
-                                                <?php
-                                                $no++;
-                                                ?>
                                         @endforeach
                                         </tbody>
                                     </table>
@@ -159,25 +247,37 @@
             </div>
             @else
                 <div class="col-12">
-                    <div class="alert alert-arrow-right alert-icon-right alert-light-warning alert-dismissible fade show mb-4" role="alert">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12" y2="16"></line></svg>
+                    <div
+                        class="alert alert-arrow-right alert-icon-right alert-light-warning alert-dismissible fade show mb-4"
+                        role="alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-alert-circle">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12" y2="16"></line>
+                        </svg>
                         <strong>Warning!</strong> No Record Found.
                     </div>
                 </div>
             @endif
 
-            <!-- Delete Modal -->
-            <div class="modal fade modal-notification" id="category_delete" tabindex="-1" role="dialog" aria-labelledby="category_deleteTitle" aria-hidden="true">
+            <!-- Cancel Modal -->
+            <div class="modal fade modal-notification" id="order_cancel" tabindex="-1" role="dialog"
+                 aria-labelledby="order_cancelTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <form method="POST" action="{{ route('product_delete') }}">
+                        <form method="POST" action="{{ route('order_cancel') }}">
                             @csrf
                             <div class="modal-body text-center">
                                 <div class="icon-content">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x text-danger">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
                                 </div>
-                                <p class="modal-text">Are you sure you want to delete this product?</p>
-                                <input type="hidden" name="product_id" id="product_id">
+                                <p class="modal-text">Are you sure you want to CANCEL this order?</p>
+                                <input type="hidden" name="order_id" id="order_id">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light-primary"
@@ -187,7 +287,7 @@
                                 </button>
                                 <button type="submit" class="btn btn-danger ml-1">
                                     <i class="bx bx-check d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Delete</span>
+                                    <span class="d-none d-sm-block">Cancel</span>
                                 </button>
                             </div>
                         </form>
@@ -198,33 +298,92 @@
 
             <!--  BEGIN CUSTOM SCRIPTS FILE  -->
             <x-slot:footerFiles>
+                <script src="{{asset('plugins/global/vendors.min.js')}}"></script>
+                <script src="{{asset('plugins/sweetalerts2/sweetalerts2.min.js')}}"></script>
                 <script>
-                    $(document).ready(function(e) {
-                        $(document).on('click', '.delete', function() {
+                    $(document).ready(function (e) {
+                        $(document).on('click', '.cancel', function () {
                             var id = $(this).attr('data-id');
-                            $(".modal-body #product_id").val(id);
+                            $(".modal-body #order_id").val(id);
                         });
 
                         var type = $('#category_type').val();
                         category_display();
 
-                        $('#category_type').on('change', function() {
+                        $('#category_type').on('change', function () {
                             type = this.value;
                             category_display();
                         });
+
                         function category_display() {
-                            if(type == 2) {
+                            if (type == 2) {
                                 $('.web-template-category').show();
                                 $('.pos-system-category').hide();
-                            } else if(type == 3) {
+                            } else if (type == 3) {
                                 $('.web-template-category').hide();
                                 $('.pos-system-category').show();
-                            }
-                            else {
+                            } else {
                                 $('.web-template-category').hide();
                                 $('.pos-system-category').hide();
                             }
                         }
+
+                        $('.btn-view').on('click', function () {
+                            const form_id = $(this).attr('data-id');
+                            $('#mail_form-'+form_id).on('submit', function (e) {
+                                e.preventDefault(); // Prevent the default form submission
+
+                                var formData = new FormData(this);
+                                var form = $(this); // Get the current form
+
+                                // Send the content to the server using AJAX
+                                $.ajax({
+                                    url: '/modern-dark-menu/order/send_mail',
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    },
+                                    data: formData,
+                                    processData: false, // Prevent jQuery from processing the data
+                                    contentType: false, // Prevent jQuery from setting content type
+                                    success: function (data) {
+                                        if(data.status == 0) {
+                                            form.find('.form-control').removeClass('border-danger');
+                                            form.find('.input-error').text('');
+
+                                            // Display input errors for the current form only
+                                            $.each(data.error, function(prefix, val) {
+                                                form.find('span.' + prefix + '_error').text(val[0]);
+                                                form.find('#' + prefix).addClass('border-danger');
+                                            });
+                                        } else {
+                                            $('#mail_form-'+form_id)[0].reset();
+                                            Swal.fire({
+                                                title: 'Done!',
+                                                text: data.msg,
+                                                icon: 'success',
+                                                confirmButtonText: 'OK',
+                                                timer: 3000,
+                                                timerProgressBar: false,
+                                            }).then(function() {
+                                                location.reload();
+                                            });
+                                        }
+                                    },
+                                    error: function (xhr, status, error) {
+                                        // Handle errors if necessary
+                                        Swal.fire({
+                                            title: 'Error!',
+                                            text: 'An error occurred: ' + error,
+                                            icon: 'error',
+                                            confirmButtonText: 'OK',
+                                        });
+                                    }
+                                });
+                            });
+                        })
+
+
                     });
                 </script>
 

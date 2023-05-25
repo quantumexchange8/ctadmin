@@ -14,6 +14,8 @@
             @vite(['resources/scss/light/plugins/filepond/custom-filepond.scss'])
             @vite(['resources/scss/light/plugins/flatpickr/custom-flatpickr.scss'])
             @vite(['resources/scss/light/assets/apps/invoice-add.scss'])
+            @vite(['resources/scss/light/assets/elements/alert.scss'])
+            @vite(['resources/scss/dark/assets/elements/alert.scss'])
 
             @vite(['resources/scss/dark/plugins/filepond/custom-filepond.scss'])
             @vite(['resources/scss/dark/plugins/flatpickr/custom-flatpickr.scss'])
@@ -216,12 +218,14 @@
                                     <div class="invoice-actions-btn">
 
                                         <div class="invoice-action-btn">
-
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-xl-12 col-md-4 mb-4">
                                                     <button class="btn btn-success w-100" type="submit">Save</button>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-xl-12 col-md-4">
+                                                    <a href="{{ route('order_quotation', $order->order_id) }}" target="_blank" class="btn btn-secondary btn-preview">Preview</a>
+                                                </div>
+                                                <div class="col-xl-12 col-md-4">
                                                     <a href="{{ route('order_listing') }}" class="btn btn-dark btn-preview">Cancel</a>
                                                 </div>
                                             </div>

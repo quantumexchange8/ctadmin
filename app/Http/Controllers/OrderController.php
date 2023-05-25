@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\MailToUser;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\WebTemplateCategory;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Session;
 
@@ -45,7 +47,8 @@ class OrderController extends Controller
             'get_category_sel' => Category::get_category_sel(),
             'records' => Order::get_record($search, 15),
             'search' =>  $search,
-            'get_status_sel' => [Order::STATUS_PENDING => 'Pending', Order::STATUS_REPLIED => 'Replied'],
+            'get_order_status_sel' => Order::get_order_status_sel(),
+            'get_attachment_sel' => ['quotation' => 'Quotation', 'invoice' => 'Invoice', 'receipt' => 'Receipt'],
         ]);
 
     }
@@ -101,7 +104,7 @@ class OrderController extends Controller
                 ]);
 
                 Session::flash('success_msg', 'Successfully Updated Order!');
-                return redirect()->route('order_listing');
+                return redirect()->back();
             }
 
             $post = (object) $request->all();
@@ -160,6 +163,135 @@ class OrderController extends Controller
             'success' => true,
             'message' => 'Order item deleted successfully'
         ]);
+    }
+
+    public function send_mail(Request $request)
+    {
+        // Validate the form data
+        $validator = Validator::make($request->all(), [
+            'attachment_type' => 'required',
+            'mail_from' => 'required|email',
+            'mail_to' => 'required|email',
+            'mail_subject' => 'required|string',
+            'mail_attachment' => 'required|mimes:pdf,docx|max:10240', // Example validation for file attachment (PDF and DOCX formats, max 10MB)
+            'mail_content' => 'required',
+        ])->setAttributeNames([
+            'attachment_type' => 'Attachment Type',
+            'mail_from' => 'From',
+            'mail_to' => 'To',
+            'mail_subject' => 'Subject',
+            'mail_attachment' => 'Attachment',
+            'mail_content' => 'Content',
+        ]);
+
+        if (!$validator->passes()){
+            return response()->json([
+                'status' => 0,
+                'error' => $validator->errors()->toArray()
+            ]);
+        } else {
+            // Retrieve the form data
+            $data = [
+                'mail_from' => $request->input('mail_from'),
+                'mail_to' => $request->input('mail_to'),
+                'mail_subject' => $request->input('mail_subject'),
+                'mail_attachment' => $request->file('mail_attachment'),
+                'mail_content' => $request->input('mail_content'),
+            ];
+
+            // Send the email
+            Mail::to($data['mail_to'])->send(new MailToUser($data));
+
+            $order = Order::find($request->order_id);
+
+            switch ($request->input('attachment_type')) {
+                case 'quotation':
+                    $order->update([
+                        'order_status' => Order::STATUS_PENDING
+                    ]);
+
+                    $order->clearMediaCollection('order_quotation');
+
+                    $order->addMedia($request->file('mail_attachment'))
+                        ->toMediaCollection('order_quotation');
+
+                    break;
+                case 'invoice':
+                    $order->update([
+                        'order_status' => Order::STATUS_AWAITING
+                    ]);
+
+                    $order->clearMediaCollection('order_invoice');
+
+                    $order->addMedia($request->file('mail_attachment'))
+                        ->toMediaCollection('order_invoice');
+
+                    break;
+                case 'receipt':
+                    $order->update([
+                        'order_status' => Order::STATUS_COMPLETED
+                    ]);
+
+                    $order->clearMediaCollection('order_receipt');
+
+                    $order->addMedia($request->file('mail_attachment'))
+                        ->toMediaCollection('order_receipt');
+
+                    break;
+                default:
+                    // Handle the case when attachment_type is not recognized
+                    return response()->json([
+                        'status' => 2,
+                        'error' => 'Invalid attachment type.'
+                    ]);
+            }
+
+            // Optionally, you can handle the response here (e.g., redirect with a success message)
+            return response()->json([
+                'status' => 1,
+                'msg' => 'Successfully Sent Email!'
+            ]);
+        }
+    }
+
+    public function invoice_preview($order_id)
+    {
+        $order = Order::find($order_id);
+
+        return view('pages.order.invoice', [
+            'title' => 'Invoice',
+            'heading' => 'Order',
+            'order' => $order
+        ]);
+    }
+
+    public function receipt_preview($order_id)
+    {
+        $order = Order::find($order_id);
+
+        return view('pages.order.receipt', [
+            'title' => 'Receipt',
+            'heading' => 'Order',
+            'order' => $order
+        ]);
+    }
+
+    public function order_cancel(Request $request)
+    {
+        $order_id = $request->input('order_id');
+        $order = Order::find($order_id);
+
+        if (!$order) {
+            Session::flash('fail_msg', trans('public.invalid_order'));
+            return redirect()->route('order_listing');
+        }
+
+        $order->update([
+            'order_status' => Order::STATUS_CANCELLED,
+        ]);
+
+        Session::flash('success_msg', 'Order Cancelled!');
+        return redirect()->route('order_listing');
     }
 
 }

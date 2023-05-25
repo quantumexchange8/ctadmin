@@ -32,7 +32,7 @@
                 <div class="col-lg-12 layout-spacing">
                     <div class="statbox widget box box-shadow">
                         <div class="widget-content widget-content-area">
-                            <form method="POST" action="{{ route('product_listing') }}">
+                            <form method="POST" action="{{ route('user_listing') }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-4">
@@ -41,42 +41,30 @@
                                             <input type="text" class="form-control select_active" id="search" name="freetext" placeholder="Search for..." value="{{ @$search['freetext'] }}">
                                         </div>
                                     </div>
-{{--                                    <div class="col-md-4">--}}
-{{--                                        <div class="form-group mb-3">--}}
-{{--                                            <label for="category_type" class="mb-2">Category</label>--}}
-{{--                                            {!! Form::select('category_id', $get_category_sel, @$search['category_id'], ['class' => 'form-select', 'id' => 'category_type', 'placeholder' => 'Choose Category']) !!}--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-md-4 web-template-category">--}}
-{{--                                        <div class="form-group mb-3">--}}
-{{--                                            <label for="web_template_category_id" class="mb-2">Web Template Category</label>--}}
-{{--                                            {!! Form::select('web_template_category_id', $get_web_template_category_sel, @$search['web_template_category_id'], ['class' => 'form-select', 'id' => 'web_template_category_id', 'placeholder' => 'Choose Template Category..']) !!}--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-md-4 pos-system-category">--}}
-{{--                                        <div class="form-group mb-3">--}}
-{{--                                            <label for="pos_system_category_id" class="mb-2">POS System Category</label>--}}
-{{--                                            {!! Form::select('pos_system_category_id', $get_pos_system_category_sel, @$search['pos_system_category_id'], ['class' => 'form-select', 'id' => 'pos_system_category_id', 'placeholder' => 'Choose POS Category..']) !!}--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-md-4">--}}
-{{--                                        <div class="form-group mb-3">--}}
-{{--                                            <label for="product_status" class="mb-2">Status</label>--}}
-{{--                                            {!! Form::select('product_status', $get_status_sel, @$search['product_status'], ['class' => 'form-select', 'placeholder' => 'Search Status..']) !!}--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-md-4">--}}
-{{--                                        <div class="form-group mb-3">--}}
-{{--                                            <label for="product_visibility" class="mb-2">Visibility</label>--}}
-{{--                                            {!! Form::select('product_visibility', $get_visibility_sel, @$search['product_visibility'], ['class' => 'form-select', 'placeholder' => 'Search Visibility..']) !!}--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-md-4">--}}
-{{--                                        <div class="form-group mb-3">--}}
-{{--                                            <label for="order_by" class="mb-2">Order By</label>--}}
-{{--                                            {!! Form::select('order_by', $get_order_sel, @$search['order_by'], ['class' => 'form-select']) !!}--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
+                                    <div class="col-md-4">
+                                        <div class="form-group mb-3">
+                                            <label for="user_gender" class="mb-2">Gender</label>
+                                            {!! Form::select('user_gender', $user_gender_sel, @$search['user_gender'], ['class' => 'form-select', 'id' => 'user_gender', 'placeholder' => 'Choose Category']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group mb-3">
+                                            <label for="user_nationality" class="mb-2">Country</label>
+                                            {!! Form::select('user_nationality', $user_nationality_sel, @$search['user_nationality'], ['class' => 'form-select', 'id' => 'user_nationality', 'placeholder' => 'Search Country..']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group mb-3">
+                                            <label for="user_status" class="mb-2">Status</label>
+                                            {!! Form::select('user_status', $user_status_sel, @$search['user_status'], ['class' => 'form-select', 'placeholder' => 'Search Status..']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group mb-3">
+                                            <label for="order_by" class="mb-2">Order By</label>
+                                            {!! Form::select('order_by', $get_order_sel, @$search['order_by'], ['class' => 'form-select']) !!}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -87,7 +75,7 @@
                                             <i class="fas fa-times mr-1"></i> Reset
                                         </button>
                                         <div class="float-end">
-                                            <a href="{{ route('product_add') }}" class="btn btn-success">
+                                            <a href="{{ route('user_add') }}" class="btn btn-success">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
                                                 <span class="btn-text-inner">Create</span>
                                             </a>
@@ -173,7 +161,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <div class="action-btns">
-                                                            <a href="javascript:void(0);" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                            <a href="{{ route('user_edit', $record->user_id) }}" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                                             </a>
                                                             <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip" data-toggle="tooltip" data-placement="top" title="Delete">
@@ -240,27 +228,6 @@
                             var id = $(this).attr('data-id');
                             $(".modal-body #product_id").val(id);
                         });
-
-                        var type = $('#category_type').val();
-                        category_display();
-
-                        $('#category_type').on('change', function() {
-                            type = this.value;
-                            category_display();
-                        });
-                        function category_display() {
-                            if(type == 2) {
-                                $('.web-template-category').show();
-                                $('.pos-system-category').hide();
-                            } else if(type == 3) {
-                                $('.web-template-category').hide();
-                                $('.pos-system-category').show();
-                            }
-                            else {
-                                $('.web-template-category').hide();
-                                $('.pos-system-category').hide();
-                            }
-                        }
                     });
                 </script>
 

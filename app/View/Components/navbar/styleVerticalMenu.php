@@ -33,11 +33,6 @@ class styleVerticalMenu extends Component
      */
     public function render()
     {
-
-        $order = Order::where('is_deleted', 0)->where('order_status', Order::STATUS_PENDING)->orderByDesc('order_created')->first();
-
-        return view('components.navbar.style-vertical-menu', [
-            'order' => $order,
-        ]);
+        return view('components.navbar.style-vertical-menu');
     }
 }
