@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $order = Order::where('is_deleted', 0)->first();
+        $total_visits = DB::table('views')->count('viewable_id');
 
         return view('pages.dashboard.analytics', [
             'title' => 'Dashboard',
-            'order' => $order,
+            'total_visits' => $total_visits,
         ]);
     }
 }

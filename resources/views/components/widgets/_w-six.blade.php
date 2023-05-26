@@ -1,9 +1,9 @@
-{{-- 
+{{--
 
 /**
 *
 * Created a new component <x-rtl.widgets._w-six/>.
-* 
+*
 */
 
 --}}
@@ -29,7 +29,7 @@
         <div class="w-chart-section">
             <div class="w-detail">
                 <p class="w-title">Total Visits</p>
-                <p class="w-stats">423,964</p>
+                <p class="w-stats">{{ $visits }}</p>
             </div>
             <div class="w-chart-render-one">
                 <div id="total-users"></div>

@@ -79,58 +79,32 @@
 
                     <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
                         <div class="drodpown-title message">
-                            <h6 class="d-flex justify-content-between"><span class="align-self-center">Messages</span> <span class="badge badge-primary">9 Unread</span></h6>
+                            <h6 class="d-flex justify-content-between"><span class="align-self-center">New Users</span> <span class="badge badge-primary">{{ $new_users->count() }}</span></h6>
                         </div>
                         <div class="notification-scroll">
-                            <div class="dropdown-item">
-                                <div class="media server-log">
-                                    <img src="{{Vite::asset('resources/images/profile-16.jpeg')}}" class="img-fluid me-2" alt="avatar">
-                                    <div class="media-body">
-                                        <div class="data-info">
-                                            <h6 class="">Kara Young</h6>
-                                            <p class="">1 hr ago</p>
-                                        </div>
+                            @foreach($new_users as $new_user)
+                                <div class="dropdown-item">
+                                    <a href="{{ route('user_edit', $new_user->user_id) }}">
+                                        <div class="media server-log">
+                                            @if($new_user->hasMedia('user_profile_photo'))
+                                                <img src="{{ $new_user->getFirstMediaUrl('user_profile_photo') }}" class="img-fluid me-2" alt="avatar">
+                                            @else
+                                                <img src="{{Vite::asset('resources/images/profile-5.jpeg')}}" class="img-fluid me-2" alt="avatar">
+                                            @endif
+                                            <div class="media-body">
+                                                <div class="data-info">
+                                                    <h6 class="">{{ $new_user->user_fullname }}</h6>
+                                                    <p class="">{{ $new_user->user_created->diffForHumans() }}</p>
+                                                </div>
 
-                                        <div class="icon-status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                                <div class="icon-status">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
-                            </div>
-
-                            <div class="dropdown-item">
-                                <div class="media ">
-                                    <img src="{{Vite::asset('resources/images/profile-15.jpeg')}}" class="img-fluid me-2" alt="avatar">
-                                    <div class="media-body">
-                                        <div class="data-info">
-                                            <h6 class="">Daisy Anderson</h6>
-                                            <p class="">8 hrs ago</p>
-                                        </div>
-
-                                        <div class="icon-status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="dropdown-item">
-                                <div class="media file-upload">
-                                    <img src="{{Vite::asset('resources/images/profile-21.jpeg')}}" class="img-fluid me-2" alt="avatar">
-                                    <div class="media-body">
-                                        <div class="data-info">
-                                            <h6 class="">Oscar Garner</h6>
-                                            <p class="">14 hrs ago</p>
-                                        </div>
-
-                                        <div class="icon-status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
+                            @endforeach
 
                             <div class="drodpown-title notification mt-2">
                                 <h6 class="d-flex justify-content-between"><span class="align-self-center">New Orders</span> <span class="badge badge-secondary">{{ auth()->user()->unreadNotifications->count() }}</span></h6>
@@ -157,7 +131,7 @@
                                 @endforeach
                             @else
                                 <div class="dropdown-item">
-                                    <p style="font-size: 12px">No records yet</p>
+                                    <p style="font-size: 12px">No orders yet</p>
                                 </div>
                             @endif
 
