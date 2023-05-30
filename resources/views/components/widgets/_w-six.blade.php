@@ -38,8 +38,8 @@
 
         <div class="w-chart-section">
             <div class="w-detail">
-                <p class="w-title">Paid Visits</p>
-                <p class="w-stats">7,929</p>
+                <p class="w-title">Completed Orders</p>
+                <p class="w-stats">{{ $paids }}</p>
             </div>
             <div class="w-chart-render-one">
                 <div id="paid-visits"></div>

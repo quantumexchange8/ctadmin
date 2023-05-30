@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Order extends Model implements HasMedia
 {
-    use HasFactory,  InteractsWithMedia;
+    use HasFactory,  InteractsWithMedia, LogsActivity;
 
     protected $table = 'tbl_order';
 
@@ -20,7 +23,7 @@ class Order extends Model implements HasMedia
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
-        'order_number', 'quotation_number', 'invoice_number', 'receipt_number', 'order_total_price', 'user_id', 'is_deleted', 'order_status', 'discount_amount',
+        'order_number', 'quotation_number', 'invoice_number', 'receipt_number', 'order_total_price', 'user_id', 'is_deleted', 'order_status', 'discount_amount', 'order_completed_at'
     ];
 
     const STATUS_PROCESSING = 1;
@@ -28,6 +31,8 @@ class Order extends Model implements HasMedia
     const STATUS_AWAITING = 3;
     const STATUS_COMPLETED = 4;
     const STATUS_CANCELLED = 5;
+
+    protected static $logAttributes = ['order_status'];
 
     public static function get_record($search, $perpage)
     {
@@ -90,5 +95,21 @@ class Order extends Model implements HasMedia
     public function order_item()
     {
         return $this->hasMany(OrderItem::class, 'order_id', 'order_id')->where('is_deleted', 0);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $order = $this->fresh();
+
+        return LogOptions::defaults()
+            ->useLogName('order')
+            ->logOnly([
+                'order_total_price', 'is_deleted', 'discount_amount', 'order_completed_at'
+            ])
+            ->setDescriptionForEvent(function (string $eventName) use ($order) {
+                return Auth::user()->user_fullname . " has {$eventName} Order Number {$order->order_number}.";
+            })
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }

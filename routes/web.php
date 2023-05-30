@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
@@ -102,6 +103,36 @@ foreach ($prefixRouters as $prefixRouter) {
 //            Route::delete('/category_image_delete', [CategoryController::class, 'category_image_delete']);
 //            Route::match(['get', 'post'], '/category_listing', [CategoryController::class, 'category_listing'])->name('category_listing');
             Route::post('/order_cancel', [OrderController::class, 'order_cancel'])->name('order_cancel');
+        });
+
+        /**
+         * ==============================
+         *          @Router -  Users
+         * ==============================
+         */
+
+        Route::prefix('user')->group(function () {
+            Route::get('/settings', function () {
+                return view('pages.user.account-settings', ['title' => 'User Profile | CORK - Multipurpose Bootstrap Dashboard Template ', 'breadcrumb' => 'This Breadcrumb']);
+            })->name('settings');
+            Route::get('/profile', function () {
+                return view('pages.user.profile', ['title' => 'Account Settings | CORK - Multipurpose Bootstrap Dashboard Template ', 'breadcrumb' => 'This Breadcrumb']);
+            })->name('profile');
+            Route::match(['get', 'post'], '/user_listing', [UserController::class, 'user_listing'])->name('user_listing');
+            Route::match(['get', 'post'], '/user_add', [UserController::class, 'user_add'])->name('user_add');
+            Route::match(['get', 'post'], '/user_edit/{id}', [UserController::class, 'user_edit'])->name('user_edit');
+            Route::post('/user_profile_photo_upload', [UserController::class, 'user_profile_photo_upload']);
+            Route::delete('/user_profile_photo_delete', [UserController::class, 'user_profile_photo_delete']);
+        });
+
+        /**
+         * ==============================
+         *        @Router -  Logs
+         * ==============================
+         */
+
+        Route::prefix('activity_log')->group(function () {
+            Route::match(['get', 'post'], '/listing', [ActivityLogController::class, 'activity_log_listing'])->name('activity_log_listing');
         });
 
         /**
@@ -558,26 +589,6 @@ foreach ($prefixRouters as $prefixRouter) {
             Route::get('/striped-table', function () {
                 return view('pages.table.datatable.striped-table', ['title' => 'DataTables Striped | CORK - Multipurpose Bootstrap Dashboard Template ', 'breadcrumb' => 'This Breadcrumb']);
             })->name('striped-table');
-        });
-
-        /**
-         * ==============================
-         *          @Router -  Users
-         * ==============================
-         */
-
-        Route::prefix('user')->group(function () {
-            Route::get('/settings', function () {
-                return view('pages.user.account-settings', ['title' => 'User Profile | CORK - Multipurpose Bootstrap Dashboard Template ', 'breadcrumb' => 'This Breadcrumb']);
-            })->name('settings');
-            Route::get('/profile', function () {
-                return view('pages.user.profile', ['title' => 'Account Settings | CORK - Multipurpose Bootstrap Dashboard Template ', 'breadcrumb' => 'This Breadcrumb']);
-            })->name('profile');
-            Route::match(['get', 'post'], '/user_listing', [UserController::class, 'user_listing'])->name('user_listing');
-            Route::match(['get', 'post'], '/user_add', [UserController::class, 'user_add'])->name('user_add');
-            Route::match(['get', 'post'], '/user_edit/{id}', [UserController::class, 'user_edit'])->name('user_edit');
-            Route::post('/user_profile_photo_upload', [UserController::class, 'user_profile_photo_upload']);
-            Route::delete('/user_profile_photo_delete', [UserController::class, 'user_profile_photo_delete']);
         });
 
         /**

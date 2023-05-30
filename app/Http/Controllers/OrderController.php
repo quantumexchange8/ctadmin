@@ -9,9 +9,11 @@ use App\Models\OrderItem;
 use App\Models\WebTemplateCategory;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Session;
+use Spatie\Activitylog\Models\Activity;
 
 class OrderController extends Controller
 {
@@ -203,6 +205,7 @@ class OrderController extends Controller
             Mail::to($data['mail_to'])->send(new MailToUser($data));
 
             $order = Order::find($request->order_id);
+            $user = $order->user;
 
             switch ($request->input('attachment_type')) {
                 case 'quotation':
@@ -215,6 +218,20 @@ class OrderController extends Controller
                     $order->addMedia($request->file('mail_attachment'))
                         ->toMediaCollection('order_quotation');
 
+                    Activity::create([
+                        'log_name' => 'order', // Specify the log name here
+                        'description' => Auth::user()->user_fullname . ' has sent ' . $request->input('attachment_type') . ' to ' . $user->user_fullname,
+                        'subject_type' => Order::class,
+                        'subject_id' => $order->order_id, // Replace with the appropriate subject ID
+                        'causer_type' => get_class(auth()->user()),
+                        'causer_id' => auth()->id(),
+                        'properties' => [
+                            'old' => ['order_status' => Order::STATUS_PROCESSING], // Set the old values here
+                            'attributes' => ['order_status' => Order::STATUS_PENDING], // Set the new values here
+                        ],
+                        'event' => 'updated',
+                    ]);
+
                     break;
                 case 'invoice':
                     $order->update([
@@ -226,16 +243,45 @@ class OrderController extends Controller
                     $order->addMedia($request->file('mail_attachment'))
                         ->toMediaCollection('order_invoice');
 
+                    Activity::create([
+                        'log_name' => 'order', // Specify the log name here
+                        'description' => Auth::user()->user_fullname . ' has sent ' . $request->input('attachment_type') . ' to ' . $user->user_fullname,
+                        'subject_type' => Order::class,
+                        'subject_id' => $order->order_id, // Replace with the appropriate subject ID
+                        'causer_type' => get_class(auth()->user()),
+                        'causer_id' => auth()->id(),
+                        'properties' => [
+                            'old' => ['order_status' => Order::STATUS_PENDING], // Set the old values here
+                            'attributes' => ['order_status' => Order::STATUS_AWAITING], // Set the new values here
+                        ],
+                        'event' => 'updated',
+                    ]);
+
                     break;
                 case 'receipt':
                     $order->update([
-                        'order_status' => Order::STATUS_COMPLETED
+                        'order_status' => Order::STATUS_COMPLETED,
+                        'order_completed_at' => now(),
                     ]);
 
                     $order->clearMediaCollection('order_receipt');
 
                     $order->addMedia($request->file('mail_attachment'))
                         ->toMediaCollection('order_receipt');
+
+                    Activity::create([
+                        'log_name' => 'order', // Specify the log name here
+                        'description' => Auth::user()->user_fullname . ' has sent ' . $request->input('attachment_type') . ' to ' . $user->user_fullname,
+                        'subject_type' => Order::class,
+                        'subject_id' => $order->order_id, // Replace with the appropriate subject ID
+                        'causer_type' => get_class(auth()->user()),
+                        'causer_id' => auth()->id(),
+                        'properties' => [
+                            'old' => ['order_status' => Order::STATUS_AWAITING], // Set the old values here
+                            'attributes' => ['order_status' => Order::STATUS_COMPLETED], // Set the new values here
+                        ],
+                        'event' => 'updated',
+                    ]);
 
                     break;
                 default:
@@ -280,6 +326,7 @@ class OrderController extends Controller
     {
         $order_id = $request->input('order_id');
         $order = Order::find($order_id);
+        $oldOrderStatus = $order->order_status;
 
         if (!$order) {
             Session::flash('fail_msg', trans('public.invalid_order'));
@@ -288,6 +335,20 @@ class OrderController extends Controller
 
         $order->update([
             'order_status' => Order::STATUS_CANCELLED,
+        ]);
+
+        Activity::create([
+            'log_name' => 'order', // Specify the log name here
+            'description' => Auth::user()->user_fullname . ' has cancelled Order Number ' . $order->order_number,
+            'subject_type' => Order::class,
+            'subject_id' => $order->order_id, // Replace with the appropriate subject ID
+            'causer_type' => get_class(auth()->user()),
+            'causer_id' => auth()->id(),
+            'properties' => [
+                'old' => ['order_status' => $oldOrderStatus], // Set the old values here
+                'attributes' => ['order_status' => Order::STATUS_CANCELLED], // Set the new values here
+            ],
+            'event' => 'updated',
         ]);
 
         Session::flash('success_msg', 'Order Cancelled!');

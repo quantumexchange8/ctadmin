@@ -6,13 +6,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Activitylog\LogOptions;
 
 class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
+    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia, LogsActivity;
 
     protected $table = 'tbl_user';
 
@@ -42,6 +45,8 @@ class User extends Authenticatable implements HasMedia
         'user_role',
         'user_status',
     ];
+
+    protected $logAttributes = ['user_fullname', 'user_email'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -101,5 +106,29 @@ class User extends Authenticatable implements HasMedia
 
         return $query->orderbyDesc('user_created')->paginate($perpage);
 
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $user = $this->fresh();
+
+        return LogOptions::defaults()
+            ->useLogName('user')
+            ->logOnly([
+                'user_fullname',
+                'user_email',
+                'user_gender',
+                'user_address',
+                'user_nationality',
+                'user_phone',
+                'is_deleted',
+                'user_role',
+                'user_status',
+            ])
+            ->setDescriptionForEvent(function (string $eventName) use ($user) {
+                return Auth::user()->user_fullname . " has {$eventName} {$user->user_fullname}.";
+            })
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }

@@ -72,14 +72,14 @@
                 <li class="nav-item dropdown notification-dropdown">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                        @if(auth()->user()->unreadNotifications->count() < 0)
+                        @if(auth()->user()->unreadNotifications->count() > 0)
                             <span class="badge badge-success"></span>
                         @endif
                     </a>
 
                     <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
                         <div class="drodpown-title message">
-                            <h6 class="d-flex justify-content-between"><span class="align-self-center">New Users</span> <span class="badge badge-primary">{{ $new_users->count() }}</span></h6>
+                            <h6 class="d-flex justify-content-between"><span class="align-self-center">New Users</span> <span class="badge badge-primary">{{ @$new_users->count() }}</span></h6>
                         </div>
                         <div class="notification-scroll">
                             @foreach($new_users as $new_user)
@@ -110,7 +110,7 @@
                                 <h6 class="d-flex justify-content-between"><span class="align-self-center">New Orders</span> <span class="badge badge-secondary">{{ auth()->user()->unreadNotifications->count() }}</span></h6>
                             </div>
                             <a href="{{ route('mark_as_read') }}"><span class="d-flex justify-content-end me-2 mb-2 mt-0" style="font-size: 12px">Mark as read</span></a>
-                            @if(auth()->user()->unreadNotifications->count() < 0)
+                            @if(auth()->user()->unreadNotifications->count() > 0)
                                 @foreach(auth()->user()->unreadNotifications as $notification)
                                     <div class="dropdown-item">
                                         <a href="{{ route('order_listing') }}">

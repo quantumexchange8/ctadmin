@@ -1,36 +1,36 @@
-/** 
- * 
+/**
+ *
  * Widget Chart Three
- * 
+ *
 **/
 
 window.addEventListener("load", function(){
     try {
-  
+
       let getcorkThemeObject = sessionStorage.getItem("theme");
       let getParseObject = JSON.parse(getcorkThemeObject)
       let ParsedObject = getParseObject;
-  
+
       if (ParsedObject.settings.layout.darkMode) {
-  
+
         var Theme = 'dark';
-  
+
         Apex.tooltip = {
             theme: Theme
         }
-        
+
         /**
           ==============================
           |    @Options Charts Script   |
           ==============================
         */
-        
+
         /*
           ===================================
               Unique Visitors | Options
           ===================================
         */
-        
+
         var d_1options1 = {
         chart: {
             height: 350,
@@ -46,7 +46,7 @@ window.addEventListener("load", function(){
                 columnWidth: '55%',
                 endingShape: 'rounded',
                 borderRadius: 10,
-        
+
             },
         },
         dataLabels: {
@@ -109,7 +109,7 @@ window.addEventListener("load", function(){
             }
         },
         responsive: [
-            { 
+            {
                 breakpoint: 767,
                 options: {
                     plotOptions: {
@@ -122,28 +122,28 @@ window.addEventListener("load", function(){
             },
         ]
         }
-        
-  
+
+
       } else {
-        
+
         var Theme = 'dark';
-        
+
         Apex.tooltip = {
             theme: Theme
         }
-        
+
         /**
           ==============================
           |    @Options Charts Script   |
           ==============================
         */
-        
+
         /*
           ===================================
               Unique Visitors | Options
           ===================================
         */
-        
+
         var d_1options1 = {
         chart: {
             height: 350,
@@ -159,7 +159,7 @@ window.addEventListener("load", function(){
                 columnWidth: '55%',
                 endingShape: 'rounded',
                 borderRadius: 10,
-        
+
             },
         },
         dataLabels: {
@@ -222,7 +222,7 @@ window.addEventListener("load", function(){
             }
         },
         responsive: [
-            { 
+            {
                 breakpoint: 767,
                 options: {
                     plotOptions: {
@@ -235,87 +235,87 @@ window.addEventListener("load", function(){
             },
         ]
         }
-          
+
       }
-        
+
         /**
             ==============================
             |    @Render Charts Script    |
             ==============================
         */
-  
+
         /*
             ===================================
                 Unique Visitors | Script
             ===================================
         */
-  
+
         let d_1C_3 = new ApexCharts(
             document.querySelector("#uniqueVisits"),
             d_1options1
         );
         d_1C_3.render();
-  
-  
+
+
       /**
        * =================================================================================================
        * |     @Re_Render | Re render all the necessary JS when clicked to switch/toggle theme           |
        * =================================================================================================
        */
-  
+
       document.querySelector('.theme-toggle').addEventListener('click', function() {
-  
+
         let getcorkThemeObject = sessionStorage.getItem("theme");
         let getParseObject = JSON.parse(getcorkThemeObject)
         let ParsedObject = getParseObject;
-  
+
         // console.log(ParsedObject.settings.layout.darkMode)
-  
+
         if (ParsedObject.settings.layout.darkMode) {
-  
+
              /*
                 ==============================
                 |    @Re-Render Charts Script    |
                 ==============================
             */
-        
+
             /*
                 ===================================
                     Unique Visitors | Script
                 ===================================
             */
-        
+
             d_1C_3.updateOptions({
             grid: {
                     borderColor: '#191e3a',
                 },
-            })            
-            
+            })
+
         } else {
-            
+
             /*
                 ==============================
                 |    @Re-Render Charts Script    |
                 ==============================
             */
-        
+
             /*
                 ===================================
                     Unique Visitors | Script
                 ===================================
             */
-        
+
             d_1C_3.updateOptions({
             grid: {
                     borderColor: '#e0e6ed',
                 },
-            })            
-  
+            })
+
         }
-       
+
     })
-  
-  
+
+
     } catch(e) {
       // statements
       console.log(e);
