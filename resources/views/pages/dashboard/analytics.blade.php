@@ -50,19 +50,7 @@
         </div>
 
         <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
-            <x-widgets._w-hybrid-one title="Users Joined" chart-id="hybrid_followers" :userCreatedCounts="$userCreatedCounts" :totalUsers="$total_users"/>
-        </div>
-
-        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-            <x-widgets._w-five title="Figma Design"/>
-        </div>
-
-        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-            <x-widgets._w-card-one title="Jimmy Turner"/>
-        </div>
-
-        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-            <x-widgets._w-card-two title="Dev Summit - New York"/>
+            <x-widgets._w-hybrid-one title="Users Joined" chart-id="hybrid_followers" :totalUsers="$total_users" :totalCarts="$total_carts" :totalAwaiting="$total_awaiting" :awaitingPaymentCount="$awaitingPaymentCount"/>
         </div>
 
     </div>
@@ -354,7 +342,7 @@
                                 }
                             },
                             series: [{
-                                data: [21, 9, 36, 12, 44, 25, 59, 41, 66, 25]
+                                data: [{{ implode(', ', array_values($visitCounts)) }}]
                             }],
                             stroke: {
                                 curve: 'smooth',
@@ -453,7 +441,7 @@
                                 }
                             },
                             series: [{
-                                data: [22, 19, 30, 47, 32, 44, 34, 55, 41, 69]
+                                data: [{{ implode(', ', array_values($paidCounts)) }}]
                             }],
                             stroke: {
                                 curve: 'smooth',
@@ -729,7 +717,7 @@
                                     show: false,
                                 }
                             },
-                            colors: ['#622bd7', '#ffbb44'],
+                            colors: ['#622bd7', '#ffbb44', '#4361ee'],
                             plotOptions: {
                                 bar: {
                                     horizontal: false,
@@ -765,13 +753,32 @@
                                 width: 2,
                                 colors: ['transparent']
                             },
-                            series: [{
-                                name: 'Direct',
-                                data: [58, 44, 55, 57, 56, 61, 58, 63, 60, 66, 56, 63]
-                            }, {
-                                name: 'Organic',
-                                data: [91, 76, 85, 101, 98, 87, 105, 91, 114, 94, 66, 70]
-                            }],
+                            series: [
+                                {
+                                    name: 'EA',
+                                    data: [
+                                        @foreach ($months as $month)
+                                            {{ $result['expert-advisor_unique_visit_' . $month] }},
+                                        @endforeach
+                                    ]
+                                },
+                                {
+                                    name: 'POS System',
+                                    data: [
+                                        @foreach ($months as $month)
+                                            {{ $result['pos-system_unique_visit_' . $month] }},
+                                        @endforeach
+                                    ]
+                                },
+                                {
+                                    name: 'Web Template',
+                                    data: [
+                                        @foreach ($months as $month)
+                                            {{ $result['web-template_unique_visit_' . $month] }},
+                                        @endforeach
+                                    ]
+                                }
+                            ],
                             xaxis: {
                                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                             },
@@ -1005,8 +1012,8 @@
                                 width: 2,
                             },
                             series: [{
-                                name: 'Sales',
-                                data: [ 60, 28, 52, 38, 40, 36, 38]
+                                name: 'Wishlist',
+                                data: [{{ implode(', ', array_values($cartCreatedCount)) }}]
                             }],
                             labels: ['1', '2', '3', '4', '5', '6', '7'],
                             yaxis: {
@@ -1063,8 +1070,8 @@
                                 opacity: 1,
                             },
                             series: [{
-                                name: 'Sales',
-                                data: [28, 50, 36, 60, 38, 52, 38 ]
+                                name: 'Awaiting',
+                                data: [{{ implode(', ', array_values($awaitingPaymentCount)) }}]
                             }],
                             labels: ['1', '2', '3', '4', '5', '6', '7'],
                             yaxis: {
@@ -1139,8 +1146,8 @@
                                 width: 2,
                             },
                             series: [{
-                                name: 'Sales',
-                                data: [38, 60, 38, 52, 36, 40, 28 ]
+                                name: 'Users',
+                                data: [{{ implode(', ', array_values($userCreatedCounts)) }}]
                             }],
                             labels: ['1', '2', '3', '4', '5', '6', '7'],
                             yaxis: {
@@ -1194,8 +1201,8 @@
                                 width: 2,
                             },
                             series: [{
-                                name: 'Sales',
-                                data: [ 60, 28, 52, 38, 40, 36, 38]
+                                name: 'Wishlist',
+                                data: [{{ implode(', ', array_values($cartCreatedCount)) }}]
                             }],
                             labels: ['1', '2', '3', '4', '5', '6', '7'],
                             yaxis: {
@@ -1252,8 +1259,8 @@
                                 opacity: 1,
                             },
                             series: [{
-                                name: 'Sales',
-                                data: [28, 50, 36, 60, 38, 52, 38 ]
+                                name: 'Awaiting',
+                                data: [{{ implode(', ', array_values($awaitingPaymentCount)) }}]
                             }],
                             labels: ['1', '2', '3', '4', '5', '6', '7'],
                             yaxis: {

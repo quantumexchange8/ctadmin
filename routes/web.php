@@ -47,9 +47,7 @@ foreach ($prefixRouters as $prefixRouter) {
 
         Route::prefix('dashboard')->group(function () {
             Route::match(['get', 'post'], '/analytics', [DashboardController::class, 'index'])->name('analytics');
-            Route::get('/sales', function () {
-                return view('pages.dashboard.sales', ['title' => 'Sales Admin | CORK - Multipurpose Bootstrap Dashboard Template', 'breadcrumb' => 'This Breadcrumb']);
-            })->name('sales');
+            Route::match(['get', 'post'], '/sales', [DashboardController::class, 'sales'])->name('sales');
         });
 
         /**

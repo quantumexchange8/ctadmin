@@ -146,7 +146,7 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    {{ $record->causer->user_fullname }}
+                                                    {{ $record->causer->user_fullname ?? '-' }}
                                                 </td>
                                                 <td>
                                                     {{ date_format($record->created_at, 'Y-m-d H:i A') }}

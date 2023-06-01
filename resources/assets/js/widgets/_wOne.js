@@ -1,30 +1,30 @@
-/** 
- * 
+/**
+ *
  * Sales
- * 
+ *
 **/
 
 window.addEventListener("load", function(){
     try {
-  
+
       let getcorkThemeObject = sessionStorage.getItem("theme");
       let getParseObject = JSON.parse(getcorkThemeObject)
       let ParsedObject = getParseObject;
-  
+
       if (ParsedObject.settings.layout.darkMode) {
-        
+
         var Theme = 'dark';
-    
+
         Apex.tooltip = {
             theme: Theme
         }
-    
+
         /**
             ==============================
             |    @Options Charts Script   |
             ==============================
         */
-        
+
         /*
             =============================
                 Total Orders | Options
@@ -57,9 +57,9 @@ window.addEventListener("load", function(){
           },
           series: [{
             name: 'Sales',
-            data: [28, 40, 36, 52, 38, 60, 38, 52, 36, 40]
+            data: [28, 40, 36, 52, 38, 60, 38]
           }],
-          labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+          labels: ['1', '2', '3', '4', '5', '6', '7'],
           yaxis: {
             min: 0
           },
@@ -69,7 +69,7 @@ window.addEventListener("load", function(){
               right: 0,
               bottom: 0,
               left: 0
-            }, 
+            },
           },
           tooltip: {
             x: {
@@ -79,21 +79,21 @@ window.addEventListener("load", function(){
           },
           colors: ['#00ab55']
         }
-  
+
       } else {
-  
+
         var Theme = 'dark';
-    
+
         Apex.tooltip = {
             theme: Theme
         }
-    
+
         /**
             ==============================
             |    @Options Charts Script   |
             ==============================
         */
-        
+
         /*
             =============================
                 Total Orders | Options
@@ -139,7 +139,7 @@ window.addEventListener("load", function(){
               right: 0,
               bottom: 0,
               left: 0
-            }, 
+            },
           },
           tooltip: {
             x: {
@@ -151,15 +151,15 @@ window.addEventListener("load", function(){
         }
 
       }
-      
-    
+
+
     /**
         ==============================
         |    @Render Charts Script    |
         ==============================
     */
-    
-    
+
+
     /*
         ============================
             Total Orders | Render
@@ -167,29 +167,29 @@ window.addEventListener("load", function(){
     */
     var d_2C_2 = new ApexCharts(document.querySelector("#total-orders"), d_2options2);
     d_2C_2.render();
-  
+
     /**
        * =================================================================================================
        * |     @Re_Render | Re render all the necessary JS when clicked to switch/toggle theme           |
        * =================================================================================================
        */
-    
+
     document.querySelector('.theme-toggle').addEventListener('click', function() {
-  
+
       // console.log(sessionStorage);
-  
+
       let getcorkThemeObject = sessionStorage.getItem("theme");
       let getParseObject = JSON.parse(getcorkThemeObject)
       let ParsedObject = getParseObject;
-  
-      if (ParsedObject.settings.layout.darkMode) {  
-  
+
+      if (ParsedObject.settings.layout.darkMode) {
+
         /*
             =============================
                 Total Orders | Options
             =============================
         */
-  
+
         d_2C_2.updateOptions({
           fill: {
             type:"gradient",
@@ -203,15 +203,15 @@ window.addEventListener("load", function(){
             }
           }
         })
-  
-      } else {  
-  
+
+      } else {
+
         /*
             =============================
                 Total Orders | Options
             =============================
         */
-  
+
         d_2C_2.updateOptions({
           fill: {
             type:"gradient",
@@ -225,13 +225,13 @@ window.addEventListener("load", function(){
                 stops: [100, 100]
             }
           }
-        })        
-        
+        })
+
       }
-  
+
     })
-    
-    
+
+
     } catch(e) {
         console.log(e);
     }
