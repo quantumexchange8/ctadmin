@@ -284,13 +284,13 @@ class DashboardController extends Controller
             $totalRevenue = Order::query()
                 ->where('is_deleted', 0)
                 ->where('order_status', Order::STATUS_COMPLETED)
-                ->whereBetween('order_created', [$startDate, $endDate])
+                ->whereBetween('order_completed_at', [$startDate, $endDate])
                 ->sum('order_total_price');
 
             $totalDiscount = Order::query()
                 ->where('is_deleted', 0)
                 ->where('order_status', Order::STATUS_COMPLETED)
-                ->whereBetween('order_created', [$startDate, $endDate])
+                ->whereBetween('order_completed_at', [$startDate, $endDate])
                 ->sum('discount_amount');
 
             $totalRevenueByMonth[$key] = $totalRevenue;
@@ -314,7 +314,7 @@ class DashboardController extends Controller
                 $product = $orderItem->product;
 
                 if ($product && $product->category) {
-                    $categoryName = $product->category->first()->category_name;
+                    $categoryName = $product->category->category_name;
                     $categorySlug = $product->category->category_slug;
 
                     if (!isset($categoryCounts[$categorySlug])) {

@@ -44,7 +44,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group mb-3">
                                             <label for="user_gender" class="mb-2">Gender</label>
-                                            {!! Form::select('user_gender', $user_gender_sel, @$search['user_gender'], ['class' => 'form-select', 'id' => 'user_gender', 'placeholder' => 'Choose Category']) !!}
+                                            {!! Form::select('user_gender', $user_gender_sel, @$search['user_gender'], ['class' => 'form-select', 'id' => 'user_gender', 'placeholder' => 'Choose Gender']) !!}
                                         </div>
                                     </div>
                                     <div class="col-md-4">

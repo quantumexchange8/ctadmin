@@ -70,6 +70,54 @@ class Order extends Model implements HasMedia
         return $query->orderbyDesc('order_created')->paginate($perpage);
     }
 
+    public static function get_export_record($search)
+    {
+        $search_text = @$search['freetext'] ?? NULL;
+
+        $query = Order::with('order_item')->with('user')->where('is_deleted', 0);
+
+        $query->where(function ($query) use ($search_text) {
+            $freetext = explode(' ', $search_text);
+
+            if ($search_text) {
+                $query->where(function ($query) use ($freetext) {
+                    foreach ($freetext as $freetexts) {
+                        $query->orWhere('order_number', 'like', '%' . $freetexts . '%')
+                            ->orWhere('quotation_number', 'like', '%' . $freetexts . '%')
+                            ->orWhere('invoice_number', 'like', '%' . $freetexts . '%')
+                            ->orWhere('receipt_number', 'like', '%' . $freetexts . '%');
+                        }
+                    })
+                    ->orWhereHas('order_item', function ($query) use ($freetext) {
+                        foreach ($freetext as $freetexts) {
+                            $query->where('order_item_name', 'like', '%' . $freetexts . '%');
+                        }
+                    })
+                    ->orWhereHas('user', function ($query) use ($freetext) {
+                        foreach ($freetext as $freetexts) {
+                            $query->where('user_fullname', 'like', '%' . $freetexts . '%');
+                        }
+                    });
+                }
+            });
+
+        if (isset($search['date_range'])) {
+            $dateRange = explode(' to ', $search['date_range']);
+            $startDate = $dateRange[0] . ' 00:00:00';
+            $endDate = $dateRange[1] . ' 23:59:59';
+
+            $query->whereBetween('order_completed_at', [$startDate, $endDate]);
+        }
+
+        $order_status = @$search['order_status'];
+
+        if(isset($order_status)){
+            $query->where('order_status', $order_status);
+        }
+
+        return $query->orderbyDesc('order_created');
+    }
+
     public static function get_order_status_sel()
     {
         return $orderStatuses = [

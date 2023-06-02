@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class OrderItem extends Model
 {
@@ -18,6 +19,11 @@ class OrderItem extends Model
     protected $fillable = [
         'order_item_name', 'order_item_description', 'order_item_price', 'order_item_offer_price', 'order_id', 'product_id', 'order_item_quantity', 'is_deleted',
     ];
+
+    public function getSubTotal()
+    {
+        return $this->sum(DB::raw("CASE WHEN order_item_offer_price = '0.00' THEN order_item_price ELSE order_item_offer_price END"));
+    }
 
     public function product()
     {

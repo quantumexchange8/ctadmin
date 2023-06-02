@@ -7,6 +7,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LocalizationController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebTemplateCategoryController;
 use App\Http\Controllers\WebTemplateController;
@@ -101,6 +102,16 @@ foreach ($prefixRouters as $prefixRouter) {
 //            Route::delete('/category_image_delete', [CategoryController::class, 'category_image_delete']);
 //            Route::match(['get', 'post'], '/category_listing', [CategoryController::class, 'category_listing'])->name('category_listing');
             Route::post('/order_cancel', [OrderController::class, 'order_cancel'])->name('order_cancel');
+        });
+
+        /**
+         * ==============================
+         *          @Router -  Report
+         * ==============================
+         */
+
+        Route::prefix('report')->group(function () {
+            Route::match(['get', 'post'], '/report_listing', [ReportController::class, 'report_listing'])->name('report_listing');
         });
 
         /**

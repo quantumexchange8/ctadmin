@@ -29,7 +29,7 @@ class OrderController extends Controller
                     session(['order_search' => [
                         'freetext' =>  $request->input('freetext'),
                         'category_id' => $request->input('category_id'),
-                            'order_status' => $request->input('order_status'),
+                        'order_status' => $request->input('order_status'),
                     ]]);
                     break;
                 case 'reset':

@@ -91,7 +91,17 @@
                                 <tbody>
                                 <tr class="tm_gray_bg tm_border_top tm_border_left tm_border_right">
                                     <td class="tm_width_3 tm_primary_color tm_border_none tm_bold">Subtotal</td>
-                                    <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_bold">RM {{ $order->getSubTotal() }}</td>
+                                    @php
+                                        $subTotal = 0;
+                                    @endphp
+
+                                    @foreach($order->order_item as $item)
+                                        @php
+                                            $subTotal += $item->order_item_offer_price > 0.00 ? $item->order_item_offer_price : $item->order_item_price;
+                                        @endphp
+                                    @endforeach
+
+                                    <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_bold">RM {{ $subTotal }}</td>
                                 </tr>
                                 <tr class="tm_gray_bg tm_border_left tm_border_right">
                                     <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">Discount</td>
