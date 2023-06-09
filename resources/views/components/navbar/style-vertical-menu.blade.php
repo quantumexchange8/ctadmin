@@ -79,29 +79,32 @@
                             <h6 class="d-flex justify-content-between"><span class="align-self-center">New Users</span> <span class="badge badge-primary">3</span></h6>
                         </div>
                         <div class="notification-scroll">
-                            @foreach($newUsers as $new_user)
-                                <div class="dropdown-item">
-                                    <a href="{{ route('user_edit', $new_user->user_id) }}">
-                                        <div class="media server-log">
-                                            @if($new_user->hasMedia('user_profile_photo'))
-                                                <img src="{{ $new_user->getFirstMediaUrl('user_profile_photo') }}" class="img-fluid me-2" alt="avatar">
-                                            @else
-                                                <img src="{{Vite::asset('resources/images/profile-5.jpeg')}}" class="img-fluid me-2" alt="avatar">
-                                            @endif
-                                            <div class="media-body">
-                                                <div class="data-info">
-                                                    <h6 class="">{{ $new_user->user_fullname }}</h6>
-                                                    <p class="">{{ $new_user->user_created->diffForHumans() }}</p>
-                                                </div>
+{{--                            @foreach($newUsers as $new_user)--}}
+{{--                                <div class="dropdown-item">--}}
+{{--                                    <a href="{{ route('user_edit', $new_user->user_id) }}">--}}
+{{--                                        <div class="media server-log">--}}
+{{--                                            @if($new_user->hasMedia('user_profile_photo'))--}}
+{{--                                                <img src="{{ $new_user->getFirstMediaUrl('user_profile_photo') }}" class="img-fluid me-2" alt="avatar">--}}
+{{--                                            @else--}}
+{{--                                                <img src="{{Vite::asset('resources/images/profile-5.jpeg')}}" class="img-fluid me-2" alt="avatar">--}}
+{{--                                            @endif--}}
+{{--                                            <div class="media-body">--}}
+{{--                                                <div class="data-info">--}}
+{{--                                                    <h6 class="">{{ $new_user->user_fullname }}</h6>--}}
+{{--                                                    <p class="">{{ $new_user->user_created->diffForHumans() }}</p>--}}
+{{--                                                </div>--}}
 
-                                                <div class="icon-status">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            @endforeach
+{{--                                                <div class="icon-status">--}}
+{{--                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </a>--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
+                            <div class="dropdown-item">
+                                Hello World
+                            </div>
 
                             <div class="drodpown-title notification mt-2">
                                 <h6 class="d-flex justify-content-between"><span class="align-self-center">New Orders</span> <span class="badge badge-secondary">{{ auth()->user()->unreadNotifications->count() }}</span></h6>
