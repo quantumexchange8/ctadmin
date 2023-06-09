@@ -43,7 +43,7 @@ class styleVerticalMenu extends Component
             ->get();
 
         return view('components.navbar.style-vertical-menu', [
-            'new_users' => $new_users
+            'newUsers' => $new_users
         ]);
     }
 }

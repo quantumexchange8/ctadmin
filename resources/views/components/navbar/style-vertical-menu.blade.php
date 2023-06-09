@@ -79,7 +79,7 @@
                             <h6 class="d-flex justify-content-between"><span class="align-self-center">New Users</span> <span class="badge badge-primary">3</span></h6>
                         </div>
                         <div class="notification-scroll">
-                            @foreach($new_users as $new_user)
+                            @foreach($newUsers as $new_user)
                                 <div class="dropdown-item">
                                     <a href="{{ route('user_edit', $new_user->user_id) }}">
                                         <div class="media server-log">
