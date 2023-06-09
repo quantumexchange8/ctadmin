@@ -56,9 +56,6 @@
                         <a class="dropdown-item d-flex" href="{{ url('localization/en') }}"><img src="{{Vite::asset('resources/images/1x1/us.svg')}}" class="flag-width" alt="flag"><span class="align-self-center">&nbsp;English</span>
                         </a>
                         <a class="dropdown-item d-flex" href="{{ url('localization/zh-Hans') }}"><img src="{{Vite::asset('resources/images/1x1/cn.svg')}}" class="flag-width" alt="flag"> <span class="align-self-center">&nbsp;Chinese</span></a>
-                        <a class="dropdown-item d-flex" href="javascript:void(0);"><img src="{{Vite::asset('resources/images/1x1/br.svg')}}" class="flag-width" alt="flag"> <span class="align-self-center">&nbsp;Portuguese</span></a>
-                        <a class="dropdown-item d-flex" href="javascript:void(0);"><img src="{{Vite::asset('resources/images/1x1/in.svg')}}" class="flag-width" alt="flag"> <span class="align-self-center">&nbsp;Hindi</span></a>
-                        <a class="dropdown-item d-flex" href="javascript:void(0);"><img src="{{Vite::asset('resources/images/1x1/de.svg')}}" class="flag-width" alt="flag"> <span class="align-self-center">&nbsp;German</span></a>
                     </div>
                 </li>
 
