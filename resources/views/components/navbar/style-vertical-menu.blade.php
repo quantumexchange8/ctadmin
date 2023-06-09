@@ -74,67 +74,67 @@
                         @endif
                     </a>
 
-                    <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
-                        <div class="drodpown-title message">
-                            <h6 class="d-flex justify-content-between"><span class="align-self-center">New Users</span> <span class="badge badge-primary">{{ @$new_users->count() }}</span></h6>
-                        </div>
-                        <div class="notification-scroll">
-                            @foreach($new_users as $new_user)
-                                <div class="dropdown-item">
-                                    <a href="{{ route('user_edit', $new_user->user_id) }}">
-                                        <div class="media server-log">
-                                            @if($new_user->hasMedia('user_profile_photo'))
-                                                <img src="{{ $new_user->getFirstMediaUrl('user_profile_photo') }}" class="img-fluid me-2" alt="avatar">
-                                            @else
-                                                <img src="{{Vite::asset('resources/images/profile-5.jpeg')}}" class="img-fluid me-2" alt="avatar">
-                                            @endif
-                                            <div class="media-body">
-                                                <div class="data-info">
-                                                    <h6 class="">{{ $new_user->user_fullname }}</h6>
-                                                    <p class="">{{ $new_user->user_created->diffForHumans() }}</p>
-                                                </div>
+{{--                    <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">--}}
+{{--                        <div class="drodpown-title message">--}}
+{{--                            <h6 class="d-flex justify-content-between"><span class="align-self-center">New Users</span> <span class="badge badge-primary">{{ @$new_users->count() }}</span></h6>--}}
+{{--                        </div>--}}
+{{--                        <div class="notification-scroll">--}}
+{{--                            @foreach($new_users as $new_user)--}}
+{{--                                <div class="dropdown-item">--}}
+{{--                                    <a href="{{ route('user_edit', $new_user->user_id) }}">--}}
+{{--                                        <div class="media server-log">--}}
+{{--                                            @if($new_user->hasMedia('user_profile_photo'))--}}
+{{--                                                <img src="{{ $new_user->getFirstMediaUrl('user_profile_photo') }}" class="img-fluid me-2" alt="avatar">--}}
+{{--                                            @else--}}
+{{--                                                <img src="{{Vite::asset('resources/images/profile-5.jpeg')}}" class="img-fluid me-2" alt="avatar">--}}
+{{--                                            @endif--}}
+{{--                                            <div class="media-body">--}}
+{{--                                                <div class="data-info">--}}
+{{--                                                    <h6 class="">{{ $new_user->user_fullname }}</h6>--}}
+{{--                                                    <p class="">{{ $new_user->user_created->diffForHumans() }}</p>--}}
+{{--                                                </div>--}}
 
-                                                <div class="icon-status">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            @endforeach
+{{--                                                <div class="icon-status">--}}
+{{--                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </a>--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
 
-                            <div class="drodpown-title notification mt-2">
-                                <h6 class="d-flex justify-content-between"><span class="align-self-center">New Orders</span> <span class="badge badge-secondary">{{ auth()->user()->unreadNotifications->count() }}</span></h6>
-                            </div>
-                            <a href="{{ route('mark_as_read') }}"><span class="d-flex justify-content-end me-2 mb-2 mt-0" style="font-size: 12px">Mark as read</span></a>
-                            @if(auth()->user()->unreadNotifications->count() > 0)
-                                @foreach(auth()->user()->unreadNotifications as $notification)
-                                    <div class="dropdown-item">
-                                        <a href="{{ route('order_listing') }}">
-                                            <div class="media server-log">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-server"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>
-                                                <div class="media-body">
-                                                    <div class="data-info">
-                                                        <h6 class="">{{ $notification->data['message'] }}</h6>
-                                                        <p class="">{{ $notification->created_at->diffForHumans() }}</p>
-                                                    </div>
-                                                    <div class="icon-status">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                @endforeach
-                            @else
-                                <div class="dropdown-item">
-                                    <p style="font-size: 12px">No orders yet</p>
-                                </div>
-                            @endif
+{{--                            <div class="drodpown-title notification mt-2">--}}
+{{--                                <h6 class="d-flex justify-content-between"><span class="align-self-center">New Orders</span> <span class="badge badge-secondary">{{ auth()->user()->unreadNotifications->count() }}</span></h6>--}}
+{{--                            </div>--}}
+{{--                            <a href="{{ route('mark_as_read') }}"><span class="d-flex justify-content-end me-2 mb-2 mt-0" style="font-size: 12px">Mark as read</span></a>--}}
+{{--                            @if(auth()->user()->unreadNotifications->count() > 0)--}}
+{{--                                @foreach(auth()->user()->unreadNotifications as $notification)--}}
+{{--                                    <div class="dropdown-item">--}}
+{{--                                        <a href="{{ route('order_listing') }}">--}}
+{{--                                            <div class="media server-log">--}}
+{{--                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-server"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg>--}}
+{{--                                                <div class="media-body">--}}
+{{--                                                    <div class="data-info">--}}
+{{--                                                        <h6 class="">{{ $notification->data['message'] }}</h6>--}}
+{{--                                                        <p class="">{{ $notification->created_at->diffForHumans() }}</p>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="icon-status">--}}
+{{--                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </a>--}}
+{{--                                    </div>--}}
+{{--                                @endforeach--}}
+{{--                            @else--}}
+{{--                                <div class="dropdown-item">--}}
+{{--                                    <p style="font-size: 12px">No orders yet</p>--}}
+{{--                                </div>--}}
+{{--                            @endif--}}
 
 
-                        </div>
-                    </div>
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                 </li>
 
