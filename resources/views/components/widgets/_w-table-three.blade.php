@@ -20,10 +20,10 @@
             <table class="table table-scroll">
                 <thead>
                     <tr>
-                        <th><div class="th-content">Product</div></th>
-                        <th><div class="th-content th-heading">Price</div></th>
-                        <th><div class="th-content th-heading">Discount</div></th>
-                        <th><div class="th-content">Sold</div></th>
+                        <th><div class="th-content">@lang('public.product')</div></th>
+                        <th><div class="th-content th-heading">@lang('public.price')</div></th>
+                        <th><div class="th-content th-heading">@lang('public.discount')</div></th>
+                        <th><div class="th-content">@lang('public.sold')</div></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,7 +51,7 @@
                         </td>
                         <td>
                             <div class="td-content">
-                                <span class="pricing">{{ $product->product->product_price }}</span>
+                                <span class="pricing">${{ $product->product->product_price }}</span>
                             </div>
                         </td>
                         <td>

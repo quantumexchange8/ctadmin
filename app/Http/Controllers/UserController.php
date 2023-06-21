@@ -40,14 +40,14 @@ class UserController extends Controller
         $search = session('user_search') ? session('user_search') : $search;
 
         return view('pages.user.listing', [
-            'title' => 'Listing',
-            'heading' => 'Users',
+            'title' => trans('public.listing'),
+            'heading' => trans('public.users'),
             'search' => $search,
             'records' => User::get_record($search, 10),
-            'user_gender_sel'=> array('male' => 'Male', 'female' => 'Female'),
+            'user_gender_sel'=> array('male' => trans('public.male'), 'female' => trans('public.female')),
             'user_status_sel'=> [User::STATUS_ACTIVE => 'Active', User::STATUS_INACTIVE => 'Inactive'],
             'user_nationality_sel' => SettingCountry::get_country_sel(),
-            'get_order_sel' => ['asc' => 'Created Date ASC', 'desc' => 'Created Date DESC'],
+            'get_order_sel' => ['asc' => trans('public.asc_create_date'), 'desc' => trans('public.desc_create_date')],
         ]);
     }
 
@@ -69,15 +69,15 @@ class UserController extends Controller
                 'user_phone' => 'required',
                 'user_status' => 'required',
             ])->setAttributeNames([
-                'user_email' => 'Email',
-                'password' => 'Password',
-                'user_fullname' => 'Fullname',
-                'user_gender' => 'Gender',
-                'user_role' => 'Role',
-                'user_address' => 'Address',
-                'user_phone' => 'Phone',
-                'user_nationality' => 'Nationality',
-                'user_status' => 'Status',
+                'user_email' => trans('public.email'),
+                'password' => trans('public.password'),
+                'user_fullname' => trans('public.full_name'),
+                'user_gender' => trans('public.gender'),
+                'user_role' => trans('public.role'),
+                'user_address' => trans('public.address'),
+                'user_phone' => trans('public.phone'),
+                'user_nationality' => trans('public.country'),
+                'user_status' => trans('public.status'),
             ]);
 
             if (!$validator->fails()) {
@@ -103,19 +103,19 @@ class UserController extends Controller
                     }
                 }
 
-                Session::flash('success_msg', 'Successfully Added '.$request->input('user_fullname'). '!');
+                Session::flash('success_msg', trans('public.success_created_user', ['user_fullname' => $request->input('user_fullname')]));
                 return redirect()->route('user_listing');
             }
             $post = (object) $request->all();
         }
         return view('pages.user.form', [
             'submit'=> route('user_add'),
-            'heading'=> 'Users',
+            'heading'=> trans('public.users'),
             'title'=> 'Add',
             'post'=> $post,
-            'user_gender_sel'=> array('male' => 'Male', 'female' => 'Female'),
-            'user_role_sel'=> [User::ADMIN_ROLE => 'Admin', User::USER_ROLE => 'User'],
-            'user_status_sel'=> [User::STATUS_ACTIVE => 'Active', User::STATUS_INACTIVE => 'Inactive'],
+            'user_gender_sel'=> array('male' => trans('public.male'), 'female' => trans('public.female')),
+            'user_role_sel'=> [User::ADMIN_ROLE => trans('public.admin'), User::USER_ROLE => trans('public.user')],
+            'user_status_sel'=> [User::STATUS_ACTIVE => trans('public.active'), User::STATUS_INACTIVE => trans('public.inactive')],
             'user_nationality_sel' => SettingCountry::get_country_sel(),
         ])->withErrors($validator);
     }
@@ -146,15 +146,15 @@ class UserController extends Controller
                 'user_phone' => 'required',
                 'user_status' => 'required',
             ])->setAttributeNames([
-                'user_email' => 'Email',
-                'password' => 'Password',
-                'user_fullname' => 'Fullname',
-                'user_gender' => 'Gender',
-                'user_role' => 'Role',
-                'user_address' => 'Address',
-                'user_phone' => 'Phone',
-                'user_nationality' => 'Nationality',
-                'user_status' => 'Status',
+                'user_email' => trans('public.email'),
+                'password' => trans('public.password'),
+                'user_fullname' => trans('public.full_name'),
+                'user_gender' => trans('public.gender'),
+                'user_role' => trans('public.role'),
+                'user_address' => trans('public.address'),
+                'user_phone' => trans('public.phone'),
+                'user_nationality' => trans('public.country'),
+                'user_status' => trans('public.status'),
             ]);
 
             if (!$validator->fails()) {
@@ -184,7 +184,7 @@ class UserController extends Controller
                     }
                 }
 
-                Session::flash('success_msg', 'Successfully Updated '.$request->input('user_fullname'). '!');
+                Session::flash('success_msg', trans('public.success_updated_user', ['user_fullname' => $request->input('user_fullname')]));
 
                 return redirect()->route('user_listing');
             }
@@ -193,12 +193,12 @@ class UserController extends Controller
         return view('pages.user.form', [
             'submit'=>route('user_edit', $user_id),
             'title' => 'Edit',
-            'heading' => 'Users',
+            'heading' => trans('public.users'),
             'post'=> $post,
             'user' => $user,
-            'user_gender_sel'=> array('male' => 'Male', 'female' => 'Female'),
-            'user_role_sel'=> [User::ADMIN_ROLE => 'Admin', User::USER_ROLE => 'User'],
-            'user_status_sel'=> [User::STATUS_ACTIVE => 'Active', User::STATUS_INACTIVE => 'Inactive'],
+            'user_gender_sel'=> array('male' => trans('public.male'), 'female' => trans('public.female')),
+            'user_role_sel'=> [User::ADMIN_ROLE => trans('public.admin'), User::USER_ROLE => trans('public.user')],
+            'user_status_sel'=> [User::STATUS_ACTIVE => trans('public.active'), User::STATUS_INACTIVE => trans('public.inactive')],
             'user_nationality_sel' => SettingCountry::get_country_sel(),
         ])->withErrors($validator);
     }
@@ -237,5 +237,24 @@ class UserController extends Controller
         }
 
         return '';
+    }
+
+    public function user_delete(Request $request)
+    {
+        $user_id = $request->input('user_id');
+        $user = User::find($user_id);
+
+        if (!$user) {
+            Session::flash('fail_msg', trans('public.invalid_action'));
+            return redirect()->route('user_listing');
+        }
+
+        $user->update([
+            'is_deleted' => 1,
+            'user_status' => User::STATUS_INACTIVE
+        ]);
+
+        Session::flash('success_msg', trans('public.success_deleted_user'));
+        return redirect()->route('user_listing');
     }
 }

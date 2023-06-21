@@ -1,7 +1,7 @@
 <x-base-layout :scrollspy="false">
 
     <x-slot:pageTitle>
-        {{ $heading }} {{$title}}
+        {{ $heading }} - {{$title}}
         </x-slot>
 
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -16,6 +16,9 @@
             <link rel="stylesheet" href="{{asset('plugins/sweetalerts2/sweetalerts2.css')}}">
             @vite(['resources/scss/light/plugins/sweetalerts2/custom-sweetalert.scss'])
             @vite(['resources/scss/dark/plugins/sweetalerts2/custom-sweetalert.scss'])
+            @vite(['resources/scss/light/plugins/flatpickr/custom-flatpickr.scss'])
+            @vite(['resources/scss/dark/plugins/flatpickr/custom-flatpickr.scss'])
+            <link rel="stylesheet" href="{{asset('plugins/flatpickr/flatpickr.css')}}">
 
             <link rel="stylesheet" href="{{asset('plugins/animate/animate.css')}}">
 
@@ -44,46 +47,37 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group mb-3">
-                                            <label for="search" class="mb-2">Freetext</label>
+                                            <label for="search" class="mb-2">@lang('public.freetext')</label>
                                             <input type="text" class="form-control select_active" id="search"
-                                                   name="freetext" placeholder="Search for..."
+                                                   name="freetext" placeholder="@lang('public.search_for')"
                                                    value="{{ @$search['freetext'] }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group mb-3">
-                                            <label for="category_type" class="mb-2">Category</label>
-                                            {!! Form::select('category_id', $get_category_sel, @$search['category_id'], ['class' => 'form-select', 'id' => 'category_type', 'placeholder' => 'Choose Category']) !!}
+                                            <label for="rangeCalendarFlatpickr" class="mb-2">@lang('public.date_range')</label>
+                                            <input id="basicFlatpickr" value="2022-09-04" class="form-control flatpickr flatpickr-input d-none" disabled type="text" placeholder="Select Date..">
+                                            <input id="dateTimeFlatpickr" value="2022-09-19 12:00" class="form-control flatpickr flatpickr-input d-none" disabled type="text" placeholder="Select Date..">
+                                            <input id="rangeCalendarFlatpickr" name="date_range" value="{{ @$search['date_range'] }}" class="form-control flatpickr flatpickr-input active" type="text" placeholder="@lang('public.select_date')">
+                                            <input id="timeFlatpickr" class="form-control flatpickr flatpickr-input d-none" disabled type="text" placeholder="Select Date..">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group mb-3">
-                                            <label for="product_status" class="mb-2">Status</label>
-                                            {!! Form::select('order_status', $get_order_status_sel, @$search['order_status'], ['class' => 'form-select', 'placeholder' => 'Search Status..']) !!}
+                                            <label for="product_status" class="mb-2">@lang('public.status')</label>
+                                            {!! Form::select('order_status', $get_order_status_sel, @$search['order_status'], ['class' => 'form-select', 'placeholder' => trans('public.choose_status')]) !!}
                                         </div>
                                     </div>
-                                    {{--                                    <div class="col-md-4">--}}
-                                    {{--                                        <div class="form-group mb-3">--}}
-                                    {{--                                            <label for="product_visibility" class="mb-2">Visibility</label>--}}
-                                    {{--                                            {!! Form::select('product_visibility', $get_visibility_sel, @$search['product_visibility'], ['class' => 'form-select', 'placeholder' => 'Search Visibility..']) !!}--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                    </div>--}}
-                                    {{--                                    <div class="col-md-4">--}}
-                                    {{--                                        <div class="form-group mb-3">--}}
-                                    {{--                                            <label for="order_by" class="mb-2">Order By</label>--}}
-                                    {{--                                            {!! Form::select('order_by', $get_order_sel, @$search['order_by'], ['class' => 'form-select']) !!}--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                    </div>--}}
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <button type="submit" class="btn btn-primary waves-effect waves-light mr-2"
                                                 name="submit" value="search">
-                                            <i class="fas fa-search mr-1"></i> Search
+                                            <i class="fas fa-search mr-1"></i> @lang('public.search')
                                         </button>
                                         <button type="submit" class="btn btn-danger waves-effect waves-light mx-2"
                                                 name="submit" value="reset">
-                                            <i class="fas fa-times mr-1"></i> Reset
+                                            <i class="fas fa-times mr-1"></i> @lang('public.reset')
                                         </button>
                                     </div>
                                 </div>
@@ -104,18 +98,17 @@
                                 </div>
                             </div>
                             <div class="widget-content widget-content-area">
-                                {{--                                <p class="mb-4"> Click the <code class="text-success">create button</code> to add more products.</p>--}}
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th scope="col">Order No.</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Price</th>
-                                            <th class="text-center" scope="col">Order Status</th>
-                                            <th scope="col">Date</th>
-                                            <th class="text-center" scope="col">Action</th>
+                                            <th scope="col">@lang('public.order_no')</th>
+                                            <th scope="col">@lang('public.name')</th>
+                                            <th scope="col">@lang('public.email')</th>
+                                            <th scope="col">@lang('public.price')</th>
+                                            <th class="text-center" scope="col">@lang('public.status')</th>
+                                            <th scope="col">@lang('public.date')</th>
+                                            <th class="text-center" scope="col">@lang('public.action')</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -129,16 +122,16 @@
                                                     {{ $record->user->user_email }}
                                                 </td>
                                                 <td>
-                                                    RM {{ $record->order_total_price ?? $record->getSubTotal() }}
+                                                    $ {{ $record->order_total_price ?? $record->getSubTotal() }}
                                                 </td>
                                                 <td class="text-center">
                                                     @php
                                                         $statusLabels = [
-                                                            \App\Models\Order::STATUS_PROCESSING => ['Processing', 'badge-primary'],
-                                                            \App\Models\Order::STATUS_PENDING => ['Pending', 'badge-secondary'],
-                                                            \App\Models\Order::STATUS_AWAITING => ['Awaiting Payment', 'badge-info'],
-                                                            \App\Models\Order::STATUS_COMPLETED => ['Completed', 'badge-success'],
-                                                            \App\Models\Order::STATUS_CANCELLED => ['Cancelled', 'badge-danger']
+                                                            \App\Models\Order::STATUS_PROCESSING => [trans('public.processing'), 'badge-primary'],
+                                                            \App\Models\Order::STATUS_PENDING => [trans('public.pending'), 'badge-secondary'],
+                                                            \App\Models\Order::STATUS_AWAITING => [trans('public.awaiting_payment'), 'badge-info'],
+                                                            \App\Models\Order::STATUS_COMPLETED => [trans('public.completed'), 'badge-success'],
+                                                            \App\Models\Order::STATUS_CANCELLED => [trans('public.cancelled'), 'badge-danger']
                                                         ];
                                                     @endphp
                                                     @if (isset($statusLabels[$record->order_status]))
@@ -169,7 +162,7 @@
                                                         <a href="javascript:void(0);" data-bs-toggle="modal"
                                                            data-bs-target="#mail_modal-{{ $record->order_id }}"
                                                            class="action-btn btn-view bs-tooltip me-2"
-                                                           data-toggle="tooltip" data-placement="top" data-id="{{ $record->order_id }}" title="Mail">
+                                                           data-toggle="tooltip" data-placement="top" data-id="{{ $record->order_id }}" title="@lang('public.mail')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                  height="24" viewBox="0 0 24 24" fill="none"
                                                                  stroke="currentColor" stroke-width="2"
@@ -183,7 +176,7 @@
                                                         @include('pages.order.mail-modal')
                                                         <a href="{{ route('receipt_preview', $record->order_id) }}"
                                                            target="_blank" class="action-btn btn-view bs-tooltip me-2"
-                                                           data-toggle="tooltip" data-placement="top" title="Receipt">
+                                                           data-toggle="tooltip" data-placement="top" title="@lang('public.receipt')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                  height="24" viewBox="0 0 24 24" fill="none"
                                                                  stroke="currentColor" stroke-width="2"
@@ -196,7 +189,7 @@
                                                         </a>
                                                         <a href="{{ route('invoice_preview', $record->order_id) }}"
                                                            target="_blank" class="action-btn btn-view bs-tooltip me-2"
-                                                           data-toggle="tooltip" data-placement="top" title="Invoice">
+                                                           data-toggle="tooltip" data-placement="top" title="@lang('public.invoice')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                  height="24" viewBox="0 0 24 24" fill="none"
                                                                  stroke="currentColor" stroke-width="2"
@@ -208,7 +201,7 @@
                                                         </a>
                                                         <a href="{{ route('order_edit', $record->order_id) }}"
                                                            class="action-btn btn-edit bs-tooltip me-2"
-                                                           data-toggle="tooltip" data-placement="top" title="Edit">
+                                                           data-toggle="tooltip" data-placement="top" title="@lang('public.edit')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                  height="24" viewBox="0 0 24 24" fill="none"
                                                                  stroke="currentColor" stroke-width="2"
@@ -222,7 +215,7 @@
                                                            class="action-btn btn-delete bs-tooltip cancel"
                                                            data-toggle="tooltip" data-placement="top" data-id="{{ $record->order_id }}"
                                                            data-bs-toggle="modal" data-bs-target="#order_cancel"
-                                                           title="Cancel">
+                                                           title="@lang('public.cancel')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                  height="24" viewBox="0 0 24 24" fill="none"
                                                                  stroke="currentColor" stroke-width="2"
@@ -300,6 +293,8 @@
             <x-slot:footerFiles>
                 <script src="{{asset('plugins/global/vendors.min.js')}}"></script>
                 <script src="{{asset('plugins/sweetalerts2/sweetalerts2.min.js')}}"></script>
+                <script type="module" src="{{asset('plugins/flatpickr/flatpickr.js')}}"></script>
+                <script type="module" src="{{asset('plugins/flatpickr/custom-flatpickr.js')}}"></script>
                 <script>
                     $(document).ready(function (e) {
                         $(document).on('click', '.cancel', function () {

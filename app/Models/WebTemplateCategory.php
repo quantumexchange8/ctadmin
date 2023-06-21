@@ -6,12 +6,15 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class WebTemplateCategory extends Model implements HasMedia, TranslatableContract
 {
-    use HasFactory, InteractsWithMedia, Translatable;
+    use HasFactory, InteractsWithMedia, Translatable, LogsActivity;
 
     protected $table = 'tbl_web_template_category';
 
@@ -77,6 +80,28 @@ class WebTemplateCategory extends Model implements HasMedia, TranslatableContrac
 
     public function web_template_category_translation()
     {
-        return $this->hasMany(WebTemplateTranslation::class, 'web_template_id', 'id');
+        return $this->hasMany(WebTemplateCategoryTranslation::class, 'web_template_category_id', 'id');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $webTemplateCategoryTitle = $this->web_template_category_translation()
+            ->whereIn('locale', ['en', 'zh-Hans', 'zh-Hant'])
+            ->pluck('web_template_category_name', 'locale')
+            ->toArray();
+
+        return LogOptions::defaults()
+            ->useLogName('category')
+            ->logOnly([
+                'web_template_category_status', 'web_template_category_group', 'category_id', 'is_deleted'
+            ])
+            ->setDescriptionForEvent(function (string $eventName) use ($webTemplateCategoryTitle) {
+                $language = app()->getLocale();
+                $title = $webTemplateCategoryTitle[$language] ?? 'N/A';
+
+                return Auth::user()->user_fullname . " has {$eventName} the web template category with name: {$title}.";
+            })
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }

@@ -78,7 +78,7 @@ class DashboardController extends Controller
          * ==============================
          */
 
-        $categories = Category::where('is_deleted', 0)->where('category_status', 1)->get();
+        $categories = Category::where('is_deleted', 0)->get();
 
         $year = date('Y'); // Get the current year
 

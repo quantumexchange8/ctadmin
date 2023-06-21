@@ -22,7 +22,6 @@
 
                 <div class="dropdown-menu left" aria-labelledby="activitylog" style="will-change: transform;">
                     <a class="dropdown-item" href="{{ route('activity_log_listing') }}">View All</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Mark as Read</a>
                 </div>
             </div>
         </div>

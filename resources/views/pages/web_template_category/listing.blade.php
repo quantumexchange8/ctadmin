@@ -19,7 +19,7 @@
                 <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">{{ $heading }}</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ $heading }} {{ $title }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
                     </ol>
                 </nav>
             </div>
@@ -35,25 +35,25 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group mb-3">
-                                            <label for="search" class="mb-2">Freetext</label>
-                                            <input type="text" class="form-control select_active" id="search" name="freetext" placeholder="Search for..." value="{{ @$search['freetext'] }}">
+                                            <label for="search" class="mb-2">@lang('public.freetext')</label>
+                                            <input type="text" class="form-control select_active" id="search" name="freetext" placeholder="@lang('public.search_for')" value="{{ @$search['freetext'] }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group mb-3">
-                                            <label for="search_category" class="mb-2">Category</label>
-                                            {!! Form::select('web_template_category_group', $get_category_group_sel, @$search['web_template_category_group'], ['class' => 'form-select', 'id' => 'search_category', 'placeholder' => 'Search Category Group..']) !!}
+                                            <label for="search_category" class="mb-2">@lang('public.category_group')</label>
+                                            {!! Form::select('web_template_category_group', $get_category_group_sel, @$search['web_template_category_group'], ['class' => 'form-select', 'id' => 'search_category', 'placeholder' => trans('public.choose_category_group')]) !!}
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group mb-3">
-                                            <label for="web_template_visibility" class="mb-2">Status</label>
-                                            {!! Form::select('web_template_category_status', $get_status_sel, @$search['web_template_category_status'], ['class' => 'form-select', 'placeholder' => 'Search Status..']) !!}
+                                            <label for="web_template_visibility" class="mb-2">@lang('public.status')</label>
+                                            {!! Form::select('web_template_category_status', $get_status_sel, @$search['web_template_category_status'], ['class' => 'form-select', 'placeholder' => trans('public.choose_status')]) !!}
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group mb-3">
-                                            <label for="order_by" class="mb-2">Order By</label>
+                                            <label for="order_by" class="mb-2">@lang('public.order_by')</label>
                                             {!! Form::select('order_by', $get_order_sel, @$search['order_by'], ['class' => 'form-select']) !!}
                                         </div>
                                     </div>
@@ -61,15 +61,15 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <button type="submit" class="btn btn-primary waves-effect waves-light mr-2" name="submit" value="search">
-                                            <i class="fas fa-search mr-1"></i> Search
+                                            <i class="fas fa-search mr-1"></i> @lang('public.search')
                                         </button>
                                         <button type="submit" class="btn btn-danger waves-effect waves-light mx-2" name="submit" value="reset">
-                                            <i class="fas fa-times mr-1"></i> Reset
+                                            <i class="fas fa-times mr-1"></i> @lang('public.reset')
                                         </button>
                                         <div class="float-end">
                                             <a href="{{ route('web_template_category_add') }}" class="btn btn-success">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-                                                <span class="btn-text-inner">Create</span>
+                                                <span class="btn-text-inner">@lang('public.create')</span>
                                             </a>
                                         </div>
                                     </div>
@@ -90,23 +90,23 @@
                             <div class="widget-header">
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                        <h4>{{ $heading }} {{ $title }}</h4>
+                                        <h4>{{ $heading }} / {{ $title }}</h4>
                                     </div>
                                 </div>
                             </div>
                             <div class="widget-content widget-content-area">
-                                <p class="mb-4"> Click the <code class="text-success">create button</code> to add more template categories.</p>
+                                <p class="mb-4"> @lang('public.add_web_template_categories_caption')</p>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Image</th>
-                                            <th class="" scope="col">Name</th>
-                                            <th class="" scope="col">Slug</th>
-                                            <th class="text-center" scope="col">Category Group</th>
-                                            <th class="text-center" scope="col">Status</th>
-                                            <th class="text-center" scope="col">Action</th>
+                                            <th>@lang('public.image')</th>
+                                            <th class="" scope="col">@lang('public.name')</th>
+                                            <th class="" scope="col">@lang('public.slug')</th>
+                                            <th class="text-center" scope="col">@lang('public.category_group')</th>
+                                            <th class="text-center" scope="col">@lang('public.status')</th>
+                                            <th class="text-center" scope="col">@lang('public.action')</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -124,14 +124,14 @@
                                                 <td>{{ $record->web_template_category_slug }}</td>
                                                 <td class="text-center">{{ $record->web_template_category_group }}</td>
                                                 <td class="text-center">
-                                                    <span class="badge {{ $record->web_template_category_status == 1 ? 'badge-light-success' : "badge-light-secondary" }}">{{ $record->web_template_category_status == 1 ? 'Visible' : "Not Visible" }}</span>
+                                                    <span class="badge {{ $record->web_template_category_status == 1 ? 'badge-light-success' : "badge-light-secondary" }}">{{ $record->web_template_category_status == 1 ? trans('public.visible') : trans('public.not_visible') }}</span>
                                                 </td>
                                                 <td>
                                                     <div class="action-btns d-flex justify-content-center">
-                                                        <a href="{{ route('web_template_category_edit', $record->id) }}" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                        <a href="{{ route('web_template_category_edit', $record->id) }}" class="action-btn btn-edit bs-tooltip me-2" data-toggle="tooltip" data-placement="top" title="@lang('public.edit')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                                         </a>
-                                                        <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip delete" data-id='{{ $record->id }}' data-toggle="tooltip" data-placement="top" title="Delete" data-bs-toggle="modal" data-bs-target="#web_template_delete">
+                                                        <a href="javascript:void(0);" class="action-btn btn-delete bs-tooltip delete" data-id='{{ $record->id }}' data-toggle="tooltip" data-placement="top" title="@lang('public.delete')" data-bs-toggle="modal" data-bs-target="#web_template_delete">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                                         </a>
                                                     </div>
@@ -163,24 +163,24 @@
             <div class="modal fade modal-notification" id="web_template_delete" tabindex="-1" role="dialog" aria-labelledby="web_template_deleteTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <form method="POST" action="{{ route('web_template_delete') }}">
+                        <form method="POST" action="{{ route('web_template_category_delete') }}">
                             @csrf
                             <div class="modal-body text-center">
                                 <div class="icon-content">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 delete-note"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                 </div>
-                                <p class="modal-text">Are you sure you want to delete this web template?</p>
-                                <input type="hidden" name="web_template_id" id="web_template_id">
+                                <p class="modal-text">@lang('public.web_template_category_delete')</p>
+                                <input type="hidden" name="web_template_category_id" id="web_template_category_id">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light-primary"
                                         data-bs-dismiss="modal">
                                     <i class="bx bx-x d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Close</span>
+                                    <span class="d-none d-sm-block">@lang('public.close')</span>
                                 </button>
                                 <button type="submit" class="btn btn-danger ml-1">
                                     <i class="bx bx-check d-block d-sm-none"></i>
-                                    <span class="d-none d-sm-block">Delete</span>
+                                    <span class="d-none d-sm-block">@lang('public.delete')</span>
                                 </button>
                             </div>
                         </form>
@@ -194,7 +194,7 @@
                     $(document).ready(function(e) {
                         $(document).on('click', '.delete', function() {
                             var id = $(this).attr('data-id');
-                            $(".modal-body #web_template_id").val(id);
+                            $(".modal-body #web_template_category_id").val(id);
                         });
                     });
                 </script>

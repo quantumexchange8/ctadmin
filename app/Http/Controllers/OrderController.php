@@ -28,7 +28,7 @@ class OrderController extends Controller
                 case 'search':
                     session(['order_search' => [
                         'freetext' =>  $request->input('freetext'),
-                        'category_id' => $request->input('category_id'),
+                        'date_range' => $request->input('date_range'),
                         'order_status' => $request->input('order_status'),
                     ]]);
                     break;
@@ -40,17 +40,15 @@ class OrderController extends Controller
 
         $search = session('order_search') ? session('order_search') : $search;
 
-        // dd($search);
-
         return view('pages.order.listing', [
             'submit' => route('order_listing'),
             'title' => 'Listing',
-            'heading' => 'Order',
+            'heading' => trans('public.order'),
             'get_category_sel' => Category::get_category_sel(),
-            'records' => Order::get_record($search, 15),
+            'records' => Order::get_record($search, 10),
             'search' =>  $search,
             'get_order_status_sel' => Order::get_order_status_sel(),
-            'get_attachment_sel' => ['quotation' => 'Quotation', 'invoice' => 'Invoice', 'receipt' => 'Receipt'],
+            'get_attachment_sel' => ['quotation' => trans('public.quotation'), 'invoice' => trans('public.invoice'), 'receipt' => trans('public.receipt')],
         ]);
 
     }
@@ -105,7 +103,7 @@ class OrderController extends Controller
                     'order_total_price' => $request->input('order_total_price'),
                 ]);
 
-                Session::flash('success_msg', 'Successfully Updated Order!');
+                Session::flash('success_msg', trans('public.success_update_order'));
                 return redirect()->back();
             }
 
@@ -124,7 +122,6 @@ class OrderController extends Controller
     public function order_preview($order_id)
     {
         $order = Order::find($order_id);
-//        $order_item_id = OrderItem::where('order_id', $order_id)->where('is_deleted', 0)->pluck('order_item_id');
 
         return view('pages.order.preview', [
             'title' => 'Preview',
@@ -146,7 +143,6 @@ class OrderController extends Controller
     public function order_quotation($order_id)
     {
         $order = Order::find($order_id);
-//        $order_item_id = OrderItem::where('order_id', $order_id)->where('is_deleted', 0)->pluck('order_item_id');
 
         return view('pages.order.quotation', [
             'title' => 'Quotation',
@@ -178,12 +174,12 @@ class OrderController extends Controller
             'mail_attachment' => 'required|mimes:pdf,docx|max:10240', // Example validation for file attachment (PDF and DOCX formats, max 10MB)
             'mail_content' => 'required',
         ])->setAttributeNames([
-            'attachment_type' => 'Attachment Type',
-            'mail_from' => 'From',
-            'mail_to' => 'To',
-            'mail_subject' => 'Subject',
-            'mail_attachment' => 'Attachment',
-            'mail_content' => 'Content',
+            'attachment_type' => trans('public.attachment_type'),
+            'mail_from' => trans('public.from'),
+            'mail_to' => trans('public.to'),
+            'mail_subject' => trans('public.subject'),
+            'mail_attachment' => trans('public.attachment'),
+            'mail_content' => trans('public.content'),
         ]);
 
         if (!$validator->passes()){
@@ -288,14 +284,14 @@ class OrderController extends Controller
                     // Handle the case when attachment_type is not recognized
                     return response()->json([
                         'status' => 2,
-                        'error' => 'Invalid attachment type.'
+                        'error' => trans('public.invalid_attachment_type')
                     ]);
             }
 
             // Optionally, you can handle the response here (e.g., redirect with a success message)
             return response()->json([
                 'status' => 1,
-                'msg' => 'Successfully Sent Email!'
+                'msg' => trans('public.success_sent_email')
             ]);
         }
     }
@@ -351,7 +347,7 @@ class OrderController extends Controller
             'event' => 'updated',
         ]);
 
-        Session::flash('success_msg', 'Order Cancelled!');
+        Session::flash('success_msg', trans('public.success_cancel_order'));
         return redirect()->route('order_listing');
     }
 

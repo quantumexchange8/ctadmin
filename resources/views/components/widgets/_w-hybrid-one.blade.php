@@ -39,7 +39,7 @@
                     </div>
                     <div class="">
                         <p class="w-value">{{ $totalCarts }}</p>
-                        <h5 class="">Wishlists</h5>
+                        <h5 class="">@lang('public.wishlists')</h5>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="">
                         <p class="w-value">{{ $totalAwaiting }}</p>
-                        <h5 class="">Awaiting Payment</h5>
+                        <h5 class="">@lang('public.awaiting_payment')</h5>
                     </div>
                 </div>
             </div>

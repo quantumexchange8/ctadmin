@@ -19,7 +19,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 <form class="form-inline search-full form-inline search" role="search">
                     <div class="search-bar">
-                        <input type="text" class="form-control search-form-control  ml-lg-auto" placeholder="Search...">
+                        <input type="text" class="form-control search-form-control  ml-lg-auto" placeholder="{{ trans('public.search') }}...">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x search-close"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </div>
                 </form>
@@ -55,7 +55,7 @@
                     <div class="dropdown-menu position-absolute" aria-labelledby="language-dropdown">
                         <a class="dropdown-item d-flex" href="{{ url('localization/en') }}"><img src="{{Vite::asset('resources/images/1x1/us.svg')}}" class="flag-width" alt="flag"><span class="align-self-center">&nbsp;English</span>
                         </a>
-                        <a class="dropdown-item d-flex" href="{{ url('localization/zh-Hans') }}"><img src="{{Vite::asset('resources/images/1x1/cn.svg')}}" class="flag-width" alt="flag"> <span class="align-self-center">&nbsp;Chinese</span></a>
+                        <a class="dropdown-item d-flex" href="{{ url('localization/zh-Hans') }}"><img src="{{Vite::asset('resources/images/1x1/cn.svg')}}" class="flag-width" alt="flag"> <span class="align-self-center">&nbsp;@lang('public.chinese')</span></a>
                     </div>
                 </li>
 
@@ -75,41 +75,46 @@
                     </a>
 
                     <div class="dropdown-menu position-absolute" aria-labelledby="notificationDropdown">
+                        @php
+                            $new_users = \App\Models\User::query()
+                                ->where('user_status', \App\Models\User::STATUS_ACTIVE)
+                                ->where('user_role', \App\Models\User::USER_ROLE)
+                                ->where('is_deleted', 0)
+                                ->orderByDesc('user_created')
+                                ->limit(3)
+                                ->get();
+                        @endphp
                         <div class="drodpown-title message">
-                            <h6 class="d-flex justify-content-between"><span class="align-self-center">New Users</span> <span class="badge badge-primary">3</span></h6>
+                            <h6 class="d-flex justify-content-between"><span class="align-self-center">@lang('public.new_users')</span> <span class="badge badge-primary">{{ $new_users->count() }}</span></h6>
                         </div>
                         <div class="notification-scroll">
-{{--                            @foreach($newUsers as $new_user)--}}
-{{--                                <div class="dropdown-item">--}}
-{{--                                    <a href="{{ route('user_edit', $new_user->user_id) }}">--}}
-{{--                                        <div class="media server-log">--}}
-{{--                                            @if($new_user->hasMedia('user_profile_photo'))--}}
-{{--                                                <img src="{{ $new_user->getFirstMediaUrl('user_profile_photo') }}" class="img-fluid me-2" alt="avatar">--}}
-{{--                                            @else--}}
-{{--                                                <img src="{{Vite::asset('resources/images/profile-5.jpeg')}}" class="img-fluid me-2" alt="avatar">--}}
-{{--                                            @endif--}}
-{{--                                            <div class="media-body">--}}
-{{--                                                <div class="data-info">--}}
-{{--                                                    <h6 class="">{{ $new_user->user_fullname }}</h6>--}}
-{{--                                                    <p class="">{{ $new_user->user_created->diffForHumans() }}</p>--}}
-{{--                                                </div>--}}
+                            @foreach($new_users as $new_user)
+                                <div class="dropdown-item">
+                                    <a href="{{ route('user_edit', $new_user->user_id) }}">
+                                        <div class="media server-log">
+                                            @if($new_user->hasMedia('user_profile_photo'))
+                                                <img src="{{ $new_user->getFirstMediaUrl('user_profile_photo') }}" class="img-fluid me-2" alt="avatar">
+                                            @else
+                                                <img src="{{Vite::asset('resources/images/profile-5.jpeg')}}" class="img-fluid me-2" alt="avatar">
+                                            @endif
+                                            <div class="media-body">
+                                                <div class="data-info">
+                                                    <h6 class="">{{ $new_user->user_fullname }}</h6>
+                                                    <p class="">{{ $new_user->user_created->diffForHumans() }}</p>
+                                                </div>
 
-{{--                                                <div class="icon-status">--}}
-{{--                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </a>--}}
-{{--                                </div>--}}
-{{--                            @endforeach--}}
-                            <div class="dropdown-item">
-                                Hello World
-                            </div>
-
+                                                <div class="icon-status">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
                             <div class="drodpown-title notification mt-2">
-                                <h6 class="d-flex justify-content-between"><span class="align-self-center">New Orders</span> <span class="badge badge-secondary">{{ auth()->user()->unreadNotifications->count() }}</span></h6>
+                                <h6 class="d-flex justify-content-between"><span class="align-self-center">@lang('public.new_orders')</span> <span class="badge badge-secondary">{{ auth()->user()->unreadNotifications->count() }}</span></h6>
                             </div>
-                            <a href="{{ route('mark_as_read') }}"><span class="d-flex justify-content-end me-2 mb-2 mt-0" style="font-size: 12px">Mark as read</span></a>
+                            <a href="{{ route('mark_as_read') }}"><span class="d-flex justify-content-end me-2 mb-2 mt-0" style="font-size: 12px">@lang('public.mark_as_read')</span></a>
                             @if(auth()->user()->unreadNotifications->count() > 0)
                                 @foreach(auth()->user()->unreadNotifications as $notification)
                                     <div class="dropdown-item">
@@ -131,7 +136,7 @@
                                 @endforeach
                             @else
                                 <div class="dropdown-item">
-                                    <p style="font-size: 12px">No orders yet</p>
+                                    <p style="font-size: 12px">@lang('public.no_orders')</p>
                                 </div>
                             @endif
 
@@ -158,18 +163,18 @@
                                 </div>
                                 <div class="media-body">
                                     <h5>{{ auth()->user()->user_fullname }}</h5>
-                                    <p>{{ auth()->user()->user_role == 1 ? 'Admin' : 'Undefined' }}</p>
+                                    <p>{{ auth()->user()->user_role == 1 ? 'Admin' : 'User' }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="dropdown-item">
                             <a href="{{ route('user_edit', auth()->user()->user_id) }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> <span>Profile</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> <span>@lang('public.profile')</span>
                             </a>
                         </div>
                         <div class="dropdown-item">
                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> <span>Log Out</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> <span>@lang('public.log_out')</span>
                             </a>
                         </div>
                     </div>
@@ -186,11 +191,11 @@
                 <div class="icon-content">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-power"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
                 </div>
-                <p class="modal-text text-center">Ready to Leave?</p>
+                <p class="modal-text text-center">@lang('public.ready_to_leave')</p>
             </div>
             <div class="modal-footer mx-auto">
-                <a class="btn btn-secondary" data-bs-dismiss="modal">Discard</a>
-                <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                <a class="btn btn-secondary" data-bs-dismiss="modal">@lang('public.discard')</a>
+                <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">@lang('public.log_out')</a>
                 <form id="logout-form" method="POST" style="display: none;" action="{{ route('logout') }}">
                     {{ csrf_field() }}
                 </form>

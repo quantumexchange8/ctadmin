@@ -39,12 +39,12 @@ class WebTemplateCategoryController extends Controller
         $search = session('web_template_category_search') ? session('web_template_category_search') : $search;
 
         return view('pages.web_template_category.listing', [
-            'title' => 'Listing',
-            'heading' => 'Web Template Category',
+            'title' => trans('public.listing'),
+            'heading' => trans('public.web_template_category'),
             'search' =>  $search,
-            'get_category_group_sel' => ['Basic' => 'Basic', 'Finance' => 'Finance'],
-            'get_status_sel' => [1 => 'Visible', 0 => 'Not Visible'],
-            'get_order_sel' => ['asc' => 'Created Date ASC', 'desc' => 'Created Date DESC'],
+            'get_category_group_sel' => ['Basic' => trans('public.basic'), 'Finance' => trans('public.finance')],
+            'get_status_sel' => [1 => trans('public.visible'), 0 => trans('public.not_visible')],
+            'get_order_sel' => ['asc' => trans('public.asc_create_date'), 'desc' => trans('public.desc_create_date')],
             'records' => WebTemplateCategory::get_record($search, 10),
         ]);
     }
@@ -60,14 +60,14 @@ class WebTemplateCategoryController extends Controller
             $attributeNames = [
                 'web_template_category_slug' => trans('public.slug'),
                 'category_id' => trans('public.category'),
-                'web_template_category_group' => trans('public.web_template_category_group'),
+                'web_template_category_group' => trans('public.category_group'),
                 'web_template_category_image' => trans('public.image'),
             ];
 
             foreach ($languages as $lang) {
                 $rules["{$lang}.web_template_category_name"] = 'required';
 
-                $attributeNames["{$lang}.web_template_category_name"] = trans('public.web_template_category_name').' ('.trans("public.{$lang}").')';
+                $attributeNames["{$lang}.web_template_category_name"] = trans('public.name').' ('.trans("public.{$lang}").')';
             }
 
             $validator = Validator::make($request->all(), $rules+[
@@ -109,7 +109,7 @@ class WebTemplateCategoryController extends Controller
                     }
                 }
 
-                Session::flash('success_msg', 'Successfully Created Web Template!');
+                Session::flash('success_msg', trans('public.success_create_web_template_category'));
                 return redirect()->route('web_template_category_listing');
             }
 
@@ -119,12 +119,12 @@ class WebTemplateCategoryController extends Controller
 
         return view('pages.web_template_category.form', [
             'title' => 'Add',
-            'heading' => 'Web Template Category',
+            'heading' => trans('public.web_template_category'),
             'submit' => route('web_template_category_add'),
             'post' => $post,
             'languages' => $languages,
             'get_category_sel' => Category::get_category_sel(),
-            'get_category_group_sel' => ['Basic' => 'Basic', 'Finance' => 'Finance'],
+            'get_category_group_sel' => ['Basic' => trans('public.basic'), 'Finance' => trans('public.finance')],
         ])->withErrors($validator);
     }
 
@@ -138,13 +138,13 @@ class WebTemplateCategoryController extends Controller
         if ($request->isMethod('post')) {
             $attributeNames = [
                 'category_id' => trans('public.category'),
-                'web_template_category_group' => trans('public.web_template_category_group'),
+                'web_template_category_group' => trans('public.category_group'),
             ];
 
             foreach ($languages as $lang) {
                 $rules["{$lang}.web_template_category_name"] = 'required';
 
-                $attributeNames["{$lang}.web_template_category_name"] = trans('public.web_template_category_name').' ('.trans("public.{$lang}").')';
+                $attributeNames["{$lang}.web_template_category_name"] = trans('public.name').' ('.trans("public.{$lang}").')';
             }
 
             $validator = Validator::make($request->all(), $rules+[
@@ -183,7 +183,7 @@ class WebTemplateCategoryController extends Controller
 
                 }
 
-                Session::flash('success_msg', 'Successfully Updated Web Template!');
+                Session::flash('success_msg', trans('public.success_update_web_template_category'));
                 return redirect()->route('web_template_category_listing');
             }
 
@@ -193,32 +193,32 @@ class WebTemplateCategoryController extends Controller
 
         return view('pages.web_template_category.form', [
             'title' => 'Edit',
-            'heading' => 'Web Template Category',
+            'heading' => trans('public.web_template_category'),
             'submit' => route('web_template_category_edit', $web_template_category_id),
             'post' => $post,
             'web_template_category' => $web_template_category,
             'languages' => $languages,
             'get_category_sel' => Category::get_category_sel(),
-            'get_category_group_sel' => ['Basic' => 'Basic', 'Finance' => 'Finance'],
+            'get_category_group_sel' => ['Basic' => trans('public.basic'), 'Finance' => trans('public.finance')],
         ])->withErrors($validator);
     }
 
-    public function web_template_delete(Request $request)
+    public function web_template_category_delete(Request $request)
     {
-        $web_template_id = $request->input('web_template_id');
-        $web_template = WebTemplate::find($web_template_id);
+        $web_template_category_id = $request->input('web_template_category_id');
+        $web_template_category = WebTemplateCategory::find($web_template_category_id);
 
-        if (!$web_template) {
-            Session::flash('fail_msg', trans('public.invalid_web_template'));
-            return redirect()->route('web_template_listing');
+        if (!$web_template_category) {
+            Session::flash('fail_msg', trans('public.invalid_action'));
+            return redirect()->route('web_template_category_listing');
         }
 
-        $web_template->update([
+        $web_template_category->update([
             'is_deleted' => 1,
         ]);
 
-        Session::flash('success_msg', trans('public.successfully_deleted_web_template!'));
-        return redirect()->route('web_template_listing');
+        Session::flash('success_msg', trans('public.success_delete_web_template_category'));
+        return redirect()->route('web_template_category_listing');
     }
     public function web_template_category_upload(Request $request)
     {

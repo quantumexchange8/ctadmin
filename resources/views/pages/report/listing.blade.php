@@ -1,7 +1,7 @@
 <x-base-layout :scrollspy="false">
 
     <x-slot:pageTitle>
-        {{ $heading }} {{$title}}
+        {{ $heading }} - {{$title}}
         </x-slot>
 
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -41,60 +41,36 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group mb-3">
-                                            <label for="search" class="mb-2">Freetext</label>
-                                            <input type="text" class="form-control select_active" id="search" name="freetext" placeholder="Search for..." value="{{ @$search['freetext'] }}">
+                                            <label for="search" class="mb-2">@lang('public.freetext')</label>
+                                            <input type="text" class="form-control select_active" id="search" name="freetext" placeholder="@lang('public.search_for')" value="{{ @$search['freetext'] }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group mb-3">
-                                            <label for="order_status" class="mb-2">Status</label>
-                                            {!! Form::select('order_status', $get_order_status_sel, @$search['order_status'], ['class' => 'form-select', 'placeholder' => 'Search Status..']) !!}
+                                            <label for="order_status" class="mb-2">@lang('public.status')</label>
+                                            {!! Form::select('order_status', $get_order_status_sel, @$search['order_status'], ['class' => 'form-select', 'placeholder' => trans('public.choose_status')]) !!}
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group mb-3">
-                                            <label for="rangeCalendarFlatpickr" class="mb-2">Date Range</label>
+                                            <label for="rangeCalendarFlatpickr" class="mb-2">@lang('public.date_range')</label>
                                             <input id="basicFlatpickr" value="2022-09-04" class="form-control flatpickr flatpickr-input d-none" disabled type="text" placeholder="Select Date..">
                                             <input id="dateTimeFlatpickr" value="2022-09-19 12:00" class="form-control flatpickr flatpickr-input d-none" disabled type="text" placeholder="Select Date..">
-                                            <input id="rangeCalendarFlatpickr" name="date_range" value="{{ @$search['date_range'] }}" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Select Date..">
+                                            <input id="rangeCalendarFlatpickr" name="date_range" value="{{ @$search['date_range'] }}" class="form-control flatpickr flatpickr-input active" type="text" placeholder="@lang('public.select_date')">
                                             <input id="timeFlatpickr" class="form-control flatpickr flatpickr-input d-none" disabled type="text" placeholder="Select Date..">
                                         </div>
                                     </div>
-                                    {{--                                    <div class="col-md-4 pos-system-category">--}}
-                                    {{--                                        <div class="form-group mb-3">--}}
-                                    {{--                                            <label for="pos_system_category" class="mb-2">POS System Category</label>--}}
-                                    {{--                                            {!! Form::select('pos_system_category', $get_pos_system_category_sel, @$search['pos_system_category'], ['class' => 'form-select', 'id' => 'pos_system_category', 'placeholder' => 'Choose POS Category..']) !!}--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                    </div>--}}
-                                    {{--                                    <div class="col-md-4">--}}
-                                    {{--                                        <div class="form-group mb-3">--}}
-                                    {{--                                            <label for="product_status" class="mb-2">Status</label>--}}
-                                    {{--                                            {!! Form::select('product_status', $get_status_sel, @$search['product_status'], ['class' => 'form-select', 'placeholder' => 'Search Status..']) !!}--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                    </div>--}}
-                                    {{--                                    <div class="col-md-4">--}}
-                                    {{--                                        <div class="form-group mb-3">--}}
-                                    {{--                                            <label for="product_visibility" class="mb-2">Visibility</label>--}}
-                                    {{--                                            {!! Form::select('product_visibility', $get_visibility_sel, @$search['product_visibility'], ['class' => 'form-select', 'placeholder' => 'Search Visibility..']) !!}--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                    </div>--}}
-                                    {{--                                    <div class="col-md-4">--}}
-                                    {{--                                        <div class="form-group mb-3">--}}
-                                    {{--                                            <label for="order_by" class="mb-2">Order By</label>--}}
-                                    {{--                                            {!! Form::select('order_by', $get_order_sel, @$search['order_by'], ['class' => 'form-select']) !!}--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                    </div>--}}
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <button type="submit" class="btn btn-primary waves-effect waves-light mr-2" name="submit" value="search">
-                                            <i class="fas fa-search mr-1"></i> Search
+                                            <i class="fas fa-search mr-1"></i> @lang('public.search')
                                         </button>
                                         <button type="submit" class="btn btn-danger waves-effect waves-light mx-2" name="submit" value="reset">
-                                            <i class="fas fa-times mr-1"></i> Reset
+                                            <i class="fas fa-times mr-1"></i> @lang('public.reset')
                                         </button>
                                         <button type="submit" class="btn btn-dark waves-effect waves-light ml-2" name="submit" value="export">
-                                            <i class="fas fa-times mr-1"></i> Export
+                                            <i class="fas fa-times mr-1"></i> @lang('public.export')
                                         </button>
                                     </div>
                                 </div>
@@ -110,22 +86,22 @@
                             <div class="widget-header">
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                        <h4>{{ $heading }} {{ $title }}</h4>
+                                        <h4>{{ $heading }} - {{ $title }}</h4>
                                     </div>
                                 </div>
                             </div>
                             <div class="widget-content widget-content-area">
-                                <p class="mb-4"> Overview of Order Details and Sales Statistics</p>
+                                <p class="mb-4"> @lang('public.report_caption')</p>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th scope="col">Order Number</th>
-                                            <th scope="col">Customer</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Order Items</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col" class="text-center">Completed At</th>
+                                            <th scope="col">@lang('public.order_num')</th>
+                                            <th scope="col">@lang('public.customer')</th>
+                                            <th scope="col">@lang('public.status')</th>
+                                            <th scope="col">@lang('public.order_item')</th>
+                                            <th scope="col">@lang('public.price')</th>
+                                            <th scope="col" class="text-center">@lang('public.completed_at')</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -140,11 +116,11 @@
                                                 <td>
                                                     @php
                                                         $statusLabels = [
-                                                            \App\Models\Order::STATUS_PROCESSING => ['Processing', 'badge-primary'],
-                                                            \App\Models\Order::STATUS_PENDING => ['Pending', 'badge-secondary'],
-                                                            \App\Models\Order::STATUS_AWAITING => ['Awaiting Payment', 'badge-info'],
-                                                            \App\Models\Order::STATUS_COMPLETED => ['Completed', 'badge-success'],
-                                                            \App\Models\Order::STATUS_CANCELLED => ['Cancelled', 'badge-danger']
+                                                            \App\Models\Order::STATUS_PROCESSING => [trans('public.processing'), 'badge-primary'],
+                                                            \App\Models\Order::STATUS_PENDING => [trans('public.pending'), 'badge-secondary'],
+                                                            \App\Models\Order::STATUS_AWAITING => [trans('public.awaiting_payment'), 'badge-info'],
+                                                            \App\Models\Order::STATUS_COMPLETED => [trans('public.completed'), 'badge-success'],
+                                                            \App\Models\Order::STATUS_CANCELLED => [trans('public.cancelled'), 'badge-danger']
                                                         ];
                                                     @endphp
                                                     @if (isset($statusLabels[$record->order_status]))
@@ -200,7 +176,7 @@
                 <div class="col-12">
                     <div class="alert alert-arrow-right alert-icon-right alert-light-warning alert-dismissible fade show mb-4" role="alert">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12" y2="16"></line></svg>
-                        <strong>Warning!</strong> No Record Found.
+                        <strong>@lang('public.warning')</strong> @lang('public.no_record')
                     </div>
                 </div>
             @endif

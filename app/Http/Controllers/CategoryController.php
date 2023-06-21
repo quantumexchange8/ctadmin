@@ -37,11 +37,11 @@ class CategoryController extends Controller
         $search = session('category_search') ? session('category_search') : $search;
 
         return view('pages.category.listing', [
-            'title' => 'Listing',
-            'heading' => 'Category',
+            'title' => trans('public.listing'),
+            'heading' => trans('public.category'),
             'search' =>  $search,
             'get_product_sel' => Product::get_product_sel(),
-            'get_status_sel' => [1 => 'Visible', 0 => 'Not Visible'],
+            'get_status_sel' => [1 => trans('public.visible'), 0 => trans('public.not_visible')],
             'records' => Category::get_record($search, 10),
         ]);
     }
@@ -55,7 +55,7 @@ class CategoryController extends Controller
 
         if ($request->isMethod('post')) {
             $attributeNames = [
-                'category_image' => trans('public.category_image'),
+                'category_image' => trans('public.image'),
                 'category_slug' => trans('public.slug'),
             ];
 
@@ -64,9 +64,9 @@ class CategoryController extends Controller
                 $rules["{$lang}.category_caption"] = 'required';
                 $rules["{$lang}.category_description"] = 'required';
 
-                $attributeNames["{$lang}.category_name"] = trans('public.category_name').' ('.trans("public.{$lang}").')';
-                $attributeNames["{$lang}.category_caption"] = trans('public.category_caption').' ('.trans("public.{$lang}").')';
-                $attributeNames["{$lang}.category_description"] = trans('public.category_description').' ('.trans("public.{$lang}").')';
+                $attributeNames["{$lang}.category_name"] = trans('public.name').' ('.trans("public.{$lang}").')';
+                $attributeNames["{$lang}.category_caption"] = trans('public.caption').' ('.trans("public.{$lang}").')';
+                $attributeNames["{$lang}.category_description"] = trans('public.description').' ('.trans("public.{$lang}").')';
             }
 
             $validator = Validator::make($request->all(), $rules+[
@@ -107,7 +107,7 @@ class CategoryController extends Controller
                     }
                 }
 
-                Session::flash('success_msg', 'Successfully Created Category!');
+                Session::flash('success_msg', trans('public.success_create_category'));
                 return redirect()->route('category_listing');
             }
 
@@ -117,7 +117,7 @@ class CategoryController extends Controller
 
         return view('pages.category.form', [
             'title' => 'Add',
-            'heading' => 'Category',
+            'heading' => trans('public.category'),
             'submit' => route('category_add'),
             'post' => $post,
             'languages' => $languages,
@@ -137,9 +137,9 @@ class CategoryController extends Controller
                 $rules["{$lang}.category_caption"] = 'required';
                 $rules["{$lang}.category_description"] = 'required';
 
-                $attributeNames["{$lang}.category_name"] = trans('public.category_name').' ('.trans("public.{$lang}").')';
-                $attributeNames["{$lang}.category_caption"] = trans('public.category_caption').' ('.trans("public.{$lang}").')';
-                $attributeNames["{$lang}.category_description"] = trans('public.category_description').' ('.trans("public.{$lang}").')';
+                $attributeNames["{$lang}.category_name"] = trans('public.name').' ('.trans("public.{$lang}").')';
+                $attributeNames["{$lang}.category_caption"] = trans('public.caption').' ('.trans("public.{$lang}").')';
+                $attributeNames["{$lang}.category_description"] = trans('public.description').' ('.trans("public.{$lang}").')';
             }
 
             $validator = Validator::make($request->all(), $rules)->setAttributeNames($attributeNames);
@@ -175,7 +175,7 @@ class CategoryController extends Controller
                     }
                 }
 
-                Session::flash('success_msg', 'Successfully Updated Category!');
+                Session::flash('success_msg', trans('public.success_update_category'));
                 return redirect()->route('category_listing');
             }
 
@@ -185,7 +185,7 @@ class CategoryController extends Controller
 
         return view('pages.category.form', [
             'title' => 'Edit',
-            'heading' => 'Category',
+            'heading' => trans('public.category'),
             'submit' => route('category_edit', $category_id),
             'post' => $post,
             'category' => $category,
@@ -235,7 +235,7 @@ class CategoryController extends Controller
         $category = Category::find($category_id);
 
         if (!$category) {
-            Session::flash('fail_msg', trans('public.invalid_category'));
+            Session::flash('fail_msg', trans('public.invalid_action'));
             return redirect()->route('category_listing');
         }
 
@@ -243,7 +243,7 @@ class CategoryController extends Controller
             'is_deleted' => 1,
         ]);
 
-        Session::flash('success_msg', trans('public.successfully_deleted_category!'));
+        Session::flash('success_msg', trans('public.success_delete_category'));
         return redirect()->route('category_listing');
     }
 }

@@ -22,7 +22,7 @@
                     </a>
                 </div>
                 <div class="nav-item theme-text">
-                    <a href="{{getRouterValue();}}/dashboard/analytics" class="nav-link"> CurrentTech </a>
+                    <a href="{{getRouterValue();}}/dashboard/analytics" class="nav-link"> CT Admin </a>
                 </div>
             </div>
             <div class="nav-item sidebar-toggle">
@@ -50,7 +50,7 @@
                 <a href="#dashboard" data-bs-toggle="collapse" aria-expanded="{{ Request::is('*/dashboard/*') ? "true" : "false" }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                        <span>Dashboard</span>
+                        <span>@lang('public.dashboard')</span>
                     </div>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -58,24 +58,24 @@
                 </a>
                 <ul class="collapse submenu list-unstyled {{ Request::is('*/dashboard/*') ? "show" : "" }}" id="dashboard" data-bs-parent="#accordionExample">
                     <li class="{{ Request::routeIs('analytics') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/dashboard/analytics"> Analytics </a>
+                        <a href="{{getRouterValue();}}/dashboard/analytics"> @lang('public.analytics') </a>
                     </li>
                     <li class="{{ Request::routeIs('sales') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/dashboard/sales"> Sales </a>
+                        <a href="{{getRouterValue();}}/dashboard/sales"> @lang('public.sales') </a>
                     </li>
                 </ul>
             </li>
 
             <!-- Categories -->
             <li class="menu menu-heading">
-                <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>CATEGORIES</span></div>
+                <div class="heading text-uppercase"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>@lang('public.categories')</span></div>
             </li>
 
             <li class="menu {{ Request::is('*/category/*') || Request::is('*/web_template_category/*') ? "active" : "" }}">
                 <a href="#category" data-bs-toggle="collapse" aria-expanded="{{ Request::is('*/category/*') ? "true" : "false" }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                        <span>Category</span>
+                        <span>@lang('public.categories')</span>
                     </div>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -83,19 +83,19 @@
                 </a>
                 <ul class="collapse submenu list-unstyled {{ Request::is('*/category/*') || Request::is('*/web_template_category/*') ? "show" : "" }}" id="category" data-bs-parent="#accordionExample">
                     <li class="{{ Request::is('*/category/category_add') || Request::is('*/category/category_edit/*') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/category/category_add"> Form </a>
+                        <a href="{{getRouterValue();}}/category/category_add"> @lang('public.form') </a>
                     </li>
                     <li class="{{ Request::routeIs('category_listing') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/category/category_listing"> Listing </a>
+                        <a href="{{getRouterValue();}}/category/category_listing"> @lang('public.listing') </a>
                     </li>
                     <li class="{{ Request::routeIs('*/web_template_category/*') ? 'active' : '' }}">
-                        <a href="#web-template" data-bs-toggle="collapse" aria-expanded="{{ Request::is('*/web_template_category/*') ? "true" : "false" }}" class="dropdown-toggle collapsed"> Web Template <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> </a>
+                        <a href="#web-template" data-bs-toggle="collapse" aria-expanded="{{ Request::is('*/web_template_category/*') ? "true" : "false" }}" class="dropdown-toggle collapsed"> @lang('public.web_template') <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg> </a>
                         <ul class="collapse list-unstyled sub-submenu {{ Request::is('*/web_template_category/*') ? "show" : "" }}" id="web-template" data-bs-parent="#pages">
                             <li class="{{ Request::is('*/web_template_category/web_template_category_add') || Request::is('*/web_template/web_template_add/*') ? 'active' : '' }}">
-                                <a href="{{getRouterValue();}}/web_template_category/web_template_category_add"> Form </a>
+                                <a href="{{getRouterValue();}}/web_template_category/web_template_category_add"> @lang('public.form') </a>
                             </li>
                             <li class="{{ Request::is('*/web_template_category/web_template_category_listing') ? 'active' : '' }}">
-                                <a href="{{getRouterValue();}}/web_template_category/web_template_category_listing"> List </a>
+                                <a href="{{getRouterValue();}}/web_template_category/web_template_category_listing"> @lang('public.listing') </a>
                             </li>
                         </ul>
                     </li>
@@ -105,14 +105,14 @@
 
             <!-- Products -->
             <li class="menu menu-heading">
-                <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>PRODUCTS</span></div>
+                <div class="heading text-uppercase"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>@lang('public.products')</span></div>
             </li>
 
             <li class="menu {{ Request::is('*/product/*') ? "active" : "" }}">
                 <a href="#product" data-bs-toggle="collapse" aria-expanded="{{ Request::is('*/product/*') ? "true" : "false" }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-                        <span>Product</span>
+                        <span>@lang('public.products')</span>
                     </div>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -120,10 +120,10 @@
                 </a>
                 <ul class="collapse submenu list-unstyled {{ Request::is('*/product/*') ? "show" : "" }}" id="product" data-bs-parent="#accordionExample">
                     <li class="{{ Request::routeIs('product_add') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/product/product_add"> Form </a>
+                        <a href="{{getRouterValue();}}/product/product_add"> @lang('public.form') </a>
                     </li>
                     <li class="{{ Request::routeIs('product_listing') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/product/product_listing"> Listing </a>
+                        <a href="{{getRouterValue();}}/product/product_listing"> @lang('public.listing') </a>
                     </li>
                 </ul>
             </li>
@@ -132,25 +132,28 @@
 
             <!-- Orders -->
             <li class="menu menu-heading">
-                <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>ORDERS</span></div>
+                <div class="heading text-uppercase"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>@lang('public.orders')</span></div>
             </li>
-
             <li class="menu {{ Request::is('*/order/*') ? "active" : "" }}">
                 <a href="#order" data-bs-toggle="collapse" aria-expanded="{{ Request::is('*/order/*') ? "true" : "false" }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                        <span>Order</span>
+                        <span>@lang('public.orders')</span>
                     </div>
+                    @php
+                        $orderPending = \App\Models\Order::query()->where('is_deleted', 0)->where('order_status', \App\Models\Order::STATUS_PROCESSING)->count();
+                    @endphp
+                    <span class="badge badge-info sidebar-label"> {{ $orderPending }}</span>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled {{ Request::is('*/order/*') ? "show" : "" }}" id="order" data-bs-parent="#accordionExample">
                     <li class="{{ Request::routeIs('order_add') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/order/order_add"> Form </a>
+                        <a href="{{getRouterValue();}}/order/order_add"> @lang('public.form') </a>
                     </li>
                     <li class="{{ Request::routeIs('order_listing') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/order/order_listing"> Listing </a>
+                        <a href="{{getRouterValue();}}/order/order_listing"> @lang('public.listing') </a>
                     </li>
                 </ul>
             </li>
@@ -159,7 +162,7 @@
                 <a href="#invoice" data-bs-toggle="collapse" aria-expanded="{{ Request::is('*/report/*') ? "true" : "false" }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                        <span>Report</span>
+                        <span>@lang('public.reports')</span>
                     </div>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -167,30 +170,21 @@
                 </a>
                 <ul class="collapse submenu list-unstyled {{ Request::is('*/report/*') ? "show" : "" }}" id="invoice" data-bs-parent="#accordionExample">
                     <li class="{{ Request::routeIs('report_listing') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/report/report_listing"> Listing </a>
-                    </li>
-                    <li class="{{ Request::routeIs('invoice-preview') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/app/invoice/preview"> Preview </a>
-                    </li>
-                    <li class="{{ Request::routeIs('invoice-add') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/app/invoice/add"> Add </a>
-                    </li>
-                    <li class="{{ Request::routeIs('invoice-edit') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/app/invoice/edit"> Edit </a>
+                        <a href="{{getRouterValue();}}/report/report_listing"> @lang('public.listing') </a>
                     </li>
                 </ul>
             </li>
             <!-- End Products -->
 
             <li class="menu menu-heading">
-                <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>USER AND PAGES</span></div>
+                <div class="heading text-uppercase"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg><span>@lang('public.users')</span></div>
             </li>
 
             <li class="menu {{ Request::is('*/user/*') ? "active" : "" }}">
                 <a href="#users" data-bs-toggle="collapse" aria-expanded="{{ Request::is('*/user/*') ? "true" : "false" }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                        <span>User</span>
+                        <span>@lang('public.users')</span>
                     </div>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -198,10 +192,10 @@
                 </a>
                 <ul class="collapse submenu list-unstyled {{ Request::is('*/user/*') ? "show" : "" }}" id="users" data-bs-parent="#accordionExample">
                     <li class="{{ Request::routeIs('user_add') || Request::is('*/user_edit/*') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/user/user_add"> Form </a>
+                        <a href="{{getRouterValue();}}/user/user_add"> @lang('public.form') </a>
                     </li>
                     <li class="{{ Request::routeIs('user_listing') ? 'active' : '' }}">
-                        <a href="{{getRouterValue();}}/user/user_listing"> Listing </a>
+                        <a href="{{getRouterValue();}}/user/user_listing"> @lang('public.listing') </a>
                     </li>
                 </ul>
             </li>

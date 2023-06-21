@@ -37,8 +37,8 @@ class ReportController extends Controller
         $search = session('report_order_search') ? session('report_order_search') : $search;
 
         return view('pages.report.listing', [
-            'heading' => 'Report',
-            'title' => 'Listing',
+            'heading' => trans('public.report'),
+            'title' => trans('public.listing'),
             'search' => $search,
             'records' => Order::get_export_record($search)->paginate(10),
             'get_order_status_sel' => Order::get_order_status_sel(),

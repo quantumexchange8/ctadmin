@@ -123,11 +123,11 @@
                                                 <td>{{ $record->web_template_name }}</td>
                                                 <td>
                                                     @if($record->web_template_status == \App\Models\WebTemplate::STATUS_NORMAL)
-                                                        RM {{ $record->web_template_price }}
+                                                        $ {{ $record->web_template_price }}
                                                     @else
                                                         <span>
-                                                            <s> RM {{ $record->web_template_price }}</s>
-                                                            <span class="text-secondary">RM {{ $record->web_template_offer_price }}</span> <br>
+                                                            <s> $ {{ $record->web_template_price }}</s>
+                                                            <span class="text-secondary">$ {{ $record->web_template_offer_price }}</span> <br>
                                                             <span class="badge badge-danger mt-1">OFFER</span>
                                                         </span>
                                                     @endif

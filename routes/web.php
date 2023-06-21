@@ -132,6 +132,7 @@ foreach ($prefixRouters as $prefixRouter) {
             Route::match(['get', 'post'], '/user_edit/{id}', [UserController::class, 'user_edit'])->name('user_edit');
             Route::post('/user_profile_photo_upload', [UserController::class, 'user_profile_photo_upload']);
             Route::delete('/user_profile_photo_delete', [UserController::class, 'user_profile_photo_delete']);
+            Route::match(['get', 'post'],'/user_delete', [UserController::class, 'user_delete'])->name('user_delete');
         });
 
         /**
@@ -190,13 +191,6 @@ foreach ($prefixRouters as $prefixRouter) {
          */
 
         Route::prefix('web_template_category')->group(function () {
-            Route::match(['get', 'post'], '/web_template_add', [WebTemplateController::class, 'web_template_add'])->name('web_template_add');
-            Route::match(['get', 'post'], '/web_template_edit/{id}', [WebTemplateController::class, 'web_template_edit'])->name('web_template_edit');
-            Route::post('/web_template_upload', [WebTemplateController::class, 'web_template_upload']);
-            Route::delete('/web_template_image_delete', [WebTemplateController::class, 'web_template_image_delete']);
-            Route::match(['get', 'post'], '/web_template_listing', [WebTemplateController::class, 'web_template_listing'])->name('web_template_listing');
-            Route::post('/web_template_delete', [WebTemplateController::class, 'web_template_delete'])->name('web_template_delete');
-
             Route::match(['get', 'post'], '/web_template_category_listing', [WebTemplateCategoryController::class, 'web_template_category_listing'])->name('web_template_category_listing');
             Route::match(['get', 'post'], '/web_template_category_add', [WebTemplateCategoryController::class, 'web_template_category_add'])->name('web_template_category_add');
             Route::post('/web_template_category_upload', [WebTemplateCategoryController::class, 'web_template_category_upload']);

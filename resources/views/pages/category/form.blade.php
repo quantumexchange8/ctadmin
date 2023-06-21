@@ -1,7 +1,7 @@
 <x-base-layout :scrollspy="false">
 
     <x-slot:pageTitle>
-        {{ $heading }} {{$title}}
+        {{ $heading }} - {{ $title == 'Add' ? trans('public.add') : trans('public.edit') }}
         </x-slot>
 
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -47,14 +47,14 @@
                 <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">{{ $heading }}</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ $title }} {{ $heading }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ $title == 'Add' ? trans('public.add') : trans('public.edit') }}</li>
                     </ol>
                 </nav>
             </div>
             <!-- /BREADCRUMB -->
             @if($errors->any())
                 @foreach($errors->all() as $error)
-                    <div class="alert alert-light-danger alert-dismissible fade show border-0 mt-2" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-bs-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button> <strong>Error!</strong> {{ $error }} </div>
+                    <div class="alert alert-light-danger alert-dismissible fade show border-0 mt-2" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-bs-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button> <strong>@lang('public.error')</strong> {{ $error }} </div>
                 @endforeach
             @endif
             <!-- CONTENT AREA -->
@@ -68,7 +68,7 @@
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     @foreach($languages as $locale)
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link @if($locale == 'en') active @endif" id="home-tab" data-bs-toggle="tab" data-bs-target="#category-{{ $locale }}-pane" type="button" role="tab" aria-controls="category-{{ $locale }}-pane" aria-selected="true">{{ $locale }}</button>
+                                            <button class="nav-link @if($locale == 'en') active @endif" id="home-tab" data-bs-toggle="tab" data-bs-target="#category-{{ $locale }}-pane" type="button" role="tab" aria-controls="category-{{ $locale }}-pane" aria-selected="true">@lang('public.'.$locale )</button>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -78,7 +78,7 @@
                                         <div class="tab-pane fade @if($locale == 'en') show active @endif" id="category-{{ $locale }}-pane" role="tabpanel" aria-labelledby="category-{{ $locale }}" tabindex="0">
                                             <div class="row my-4">
                                                 <div class="col-sm-12">
-                                                    <label for="category_name" class="form-label">Name ({{ $locale }})</label>
+                                                    <label for="category_name" class="form-label">@lang('public.name') (@lang('public.'.$locale ))</label>
                                                     <input type="text" class="form-control" id="category_name" name="{{ $locale }}[category_name]"
                                                            @if($title == 'Add')
                                                                value="{{ @$post->$locale['category_name'] }}"
@@ -90,7 +90,7 @@
                                             </div>
                                             <div class="row mb-4">
                                                 <div class="col-sm-12">
-                                                    <label for="category_caption" class="form-label">Caption ({{ $locale }})</label>
+                                                    <label for="category_caption" class="form-label">@lang('public.caption') (@lang('public.'.$locale ))</label>
                                                     <input type="text" class="form-control" id="category_caption" name="{{ $locale }}[category_caption]"
                                                            @if($title == 'Add')
                                                                value="{{ @$post->$locale['category_caption'] }}"
@@ -102,7 +102,7 @@
                                             </div>
                                             <div class="row mb-4">
                                                 <div class="col-sm-12">
-                                                    <label for="category_description" class="form-label">Description ({{ $locale }})</label>
+                                                    <label for="category_description" class="form-label">@lang('public.description') (@lang('public.'.$locale ))</label>
                                                     <textarea class="form-control" id="category_description" name="{{ $locale }}[category_description]" rows="5">@if($title == 'Add'){{ @$post->$locale['category_description'] }}@else{{ @$category->translate($locale)->category_description }}@endif</textarea>
                                                 </div>
                                             </div>
@@ -122,7 +122,7 @@
                                         @if($title == 'Edit')
                                             <div class="widget-content widget-content-area">
                                                 <div class="d-flex justify-content-between">
-                                                    <h4 class="">Image</h4>
+                                                    <h4 class="">@lang('public.image')</h4>
                                                 </div>
                                                 <div class="text-center user-info">
                                                     <img class="bg-dark rounded w-75" src="{{ $category->getFirstMediaUrl('category_image') }}" alt="Category">
@@ -130,7 +130,7 @@
                                             </div>
                                         @endif
                                             <div class="col-12 mb-4">
-                                                <label for="web_template_category_image">Upload Images</label>
+                                                <label for="web_template_category_image">@lang('public.upload_image')</label>
                                                 <div class="multiple-file-upload">
                                                     <input type="file"
                                                            class="filepond file-upload-multiple"
@@ -142,7 +142,7 @@
                                                 </div>
                                             </div>
                                         <div class="col-xxl-12 mb-4">
-                                            <label for="category_slug">Slug</label>
+                                            <label for="category_slug">@lang('public.slug')</label>
                                             @if($title == 'Edit')
                                                 <input type="text" class="form-control" id="category_slug" name="category_slug" value="{{ @$category->category_slug }}" disabled>
                                             @else
@@ -156,7 +156,7 @@
                                 <div class="widget-content widget-content-area ecommerce-create-section">
                                     <div class="row">
                                         <div class="col-xxl-12 col-lg-6 col-md-12">
-                                            <label for="category_status" class="form-label">Visibility</label> <br>
+                                            <label for="category_status" class="form-label">@lang('public.visibility')</label> <br>
                                             <div class="switch form-switch-custom switch-inline form-switch-success">
                                                 <div class="input-checkbox">
                                                     <input class="switch-input" type="checkbox" role="switch" name="category_status" id="category_status"
@@ -167,11 +167,11 @@
                                         </div>
                                         <div class="col-sm-12 mt-4">
                                             @if($title == 'Add')
-                                                <button type="submit" class="btn btn-success mb-2">Add Category</button>
-                                                <a href="{{ route('category_listing') }}" class="btn btn-secondary mb-2">Cancel</a>
+                                                <button type="submit" class="btn btn-success mb-2">@lang('public.add') @lang('public.category')</button>
+                                                <a href="{{ route('category_listing') }}" class="btn btn-secondary mb-2">@lang('public.cancel')</a>
                                             @else
-                                                <button type="submit" class="btn btn-primary mb-2">Update</button>
-                                                <a href="{{ route('category_listing') }}" class="btn btn-secondary mb-2">Cancel</a>
+                                                <button type="submit" class="btn btn-primary mb-2">@lang('public.update')</button>
+                                                <a href="{{ route('category_listing') }}" class="btn btn-secondary mb-2">@lang('public.cancel')</a>
                                             @endif
                                         </div>
                                     </div>

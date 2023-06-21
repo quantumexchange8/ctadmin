@@ -1,7 +1,7 @@
 <x-base-layout :scrollspy="false">
 
     <x-slot:pageTitle>
-        {{ $title }} {{ $heading }}
+        {{ $title }} - {{ $heading }}
         </x-slot>
 
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -48,14 +48,14 @@
                 <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">{{ $heading }}</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ $title }} {{ $heading }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ $title == 'Add' ? trans('public.add') : trans('public.edit') }}</li>
                     </ol>
                 </nav>
             </div>
             <!-- /BREADCRUMB -->
             @if($errors->any())
                 @foreach($errors->all() as $error)
-                    <div class="alert alert-light-danger alert-dismissible fade show border-0 mt-2" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-bs-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button> <strong>Error!</strong> {{ $error }} </div>
+                    <div class="alert alert-light-danger alert-dismissible fade show border-0 mt-2" role="alert"> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-bs-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button> <strong>@lang('public.error')</strong> {{ $error }} </div>
                 @endforeach
             @endif
 
@@ -68,7 +68,7 @@
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     @foreach($languages as $locale)
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link @if($locale == 'en') active @endif" id="home-tab" data-bs-toggle="tab" data-bs-target="#product-{{ $locale }}-pane" type="button" role="tab" aria-controls="product-{{ $locale }}-pane" aria-selected="true">{{ $locale }}</button>
+                                            <button class="nav-link @if($locale == 'en') active @endif" id="home-tab" data-bs-toggle="tab" data-bs-target="#product-{{ $locale }}-pane" type="button" role="tab" aria-controls="product-{{ $locale }}-pane" aria-selected="true">@lang('public.'.$locale )</button>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -78,7 +78,7 @@
                                         <div class="tab-pane fade @if($locale == 'en') show active @endif" id="product-{{ $locale }}-pane" role="tabpanel" aria-labelledby="product-{{ $locale }}" tabindex="0">
                                             <div class="row my-4">
                                                 <div class="col-sm-12">
-                                                    <label for="product_title" class="form-label">Name ({{ $locale }})</label>
+                                                    <label for="product_title" class="form-label">@lang('public.title') (@lang('public.'.$locale ))</label>
                                                     <input type="text" class="form-control" id="product_title-{{ $locale }}" name="{{ $locale }}[product_title]"
                                                            @if($title == 'Add')
                                                                value="{{ @$post->$locale['product_title'] }}"
@@ -90,7 +90,7 @@
                                             </div>
                                             <div class="row mb-4">
                                                 <div class="col-sm-12">
-                                                    <label for="product_description" class="form-label">Description ({{ $locale }})</label>
+                                                    <label for="product_description" class="form-label">@lang('public.description') (@lang('public.'.$locale ))</label>
                                                     <textarea class="form-control" id="summernote-{{ $locale }}" name="{{ $locale }}[product_description]" >@if($title == 'Add'){{ @$post->$locale['product_description'] }}@else{{ @$product->translate($locale)->product_description }}
                                                         @endif</textarea>
                                                 </div>
@@ -133,20 +133,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="code-section-container show-code">
-
-                                            <button class="btn toggle-code-snippet"><span>Code</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down toggle-code-icon"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-
-                                            <div class="code-section text-left">
-                                <pre>
-// Basic
-
-var splide = new Splide( '.splide' );
-splide.mount();</pre>
-                                            </div>
-                                        </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +147,7 @@ splide.mount();</pre>
                                             <div class="widget-header">
                                                 <div class="row">
                                                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                                        <h4>Images to display</h4>
+                                                        <h4>@lang('public.image_display')</h4>
                                                     </div>
                                                 </div>
                                             </div>
@@ -188,8 +174,8 @@ splide.mount();</pre>
                             @endif
                             <div class="row">
                                 <div class="col-12">
-                                    <label for="product_image">Upload Images</label>
-                                    <small>(The Top image will be the THUMBNAIL.)</small>
+                                    <label for="product_image">@lang('public.upload_image')</label>
+                                    <small>(@lang('public.product_img_caption'))</small>
                                     <div class="multiple-file-upload">
                                         <input type="file"
                                                class="filepond file-upload-multiple"
@@ -213,7 +199,7 @@ splide.mount();</pre>
                                 <div class="widget-content widget-content-area ecommerce-create-section">
                                     <div class="row">
                                         <div class="col-xxl-12 mb-4">
-                                            <label for="product_slug">Slug</label>
+                                            <label for="product_slug">@lang('public.slug')</label>
                                             @if($title == 'Edit')
                                                 <input type="text" class="form-control" id="product_slug" name="product_slug" value="{{ @$product->product_slug }}" disabled>
                                             @else
@@ -221,19 +207,19 @@ splide.mount();</pre>
                                             @endif
                                         </div>
                                         <div class="col-xxl-12 col-md-6 mb-4">
-                                            <label for="category_type">Category</label>
-                                            {!! Form::select('category_id', $get_category_sel, @$post->category_id, ['class' => 'form-select', 'id' => 'category_type', 'placeholder' => 'Choose Category..']) !!}
+                                            <label for="category_type">@lang('public.category')</label>
+                                            {!! Form::select('category_id', $get_category_sel, @$post->category_id, ['class' => 'form-select', 'id' => 'category_type', 'placeholder' => trans('public.choose_category')]) !!}
                                         </div>
                                         <div class="col-xxl-12 col-md-6 mb-4 pos-system-category">
-                                            <label for="category_id">POS Category</label>
-                                            {!! Form::select('pos_system_category', $get_pos_system_category_sel, @$post->pos_system_category, ['class' => 'form-select', 'id' => 'pos_system_category', 'placeholder' => 'Choose POS Category..']) !!}
+                                            <label for="category_id">@lang('public.pos_category')</label>
+                                            {!! Form::select('pos_system_category', $get_pos_system_category_sel, @$post->pos_system_category, ['class' => 'form-select', 'id' => 'pos_system_category', 'placeholder' => trans('public.choose_pos_category')]) !!}
                                         </div>
                                         <div class="col-xxl-12 col-md-6 mb-4 web-template-category">
-                                            <label for="category_id">Template Category</label>
-                                            {!! Form::select('web_template_category_id', $get_web_template_category_sel, @$post->web_template_category_id, ['class' => 'form-select', 'id' => 'web_template_category_id', 'placeholder' => 'Choose Template Category..']) !!}
+                                            <label for="category_id">@lang('public.template_category')</label>
+                                            {!! Form::select('web_template_category_id', $get_web_template_category_sel, @$post->web_template_category_id, ['class' => 'form-select', 'id' => 'web_template_category_id', 'placeholder' => trans('public.choose_template_category')]) !!}
                                         </div>
                                         <div class="col-xxl-12 col-lg-6 col-md-12">
-                                            <label for="product_visibility" class="form-label">Visibility</label> <br>
+                                            <label for="product_visibility" class="form-label">@lang('public.visibility')</label> <br>
                                             <div class="switch form-switch-custom switch-inline form-switch-success">
                                                 <div class="input-checkbox">
                                                     <input class="switch-input" type="checkbox" role="switch" name="product_visibility" id="product_visibility"
@@ -249,26 +235,26 @@ splide.mount();</pre>
                                 <div class="widget-content widget-content-area ecommerce-create-section">
                                     <div class="row">
                                         <div class="col-sm-12 mb-2">
-                                            <label for="product_price">Regular Price</label>
+                                            <label for="product_price">@lang('public.regular_price')</label>
                                             <div class="input-group mb-3">
-                                                <span class="input-group-text">RM</span>
+                                                <span class="input-group-text">$</span>
                                                 <input type="text" class="form-control" id="product_price" name="product_price" value="{{ @$post->product_price }}" data-inputmask="'alias': 'numeric', 'digits' : '2', 'groupSeperator' : ',', 'autoGroup' : true, 'digitsOptional': false, 'removeMaskOnSubmit': true">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 mb-2">
-                                            <label for="product_offer_price">Sale Price</label>
+                                            <label for="product_offer_price">@lang('public.sale_price')</label>
                                             <div class="input-group mb-3">
-                                                <span class="input-group-text">RM</span>
+                                                <span class="input-group-text">$</span>
                                                 <input type="text" class="form-control" id="product_offer_price" name="product_offer_price" value="{{ @$post->product_offer_price }}" data-inputmask="'alias': 'numeric', 'digits' : '2', 'groupSeperator' : ',', 'autoGroup' : true, 'digitsOptional': false, 'removeMaskOnSubmit': true">
                                             </div>
                                         </div>
                                         <div class="col-sm-12">
                                             @if($title == 'Add')
-                                                <button type="submit" class="btn btn-success mb-2">Add Product</button>
-                                                <a href="{{ route('product_listing') }}" class="btn btn-secondary mb-2">Cancel</a>
+                                                <button type="submit" class="btn btn-success mb-2">@lang('public.add') @lang('public.product')</button>
+                                                <a href="{{ route('product_listing') }}" class="btn btn-secondary mb-2">@lang('public.cancel')</a>
                                             @else
-                                                <button type="submit" class="btn btn-primary mb-2">Update</button>
-                                                <a href="{{ route('product_listing') }}" class="btn btn-secondary mb-2">Cancel</a>
+                                                <button type="submit" class="btn btn-primary mb-2">@lang('public.update')</button>
+                                                <a href="{{ route('product_listing') }}" class="btn btn-secondary mb-2">@lang('public.cancel')</a>
                                             @endif
                                         </div>
                                     </div>

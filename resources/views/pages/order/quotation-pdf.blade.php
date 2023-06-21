@@ -72,9 +72,9 @@
                                         <td class="tm_width_2 tm_primary_color">{{ $items->order_item_name }}</td>
                                         <td class="tm_width_3">{{ $items->order_item_description ?? '-' }}</td>
                                         <td class="tm_width_1">{{ $items->order_item_quantity }}</td>
-                                        <td class="tm_width_2">RM {{ $items->order_item_price }}</td>
-                                        <td class="tm_width_2">RM {{ $items->order_item_offer_price }}</td>
-                                        <td class="tm_width_2 tm_text_right">RM {{ $items->order_item_offer_price > 0.00 ? $items->order_item_offer_price : $items->order_item_price }}</td>
+                                        <td class="tm_width_2">$ {{ $items->order_item_price }}</td>
+                                        <td class="tm_width_2">$ {{ $items->order_item_offer_price }}</td>
+                                        <td class="tm_width_2 tm_text_right">$ {{ $items->order_item_offer_price > 0.00 ? $items->order_item_offer_price : $items->order_item_price }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -91,7 +91,7 @@
                                 <tbody>
                                 <tr class="tm_gray_bg tm_border_top tm_border_left tm_border_right">
                                     <td class="tm_width_3 tm_primary_color tm_border_none tm_bold">Subtotal</td>
-                                    <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_bold">RM {{ $order->getTotalPrice() }}</td>
+                                    <td class="tm_width_3 tm_primary_color tm_text_right tm_border_none tm_bold">$ {{ $order->getTotalPrice() }}</td>
                                 </tr>
                                 <tr class="tm_gray_bg tm_border_left tm_border_right">
                                     <td class="tm_width_3 tm_primary_color tm_border_none tm_pt0">Discount <span class="tm_ternary_color">(10%)</span></td>
@@ -103,7 +103,7 @@
                                 </tr>
                                 <tr class="tm_border_top tm_gray_bg tm_border_left tm_border_right">
                                     <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color">Grand Total	</td>
-                                    <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color tm_text_right">RM {{ $order->getTotalPrice() }}</td>
+                                    <td class="tm_width_3 tm_border_top_0 tm_bold tm_f16 tm_primary_color tm_text_right">$ {{ $order->getTotalPrice() }}</td>
                                 </tr>
                                 </tbody>
                             </table>

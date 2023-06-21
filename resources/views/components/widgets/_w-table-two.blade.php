@@ -16,18 +16,20 @@
     </div>
 
     <div class="widget-content">
-{{--        @if() @endif--}}
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
+        @if(empty($recentOrders))
+            @lang('public.no_records')
+        @else
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
                     <tr>
-                        <th><div class="th-content">Customer</div></th>
-                        <th><div class="th-content">Order No</div></th>
-                        <th><div class="th-content th-heading">Price</div></th>
-                        <th><div class="th-content text-center">Status</div></th>
+                        <th><div class="th-content">@lang('public.customer')</div></th>
+                        <th><div class="th-content">@lang('public.order_no')</div></th>
+                        <th><div class="th-content th-heading">@lang('public.price')</div></th>
+                        <th><div class="th-content text-center">@lang('public.status')</div></th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     @foreach ($recentOrders as $order)
                         <tr>
                             <td>
@@ -51,11 +53,11 @@
                             <td class="text-center">
                                 @php
                                     $statusLabels = [
-                                        \App\Models\Order::STATUS_PROCESSING => ['Processing', 'badge-primary'],
-                                        \App\Models\Order::STATUS_PENDING => ['Pending', 'badge-secondary'],
-                                        \App\Models\Order::STATUS_AWAITING => ['Awaiting Payment', 'badge-info'],
-                                        \App\Models\Order::STATUS_COMPLETED => ['Completed', 'badge-success'],
-                                        \App\Models\Order::STATUS_CANCELLED => ['Cancelled', 'badge-danger']
+                                        \App\Models\Order::STATUS_PROCESSING => [trans('public.processing'), 'badge-primary'],
+                                        \App\Models\Order::STATUS_PENDING => [trans('public.pending'), 'badge-secondary'],
+                                        \App\Models\Order::STATUS_AWAITING => [trans('public.awaiting_payment'), 'badge-info'],
+                                        \App\Models\Order::STATUS_COMPLETED => [trans('public.completed'), 'badge-success'],
+                                        \App\Models\Order::STATUS_CANCELLED => [trans('public.cancelled'), 'badge-danger']
                                     ];
                                 @endphp
 
@@ -71,8 +73,9 @@
                         </tr>
                     @endforeach
 
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
+        @endif
     </div>
 </div>

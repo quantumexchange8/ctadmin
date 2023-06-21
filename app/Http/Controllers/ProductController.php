@@ -43,16 +43,16 @@ class ProductController extends Controller
         $search = session('product_search') ? session('product_search') : $search;
 
         return view('pages.product.listing', [
-            'title' => 'Listing',
-            'heading' => 'Product',
+            'title' => trans('public.listing'),
+            'heading' => trans('public.product'),
             'search' =>  $search,
             'records' => Product::get_record($search, 10),
-            'get_visibility_sel' => [1 => 'Visible', 0 => 'Not Visible'],
-            'get_status_sel' => [Product::STATUS_NORMAL => 'Normal Price', Product::STATUS_OFFER => 'Has Offer'],
-            'get_order_sel' => ['asc' => 'Created Date ASC', 'desc' => 'Created Date DESC'],
+            'get_visibility_sel' => [1 => trans('public.visible'), 0 => trans('public.not_visible')],
+            'get_status_sel' => [Product::STATUS_NORMAL => trans('public.normal_price'), Product::STATUS_OFFER => trans('public.has_offer')],
+            'get_order_sel' => ['asc' => trans('public.asc_create_date'), 'desc' => trans('public.desc_create_date')],
             'get_category_sel' => Category::get_category_sel(),
             'get_web_template_category_sel' => WebTemplateCategory::get_web_template_category_sel(),
-            'get_pos_system_category_sel' => ['Cloud' => 'Cloud', 'Offline' => 'Offline'],
+            'get_pos_system_category_sel' => ['Cloud' => trans('public.cloud'), 'Offline' => trans('public.offline')],
         ]);
     }
 
@@ -68,19 +68,19 @@ class ProductController extends Controller
             $attributeNames = [
                 'product_slug' => trans('public.slug'),
                 'product_price' => trans('public.price'),
-                'product_visibility' => trans('public.product_visibility'),
+                'product_visibility' => trans('public.visibility'),
                 'product_image' => trans('public.image'),
                 'category_id' => trans('public.category'),
-                'web_template_category_id' => trans('public.web_template_category_id'),
-                'pos_system_category' => trans('public.pos_system_category'),
+                'web_template_category_id' => trans('public.template_category'),
+                'pos_system_category' => trans('public.pos_category'),
             ];
 
             foreach ($languages as $lang) {
                 $rules["{$lang}.product_title"] = 'required|max:255';
                 $rules["{$lang}.product_description"] = 'required';
 
-                $attributeNames["{$lang}.product_title"] = trans('public.product_title').' ('.trans("public.{$lang}").')';
-                $attributeNames["{$lang}.product_description"] = trans('public.product_description').' ('.trans("public.{$lang}").')';
+                $attributeNames["{$lang}.product_title"] = trans('public.title').' ('.trans("public.{$lang}").')';
+                $attributeNames["{$lang}.product_description"] = trans('public.description').' ('.trans("public.{$lang}").')';
             }
 
             $validator = Validator::make($request->all(), $rules+[
@@ -141,7 +141,7 @@ class ProductController extends Controller
                     }
                 }
 
-                Session::flash('success_msg', 'Successfully Created Product!');
+                Session::flash('success_msg', trans('public.success_created_product'));
                 return redirect()->route('product_listing');
             }
 
@@ -151,13 +151,13 @@ class ProductController extends Controller
 
         return view('pages.product.form', [
             'title' => 'Add',
-            'heading' => 'Product',
+            'heading' => trans('public.product'),
             'post' => $post,
             'languages' => $languages,
             'submit' => route('product_add'),
             'get_category_sel' => Category::get_category_sel(),
             'get_web_template_category_sel' => WebTemplateCategory::get_web_template_category_sel(),
-            'get_pos_system_category_sel' => ['Cloud' => 'Cloud', 'Offline' => 'Offline'],
+            'get_pos_system_category_sel' => ['Cloud' => trans('public.cloud'), 'Offline' => trans('public.offline')],
         ])->withErrors($validator);
     }
 
@@ -181,8 +181,8 @@ class ProductController extends Controller
                 $rules["{$lang}.product_title"] = 'required|max:255';
                 $rules["{$lang}.product_description"] = 'required';
 
-                $attributeNames["{$lang}.product_title"] = trans('public.product_title').' ('.trans("public.{$lang}").')';
-                $attributeNames["{$lang}.product_description"] = trans('public.product_description').' ('.trans("public.{$lang}").')';
+                $attributeNames["{$lang}.product_title"] = trans('public.title').' ('.trans("public.{$lang}").')';
+                $attributeNames["{$lang}.product_description"] = trans('public.description').' ('.trans("public.{$lang}").')';
             }
 
             $validator = Validator::make($request->all(), $rules+[
@@ -241,7 +241,7 @@ class ProductController extends Controller
                     }
                 }
 
-                Session::flash('success_msg', 'Successfully Updated Product!');
+                Session::flash('success_msg', trans('public.success_updated_product'));
                 return redirect()->route('product_listing');
             }
 
@@ -251,14 +251,14 @@ class ProductController extends Controller
 
         return view('pages.product.form', [
             'title' => 'Edit',
-            'heading' => 'Product',
+            'heading' => trans('public.product'),
             'post' => $post,
             'product' => $product,
             'languages' => $languages,
             'submit' => route('product_edit', $product_id),
             'get_category_sel' => Category::get_category_sel(),
             'get_web_template_category_sel' => WebTemplateCategory::get_web_template_category_sel(),
-            'get_pos_system_category_sel' => ['Cloud' => 'Cloud', 'Offline' => 'Offline'],
+            'get_pos_system_category_sel' => ['Cloud' => trans('public.cloud'), 'Offline' => trans('public.offline')],
         ])->withErrors($validator);
     }
 
@@ -319,7 +319,7 @@ class ProductController extends Controller
             'is_deleted' => 1,
         ]);
 
-        Session::flash('success_msg', trans('public.successfully_deleted_product!'));
+        Session::flash('success_msg', trans('public.success_deleted_product'));
         return redirect()->route('product_listing');
     }
 }

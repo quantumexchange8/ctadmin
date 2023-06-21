@@ -103,9 +103,9 @@
                                                                         <td>{{ $no }}</td>
                                                                         <td>{{ $items->order_item_name }}</td>
                                                                         <td class="text-end">{{ $items->order_item_quantity }}</td>
-                                                                        <td class="text-end">RM {{ $items->order_item_price }}</td>
-                                                                        <td class="text-end">RM {{ $items->order_offer_price ?? '0.00' }}</td>
-                                                                        <td class="text-end">RM {{ $items->order_item_price }}</td>
+                                                                        <td class="text-end">$ {{ $items->order_item_price }}</td>
+                                                                        <td class="text-end">$ {{ $items->order_offer_price ?? '0.00' }}</td>
+                                                                        <td class="text-end">$ {{ $items->order_item_price }}</td>
                                                                     </tr>
                                                                     @php
                                                                         $no++
@@ -128,7 +128,7 @@
                                                                             <h4 class="">Grand Total : </h4>
                                                                         </div>
                                                                         <div class="col-sm-4 col-5 grand-total-amount mt-3">
-                                                                            <h4 class="">RM {{ $order->getTotalPrice() }}</h4>
+                                                                            <h4 class="">$ {{ $order->getTotalPrice() }}</h4>
                                                                         </div>
                                                                     </div>
                                                                 </div>

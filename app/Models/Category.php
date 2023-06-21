@@ -6,12 +6,15 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Category extends Model implements HasMedia, TranslatableContract
 {
-    use HasFactory, InteractsWithMedia, Translatable;
+    use HasFactory, InteractsWithMedia, Translatable, LogsActivity;
 
     protected $table = 'tbl_category';
 
@@ -66,5 +69,27 @@ class Category extends Model implements HasMedia, TranslatableContract
     public function category_translation()
     {
         return $this->hasMany(CategoryTranslation::class, 'category_id', 'id');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $categoryTitle = $this->category_translation()
+            ->whereIn('locale', ['en', 'zh-Hans', 'zh-Hant'])
+            ->pluck('category_name', 'locale')
+            ->toArray();
+
+        return LogOptions::defaults()
+            ->useLogName('category')
+            ->logOnly([
+                'category_status', 'is_deleted'
+            ])
+            ->setDescriptionForEvent(function (string $eventName) use ($categoryTitle) {
+                $language = app()->getLocale();
+                $title = $categoryTitle[$language] ?? 'N/A';
+
+                return Auth::user()->user_fullname . " has {$eventName} the category with name: {$title}.";
+            })
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }

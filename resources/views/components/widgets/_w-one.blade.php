@@ -17,7 +17,7 @@
             </div>
             <div class="w-content">
                 <span class="w-value">{{ $totalOrder }}</span>
-                <span class="w-numeric-title">Total Orders</span>
+                <span class="w-numeric-title">@lang('public.total_orders')</span>
             </div>
         </div>
         <div class="w-chart">

@@ -143,7 +143,7 @@
 
                                                                 <div class="invoice-summary-value">
                                                                     <div class="subtotal-amount">
-                                                                        <span class="currency">RM </span><span class="subtotal-amount">{{ $order->getSubTotal() }}</span>
+                                                                        <span class="currency">$ </span><span class="subtotal-amount">{{ $order->getSubTotal() }}</span>
                                                                     </div>
                                                                 </div>
 
@@ -156,7 +156,7 @@
 
                                                                 <div class="invoice-summary-value">
                                                                     <div class="total-amount">
-                                                                        <span class="currency">RM </span><span id="discount_value">{{ $order->discount_amount ?? '0.00' }}</span>
+                                                                        <span class="currency">$ </span><span id="discount_value">{{ $order->discount_amount ?? '0.00' }}</span>
                                                                     </div>
                                                                 </div>
 

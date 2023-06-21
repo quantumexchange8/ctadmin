@@ -243,14 +243,14 @@ splide.mount();</pre>
                                         <div class="col-sm-12 mb-2">
                                             <label for="web_template_price">Regular Price</label>
                                             <div class="input-group mb-3">
-                                                <span class="input-group-text">RM</span>
+                                                <span class="input-group-text">$</span>
                                                 <input type="text" class="form-control" id="web_template_price" name="web_template_price" value="{{ @$post->web_template_price }}" data-inputmask="'alias': 'numeric', 'digits' : '2', 'groupSeperator' : ',', 'autoGroup' : true, 'digitsOptional': false, 'removeMaskOnSubmit': true">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 mb-2">
                                             <label for="web_template_offer_price">Sale Price</label>
                                             <div class="input-group mb-3">
-                                                <span class="input-group-text">RM</span>
+                                                <span class="input-group-text">$</span>
                                                 <input type="text" class="form-control" id="web_template_offer_price" name="web_template_offer_price" value="{{ @$post->web_template_offer_price }}" data-inputmask="'alias': 'numeric', 'digits' : '2', 'groupSeperator' : ',', 'autoGroup' : true, 'digitsOptional': false, 'removeMaskOnSubmit': true">
                                             </div>
                                         </div>

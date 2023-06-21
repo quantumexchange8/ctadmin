@@ -48,17 +48,18 @@ class Order extends Model implements HasMedia
                 foreach($freetext as $freetexts) {
                     $query->where(function ($q) use ($freetexts) {
                         $q->where('user_fullname', 'like', '%' . $freetexts . '%');
+                        $q->orWhere('user_email', 'like', '%' . $freetexts . '%');
                     });
                 }
             }
         });
 
-        $category_id = @$search['category_id'];
+        if (isset($search['date_range'])) {
+            $dateRange = explode(' to ', $search['date_range']);
+            $startDate = $dateRange[0] . ' 00:00:00';
+            $endDate = $dateRange[1] . ' 23:59:59';
 
-        if(isset($category_id)){
-            $query->whereHas('product', function ($query) use ($category_id) {
-                $query->where('category_id', $category_id);
-            });
+            $query->whereBetween('order_created', [$startDate, $endDate]);
         }
 
         $order_status = @$search['order_status'];

@@ -24,19 +24,19 @@
         <!-- Sales -->
 
         <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-            <x-widgets._w-chart-one title="Revenue"/>
+            <x-widgets._w-chart-one title="{{ trans('public.revenue') }}"/>
         </div>
 
         <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-            <x-widgets._w-chart-two title="Sales by Category"/>
+            <x-widgets._w-chart-two title="{{ trans('public.sales_by_category') }}"/>
         </div>
 
         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 layout-spacing">
-            <x-widgets._w-two title="Daily sales"/>
+            <x-widgets._w-two title="{{ trans('public.daily_sales') }}"/>
         </div>
 
         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 layout-spacing">
-            <x-widgets._w-three title="Summary" :totalOrderPrice="$totalOrderPrice" :priceOfStatus="$priceOfStatus"/>
+            <x-widgets._w-three title="{{ trans('public.summary') }}" :totalOrderPrice="$totalOrderPrice" :priceOfStatus="$priceOfStatus"/>
         </div>
 
         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
@@ -44,11 +44,11 @@
         </div>
 
         <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-            <x-widgets._w-table-two title="Recent Orders" :recentOrders="$recentOrders"/>
+            <x-widgets._w-table-two title="{{ trans('public.recent_orders') }}" :recentOrders="$recentOrders"/>
         </div>
 
         <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-            <x-widgets._w-table-three title="Top Selling Product" :topProducts="$topProducts"/>
+            <x-widgets._w-table-three title="{{ trans('public.top_selling_products') }}" :topProducts="$topProducts"/>
         </div>
 
     </div>
@@ -144,7 +144,7 @@
                                 }
                             },
                             title: {
-                                text: 'Total Revenue',
+                                text: '{{ trans('public.total_revenue') }}',
                                 align: 'left',
                                 margin: 0,
                                 offsetX: -10,
@@ -162,14 +162,14 @@
                                 lineCap: 'square'
                             },
                             series: [{
-                                name: 'Discount Price',
+                                name: '{{ trans('public.discount_price') }}',
                                 data: [
                                     @foreach ($months as $month)
                                         {{ $totalDiscountByMonth['revenue_' . $month] }},
                                     @endforeach
                                 ]
                             }, {
-                                name: 'Final Price',
+                                name: '{{ trans('public.final_price') }}',
                                 data: [
                                     @foreach ($months as $month)
                                         {{ $totalRevenueByMonth['revenue_' . $month] }},
@@ -688,7 +688,7 @@
                                             total: {
                                                 show: true,
                                                 showAlways: true,
-                                                label: 'Total',
+                                                label: '{{ trans('public.total') }}',
                                                 color: '#888ea8',
                                                 formatter: function (w) {
                                                     return w.globals.seriesTotals.reduce( function(a, b) {

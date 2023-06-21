@@ -8,12 +8,15 @@ use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Product extends Model implements HasMedia, TranslatableContract, Viewable
 {
-    use HasFactory, InteractsWithMedia, Translatable, InteractsWithViews;
+    use HasFactory, InteractsWithMedia, Translatable, InteractsWithViews, LogsActivity;
 
     protected $table = 'tbl_product';
 
@@ -81,6 +84,12 @@ class Product extends Model implements HasMedia, TranslatableContract, Viewable
             $query->where('product_visibility', $product_visibility);
         }
 
+        $order_by = @$search['order_by'];
+
+        if(isset($order_by)){
+            $query->orderby('product_created', $order_by);
+        }
+
         return $query->orderby('product_created', 'desc')->paginate($perpage);
     }
 
@@ -111,5 +120,27 @@ class Product extends Model implements HasMedia, TranslatableContract, Viewable
     public function product_translation()
     {
         return $this->hasMany(ProductTranslation::class, 'product_id', 'id');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $productTitle = $this->product_translation()
+            ->whereIn('locale', ['en', 'zh-Hans', 'zh-Hant'])
+            ->pluck('product_title', 'locale')
+            ->toArray();
+
+        return LogOptions::defaults()
+            ->useLogName('product')
+            ->logOnly([
+                'product_price', 'product_offer_price', 'product_status', 'product_visibility', 'category_id', 'web_template_category_id', 'pos_system_category', 'is_deleted'
+            ])
+            ->setDescriptionForEvent(function (string $eventName) use ($productTitle) {
+                $language = app()->getLocale();
+                $title = $productTitle[$language] ?? 'N/A';
+
+                return Auth::user()->user_fullname . " has {$eventName} the product with title: {$title}.";
+            })
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }

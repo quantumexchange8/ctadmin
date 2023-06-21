@@ -1,7 +1,7 @@
 <x-base-layout :scrollspy="false">
 
     <x-slot:pageTitle>
-        {{ $heading }} {{$title}}
+        {{ $heading }} - {{$title}}
         </x-slot>
 
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -40,7 +40,7 @@
                 <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">{{ $heading }}</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ $title == 'Add' ? trans('public.add') : trans('public.edit') }}</li>
                     </ol>
                 </nav>
             </div>
@@ -62,7 +62,7 @@
                             <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
                                 <div class="section general-info">
                                     <div class="info">
-                                        <h6 class="">General Information</h6>
+                                        <h6 class="">@lang('public.general_info')</h6>
                                         <div class="row">
                                             <div class="col-lg-11 mx-auto">
                                                 <div class="row">
@@ -81,43 +81,43 @@
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label for="fullName">Full Name</label>
-                                                                        <input type="text" class="form-control mb-3" id="fullName" name="user_fullname" placeholder="Full Name" value="{{ @$post->user_fullname }}">
+                                                                        <label for="fullName">@lang('public.full_name')</label>
+                                                                        <input type="text" class="form-control mb-3" id="fullName" name="user_fullname" placeholder="@lang('public.full_name')" value="{{ @$post->user_fullname }}">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label for="user_status">Status</label>
-                                                                        {!! Form::select('user_status', $user_status_sel, @$post->user_status, ['class' => 'form-select', 'id' => 'user_status', 'placeholder' => 'Select Status']) !!}
+                                                                        <label for="user_status">@lang('public.status')</label>
+                                                                        {!! Form::select('user_status', $user_status_sel, @$post->user_status, ['class' => 'form-select', 'id' => 'user_status', 'placeholder' => trans('public.choose_status')]) !!}
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label for="user_gender">Gender</label>
-                                                                        {!! Form::select('user_gender', $user_gender_sel, @$post->user_gender, ['class' => 'form-select', 'id' => 'user_gender', 'placeholder' => 'Select Gender']) !!}
+                                                                        <label for="user_gender">@lang('public.gender')</label>
+                                                                        {!! Form::select('user_gender', $user_gender_sel, @$post->user_gender, ['class' => 'form-select', 'id' => 'user_gender', 'placeholder' => trans('public.gender')]) !!}
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label for="address">Address</label>
-                                                                        <input type="text" class="form-control mb-3" id="address" name="user_address" placeholder="Address" value="{{ @$post->user_address }}" >
+                                                                        <label for="address">@lang('public.address')</label>
+                                                                        <input type="text" class="form-control mb-3" id="address" name="user_address" placeholder="@lang('public.address')" value="{{ @$post->user_address }}" >
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label for="country">Country</label>
-                                                                        {!! Form::select('user_nationality', $user_nationality_sel, @$post->user_nationality, ['class' => 'form-select', 'id' => 'country', 'placeholder' => 'Select Country..']) !!}
+                                                                        <label for="country">@lang('public.country')</label>
+                                                                        {!! Form::select('user_nationality', $user_nationality_sel, @$post->user_nationality, ['class' => 'form-select', 'id' => 'country', 'placeholder' => trans('public.choose_country')]) !!}
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                        <label for="user_phone">Phone</label>
-                                                                        <input type="text" class="form-control mb-3" id="user_phone" name="user_phone" placeholder="Write your phone number here" value="{{ @$post->user_phone }}">
+                                                                        <label for="user_phone">@lang('public.phone')</label>
+                                                                        <input type="text" class="form-control mb-3" id="user_phone" name="user_phone" placeholder="+60 123456789" value="{{ @$post->user_phone }}">
                                                                     </div>
                                                                 </div>
 
@@ -135,7 +135,7 @@
                             <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
                                 <div id="social" class="section social">
                                     <div class="info">
-                                        <h5 class="">User Access</h5>
+                                        <h5 class="">@lang('public.user_access')</h5>
                                         <div class="row">
 
                                             <div class="col-md-11 mx-auto">
@@ -145,7 +145,7 @@
                                                             <span class="input-group-text me-3">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                                                             </span>
-                                                            <input type="text" class="form-control" name="user_email" placeholder="User Email" aria-label="User Email" aria-describedby="user_email" value="{{ @$post->user_email }}">
+                                                            <input type="text" class="form-control" name="user_email" placeholder="@lang('public.email')" aria-label="User Email" aria-describedby="user_email" value="{{ @$post->user_email }}">
                                                         </div>
                                                     </div>
 
@@ -154,7 +154,7 @@
                                                             <span class="input-group-text me-3">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
                                                             </span>
-                                                            {!! Form::select('user_role', $user_role_sel, @$post->user_role, ['class' => 'form-select', 'id' => 'user_role', 'placeholder' => 'Select Role']) !!}
+                                                            {!! Form::select('user_role', $user_role_sel, @$post->user_role, ['class' => 'form-select', 'id' => 'user_role', 'placeholder' => trans('public.select_role')]) !!}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -165,25 +165,25 @@
                                                     <div class="col-md-6">
                                                         <div class="input-group social-fb mb-3">
                                                             <span class="input-group-text me-3" id="fb"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></span>
-                                                            <input name="password" type="password" class="form-control" aria-label="Password" placeholder="Enter Password" aria-describedby="password" maxlength="100" value="{{ @$post->password }}">
+                                                            <input name="password" type="password" class="form-control" aria-label="Password" placeholder="@lang('public.password')" aria-describedby="password" maxlength="100" value="{{ @$post->password }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="input-group social-github mb-3">
                                                             <span class="input-group-text me-3" id="github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></span>
-                                                            <input name="password_confirmation" type="password" class="form-control" placeholder="Enter Confirm Password" aria-label="Confirm Password" aria-describedby="confirm_password" maxlength="100" value="{{ @$post->confirm_password ?? @$post->password }}">
+                                                            <input name="password_confirmation" type="password" class="form-control" placeholder="@lang('public.confirm_password')" aria-label="Confirm Password" aria-describedby="confirm_password" maxlength="100" value="{{ @$post->confirm_password ?? @$post->password }}">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 mt-1">
                                                     @if($title == 'Add')
                                                         <div class="form-group text-end">
-                                                            <button type="submit" class="btn btn-success">Add User</button>
+                                                            <button type="submit" class="btn btn-success">@lang('public.add') @lang('public.user')</button>
                                                         </div>
                                                     @else
                                                         <div class="form-group text-end">
-                                                            <button type="submit" class="btn btn-secondary">Save</button>
+                                                            <button type="submit" class="btn btn-secondary">@lang('public.update')</button>
                                                         </div>
                                                     @endif
 

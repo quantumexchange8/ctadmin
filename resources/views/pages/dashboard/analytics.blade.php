@@ -26,31 +26,31 @@
     <div class="row layout-top-spacing">
 
         <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-            <x-widgets._w-six title="Statistics" visits="{{ $total_visits }}" paids="{{ $total_paid }}"/>
+            <x-widgets._w-six title="{{ trans('public.statistics') }}" visits="{{ $total_visits }}" paids="{{ $total_paid }}"/>
         </div>
 
         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-            <x-widgets._w-card-four title="Revenue" amount="{{ $paid_amount_by_week }}" total="{{ $total_paid_amount }}"/>
+            <x-widgets._w-card-four title="{{ trans('public.revenue') }}" amount="{{ $paid_amount_by_week }}" total="{{ $total_paid_amount }}"/>
         </div>
 
         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-            <x-widgets._w-card-five title="Total Revenue" balance="${{ $total_paid_amount }}" percentage="+ 13.6%" button="View Report" link="javascript:void(0);"/>
+            <x-widgets._w-card-five title="{{ trans('public.total_revenue') }}" balance="${{ $total_paid_amount }}" percentage="+ 13.6%" button="{{ trans('public.view_report') }}" link="{{ route('report_listing') }}"/>
         </div>
 
         <div class="col-xl-9 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-            <x-widgets._w-chart-three title="Unique Visitors"/>
+            <x-widgets._w-chart-three title="{{ trans('public.unique_visitors') }}"/>
         </div>
 
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-            <x-widgets._w-activity-five title="Activity Log" :activityLogs="$activityLogs"/>
+            <x-widgets._w-activity-five title="{{ trans('public.activity_log') }}" :activityLogs="$activityLogs"/>
         </div>
 
         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-             <x-widgets._w-four title="Favorites of Consumers" :totalFavorites="$total_favorites" :topFavorites="$top_favorites"/>
+             <x-widgets._w-four title="{{ trans('public.fav_of_consumers') }}" :totalFavorites="$total_favorites" :topFavorites="$top_favorites"/>
         </div>
 
         <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
-            <x-widgets._w-hybrid-one title="Users Joined" chart-id="hybrid_followers" :totalUsers="$total_users" :totalCarts="$total_carts" :totalAwaiting="$total_awaiting" :awaitingPaymentCount="$awaitingPaymentCount"/>
+            <x-widgets._w-hybrid-one title="{{ trans('public.users_joined') }}" chart-id="hybrid_followers" :totalUsers="$total_users" :totalCarts="$total_carts" :totalAwaiting="$total_awaiting" :awaitingPaymentCount="$awaitingPaymentCount"/>
         </div>
 
     </div>
@@ -626,7 +626,7 @@
                                     name: 'EA',
                                     data: [
                                         @foreach ($months as $month)
-                                            {{ $result['expert-advisor_unique_visit_' . $month] }},
+                                            {{ $result['expert-advisor_unique_visit_' . $month] ?? 0 }},
                                         @endforeach
                                     ]
                                 },
@@ -634,7 +634,7 @@
                                     name: 'POS System',
                                     data: [
                                         @foreach ($months as $month)
-                                            {{ $result['pos-system_unique_visit_' . $month] }},
+                                            {{ $result['pos-system_unique_visit_' . $month] ?? 0 }},
                                         @endforeach
                                     ]
                                 },
@@ -642,7 +642,7 @@
                                     name: 'Web Template',
                                     data: [
                                         @foreach ($months as $month)
-                                            {{ $result['web-template_unique_visit_' . $month] }},
+                                            {{ $result['web-template_unique_visit_' . $month] ?? 0 }},
                                         @endforeach
                                     ]
                                 }
@@ -758,7 +758,7 @@
                                     name: 'EA',
                                     data: [
                                         @foreach ($months as $month)
-                                            {{ $result['expert-advisor_unique_visit_' . $month] }},
+                                            {{ $result['expert-advisor_unique_visit_' . $month] ?? 0 }},
                                         @endforeach
                                     ]
                                 },
@@ -766,7 +766,7 @@
                                     name: 'POS System',
                                     data: [
                                         @foreach ($months as $month)
-                                            {{ $result['pos-system_unique_visit_' . $month] }},
+                                            {{ $result['pos-system_unique_visit_' . $month] ?? 0 }},
                                         @endforeach
                                     ]
                                 },
@@ -774,7 +774,7 @@
                                     name: 'Web Template',
                                     data: [
                                         @foreach ($months as $month)
-                                            {{ $result['web-template_unique_visit_' . $month] }},
+                                            {{ $result['web-template_unique_visit_' . $month] ?? 0 }},
                                         @endforeach
                                     ]
                                 }

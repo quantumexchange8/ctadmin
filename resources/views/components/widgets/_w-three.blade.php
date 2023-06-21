@@ -12,30 +12,15 @@
 <div class="widget widget-three">
     <div class="widget-heading">
         <h5 class="">{{$title}}</h5>
-
-        <div class="task-action">
-            <div class="dropdown">
-                <a class="dropdown-toggle" href="#" role="button" id="summary" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                </a>
-
-                <div class="dropdown-menu left" aria-labelledby="summary" style="will-change: transform;">
-                    <a class="dropdown-item" href="javascript:void(0);">View Report</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Edit Report</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Mark as Done</a>
-                </div>
-            </div>
-        </div>
-
     </div>
     <div class="widget-content">
 
         <div class="order-summary">
             @php
                 $statusMap = [
-                    1 => ['name' => 'Processing', 'class' => 'bg-gradient-secondary'],
-                    2 => ['name' => 'Pending', 'class' => 'bg-gradient-success'],
-                    3 => ['name' => 'Awaiting Payment', 'class' => 'bg-gradient-warning'],
+                    1 => ['name' => trans('public.processing'), 'class' => 'bg-gradient-secondary'],
+                    2 => ['name' => trans('public.pending'), 'class' => 'bg-gradient-success'],
+                    3 => ['name' => trans('public.awaiting_payment'), 'class' => 'bg-gradient-warning'],
                 ];
 
                  $iconMap = [
